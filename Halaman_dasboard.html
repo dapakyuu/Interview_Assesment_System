@@ -18,11 +18,15 @@
                 <p>Platform AI Interview Assessment System</p>
             </div>
             <div class="header-actions">
-                <button class="btn btn-primary" onclick="downloadReport()">
-                    <i class="fas fa-download"></i> Download Json
-                </button>
-                <button class="btn btn-secondary" onclick="downloadReport()">
-                    <i class="fas fa-download"></i> Download Pdf
+
+                <a href="Halaman_dasboard.json" download>
+                    <button class="btn btn-primary"">
+                        <i class="fas fa-download"></i> Download Json
+                    </button>
+                </a>
+
+                <button class="btn btn-secondary" onclick="downloadPDF()">
+                    <i class="fas fa-file-pdf"></i> Download Report
                 </button>
                 <button class="btn btn-outline" onclick="backToList()">
                     <i class="fas fa-arrow-left"></i> Kembali
@@ -30,117 +34,99 @@
             </div>
         </div>
 
-        <!-- <div class="card-score">
-            <img id="scoreImage" src="rating-dark-5.png" alt="Score Icon" class="score-image">
-        </div> -->
-
-                <!-- Dashboard Grid -->
-        <div class="dashboard-grid">
-
-            <!-- Penilaian NLP -->
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-brain"></i>
-                    Score Range
-                </div>
-                <div class="isitext">
-                    81 - 100 : Excellent <br>
-                    61 - 80 : Good <br>       
-                    41 - 60 : Fair <br>
-                </div>
-            </div>
-        </div>
-
         <!-- Dashboard Grid -->
         <div class="dashboard-grid">
-
-            <!-- Penilaian NLP -->
             <div class="card">
                 <div class="card-title">
-                    <i class="fas fa-brain"></i>
-                    Penilaian NLP
+                    <i class="fas fa-award"></i>
+                    Kategori Penilaian
                 </div>
-                <div class="card-content" id="nlp-score">
-                    <h1><b>90</b></h1>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-brain"></i>
-                    kualitas jawaban
-                </div>
-                <div class="card-content" id="nlp-score">
-                    <h1><b>90</b></h1>
-                </div>
-            </div>
-
-
-
-            <!-- Confidence Score -->
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-chart-line"></i>
-                    Confidence Score
-                </div>
-                <div class="card-content" id="confidence-score">
-                    <div class="content-text">
-                        <h1><b>90</b></h1>
+                <div class="score-range-container-horizontal">
+                    <div class="score-range-item-compact excellent">
+                        <div class="score-range-badge-compact">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="score-range-label">Luar Biasa</div>
+                        <div class="score-range-value">90 - 100</div>
+                    </div>
+                    
+                    <div class="score-range-item-compact good">
+                        <div class="score-range-badge-compact">
+                            <i class="fas fa-thumbs-up"></i>
+                        </div>
+                        <div class="score-range-label">Bagus</div>
+                        <div class="score-range-value">80 - 89</div>
+                    </div>
+                    
+                    <div class="score-range-item-compact fair">
+                        <div class="score-range-badge-compact">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="score-range-label">Cukup Bagus</div>
+                        <div class="score-range-value">70 - 79</div>
+                    </div>
+                    
+                    <div class="score-range-item-compact poor">
+                        <div class="score-range-badge-compact">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="score-range-label">Tidak Bagus</div>
+                        <div class="score-range-value">< 70</div>
                     </div>
                 </div>
             </div>
-
-        </div>
-
-                <!-- Dashboard Grid -->
-        <div class="dashboard-grid">
-
-            <!-- Penilaian NLP -->
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-brain"></i>
-                    relevansi
-                </div>
-                <div class="card-content" id="nlp-score">
-                    <h1><b>90</b></h1>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-brain"></i>
-                    koherensi
-                </div>
-                <div class="card-content" id="nlp-score">
-                    <h1><b>90</b></h1>
-                </div>
-            </div>
-
-            <!-- Cheating Detection -->
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-eye"></i>
-                    tempo bicara
-                </div>
-                <div class="card-content" id="cheating-detect">
-                    <div class="content-text">
-                        <h1><b>NO</b></h1>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <!-- Row 2 -->
         <div class="dashboard-grid">
             <!-- Skor per Aspek -->
             <div class="card full-width-card">
-                <div class="card-title">
-                    <i class="fas fa-chart-radar"></i>
-                    Penilaian Per Aspek
+                <div class="card-header-with-score">
+                    <div>
+                        <div class="card-title">
+                            <i class="fas fa-chart-radar"></i>
+                            Skor per Aspek Kompetensi
+                        </div>
+                        <p style="color: #718096; font-size: 14px; margin-top: 5px;">Evaluasi mendalam terhadap berbagai aspek penilaian</p>
+                    </div>
+                    <div class="average-score-badge">
+                        <div style="font-size: 12px; color: #667eea; margin-bottom: 5px;">Rata-rata Skor</div>
+                        <div style="font-size: 32px; font-weight: bold; color: #667eea;" id="averageScore">86</div>
+                    </div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="radarChart"></canvas>
+                
+                <div class="aspects-container">
+                    <div class="radar-section">
+                        <div class="chart-container" style="height: 300px;">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="details-section">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px; color: #667eea; font-weight: 600;">
+                            <i class="fas fa-arrow-trend-up"></i>
+                            Detail Penilaian
+                        </div>
+                        <div id="aspectDetailsList"></div>
+                    </div>
+                </div>
+                
+                <div class="summary-cards">
+                    <div class="summary-card">
+                        <div class="summary-label">Tertinggi</div>
+                        <div class="summary-title" id="highestAspect">Kepercayaan Diri</div>
+                        <div class="summary-value" id="highestScore">90</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Perlu Peningkatan</div>
+                        <div class="summary-title" id="lowestAspect">Kesiapan</div>
+                        <div class="summary-value" id="lowestScore">82</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Konsistensi</div>
+                        <div class="summary-title" style="color: #3b82f6;">Sangat Baik</div>
+                        <div class="summary-value" style="color: #3b82f6;" id="consistencyScore">±4</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -155,9 +141,7 @@
                     Cheating Detection
                 </div>
                 <div class="card-content" id="cheating-detect">
-                    <div class="content-text">
-                        <h1><b>NO</b></h1>
-                    </div>
+                        <!-- Tidak -->
                 </div>
             </div>
 
@@ -168,7 +152,18 @@
                     Analisis Non-Verbal
                 </div>
                 <div class="card-content" id="nonverbal-analysis">
-                    Ekspresi wajah menunjukkan kepercayaan diri dan konsistensi jawaban.
+                    <!-- Ekspresi wajah menunjukkan kepercayaan diri dan konsistensi jawaban. -->
+                </div>
+            </div>
+
+            <!-- Penilaian Akhir -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-star"></i>
+                    Penilaian Akhir (1 - 5)
+                </div>
+                <div class="card-content" id="final-score">
+                    <img id="scoreImage" src="" alt="Score Icon" class="score-image">
                 </div>
             </div>
 
@@ -179,26 +174,16 @@
                     Keputusan Akhir
                 </div>
                 <div class="card-content" id="final-decision">
-                    ✅ Lulus
+                    <!-- Lulus -->
                 </div>
             </div>
-
-                <!-- Penilaian Akhir -->
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-star"></i>
-                    Penilaian Akhir (1 - 5)
-                </div>
-                <div class="card-content" id="final-score">
-                    <img id="scoreImage" src="rating-dark-5.png" alt="Score Icon" class="score-image">
-                </div>
-            </div>
-
 
         </div>
+
     </div>
 
-    <!-- <script src="Halaman_dasboard.js"></script> -->
-
+    <script src="Halaman_dasboard.js"></script>
+    <!-- <script src="Halaman_dasboard_perid.js"></script> -->
+     
 </body>
 </html>
