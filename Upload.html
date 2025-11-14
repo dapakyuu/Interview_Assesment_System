@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Upload Video - AI Interview Platform</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="Halaman_dasboard.css" />
+    <link rel="stylesheet" href="Upload.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="top-banner" aria-hidden="false">
+        <div class="banner-center">
+          <img
+            src="Assest/dicoding_logo.png"
+            alt="Logo Dicoding"
+            class="banner-logo"
+          />
+        </div>
+      </div>
+
+      <div class="header">
+        <div class="header-left">
+          <h1>
+            <i class="fas fa-upload"></i> AI-Powered Interview Assessment System
+          </h1>
+          <p>
+            Unggah satu atau beberapa video interview untuk dianalisis
+            menggunakan AI.
+          </p>
+        </div>
+        <div class="header-actions">
+          <a href="https://www.dicoding.com" target="_blank" rel="noopener">
+            <button class="btn btn-outline">
+              <i class="fas fa-arrow-left"></i> Kembali ke Dicoding
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <div class="upload-grid">
+        <!-- CARD: Upload Video -->
+        <div class="card upload-wrapper" id="videoCard">
+          <div class="card-title">
+            <i class="fas fa-file-video"></i> Upload Video
+          </div>
+
+          <div
+            style="
+              margin-top: 8px;
+              margin-bottom: 8px;
+              display: flex;
+              gap: 12px;
+              align-items: center;
+              flex-wrap: wrap;
+            "
+          >
+            <label style="font-weight: 600"
+              >Nama Peserta<span class="required">*</span></label
+            >
+            <input
+              id="participantName"
+              class="small-input"
+              type="text"
+              placeholder="Masukkan nama peserta"
+            />
+          </div>
+
+          <div
+            class="upload-area"
+            id="uploadAreaVideo"
+            onclick="document.getElementById('fileInputVideo').click()"
+          >
+            <p class="muted">
+              Klik atau seret file video ke sini (mp4, mov, webm). Bisa unggah 1
+              atau beberapa file.
+            </p>
+            <input
+              id="fileInputVideo"
+              type="file"
+              accept="video/*"
+              multiple
+              style="display: none"
+            />
+          </div>
+
+          <div class="upload-controls">
+            <button class="btn btn-primary" onclick="buildAndSendVideo()">
+              <i class="fas fa-paper-plane"></i> Kirim Video
+            </button>
+            <button class="btn btn-secondary" onclick="downloadPayloadVideo()">
+              <i class="fas fa-download"></i> Download JSON
+            </button>
+            <button class="btn btn-outline" onclick="clearAllVideo()">
+              <i class="fas fa-trash"></i> Hapus Semua
+            </button>
+          </div>
+
+          <div style="margin-top: 12px">
+            <div class="muted">Preview Video:</div>
+            <div id="previewGridVideo" class="preview-grid"></div>
+          </div>
+
+          <div style="margin-top: 12px">
+            <div class="muted">Status:</div>
+            <div id="statusAreaVideo" class="muted">
+              Belum ada file dipilih.
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD: Upload JSON -->
+        <div class="card upload-wrapper" id="jsonCard">
+          <div class="card-title">
+            <i class="fas fa-file-code"></i> Upload File JSON
+          </div>
+
+          <div
+            class="upload-area"
+            id="uploadAreaJSON"
+            onclick="document.getElementById('fileInputJSON').click()"
+          >
+            <p class="muted">
+              Klik atau seret satu file .json ke sini. Maksimal 1 file.
+            </p>
+            <input
+              id="fileInputJSON"
+              type="file"
+              accept=".json,application/json"
+              style="display: none"
+            />
+          </div>
+
+          <div class="upload-controls">
+            <button class="btn btn-primary" onclick="buildAndSendJSONFiles()">
+              <i class="fas fa-paper-plane"></i> Kirim JSON
+            </button>
+            <button class="btn btn-outline" onclick="clearAllJSON()">
+              <i class="fas fa-trash"></i> Hapus Semua
+            </button>
+          </div>
+
+          <div style="margin-top: 12px">
+            <div class="muted">Preview JSON:</div>
+            <div id="previewGridJSON" class="preview-grid"></div>
+          </div>
+          <div style="margin-top: 12px">
+            <div class="muted">Status:</div>
+            <div id="statusAreaJSON" class="muted">
+              Belum ada file JSON dipilih.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loadingOverlay" aria-hidden="true">
+      <div class="box">
+        <i class="fas fa-spinner fa-pulse"></i>
+        <span id="loadingMessage">Processing, please wait...</span>
+      </div>
+    </div>
+
+    <script src="Upload.js"></script>
+  </body>
+</html>
