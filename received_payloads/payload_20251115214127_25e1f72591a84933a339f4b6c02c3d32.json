@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "data": {
+    "candidate": {
+      "name": "Daffa"
+    },
+    "reviewChecklists": {
+      "project": [],
+      "interviews": [
+        {
+          "positionId": 1,
+          "isVideoExist": true,
+          "recordedVideoUrl": "http://127.0.0.1:8888/uploads/20251115214127_07ced264d9bd4e4db22c410143fc79ba.webm",
+          "filename": "20251115214127_07ced264d9bd4e4db22c410143fc79ba.webm"
+        },
+        {
+          "positionId": 2,
+          "isVideoExist": true,
+          "recordedVideoUrl": "http://127.0.0.1:8888/uploads/20251115214127_e30b9818b2f0426daac76a792fa51f7f.webm",
+          "filename": "20251115214127_e30b9818b2f0426daac76a792fa51f7f.webm"
+        }
+      ]
+    }
+  }
+}

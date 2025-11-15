@@ -10,6 +10,41 @@
     />
     <link rel="stylesheet" href="Halaman_dasboard.css" />
     <link rel="stylesheet" href="Upload.css" />
+
+    <!-- Immediate session check before page render -->
+    <script>
+      (function () {
+        const SESSION_KEY = "video_processing_session";
+        const savedSession = localStorage.getItem(SESSION_KEY);
+
+        if (savedSession) {
+          try {
+            const data = JSON.parse(savedSession);
+            const elapsed = Date.now() - data.startTime;
+
+            // If session is recent (< 30 min), show loading immediately
+            if (elapsed < 30 * 60 * 1000) {
+              console.log("✅ Found active session, showing loading overlay");
+              document.addEventListener("DOMContentLoaded", function () {
+                const overlay = document.getElementById("loadingOverlay");
+                const message = document.getElementById("loadingMessage");
+
+                if (overlay && message) {
+                  message.textContent = `Processing transcriptions...\nCandidate: ${data.candidateName}\nVideos: ${data.videoCount}\n\nPlease wait, this may take several minutes.`;
+                  overlay.style.display = "flex";
+                }
+              });
+            } else {
+              console.log("Session expired, removing...");
+              localStorage.removeItem(SESSION_KEY);
+            }
+          } catch (e) {
+            console.error("Failed to parse session:", e);
+            localStorage.removeItem(SESSION_KEY);
+          }
+        }
+      })();
+    </script>
   </head>
   <body>
     <div class="container">
@@ -95,16 +130,9 @@
             <button
               type="button"
               class="btn btn-primary"
-              onclick="buildAndSendVideo(); return false;"
+              onclick="event.preventDefault(); buildAndSendVideo();"
             >
               <i class="fas fa-paper-plane"></i> Kirim Video
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              onclick="downloadPayloadVideo(); return false;"
-            >
-              <i class="fas fa-download"></i> Download JSON
             </button>
             <button
               type="button"
@@ -190,7 +218,11 @@
     <!-- Loading overlay -->
     <div id="loadingOverlay" aria-hidden="true">
       <div class="box">
-        <i class="fas fa-spinner fa-pulse"></i>
+        <img
+          src="Assest/Loader-cat.gif"
+          alt="Loading..."
+          style="width: 120px; height: 120px; margin-bottom: 20px"
+        />
         <span id="loadingMessage">Processing, please wait...</span>
       </div>
     </div>

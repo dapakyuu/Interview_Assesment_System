@@ -118,3 +118,41 @@
   gap: 12px;
   align-items: center;
 }
+
+/* Loading Overlay - Enhanced */
+#loadingOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+#loadingOverlay .box {
+  background: white;
+  padding: 40px 60px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 500px;
+}
+
+#loadingOverlay .box img {
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 8px;
+}
+
+#loadingOverlay .box span {
+  font-size: 18px;
+  color: #333;
+  font-weight: 500;
+  display: block;
+  white-space: pre-line;
+  line-height: 1.6;
+}
