@@ -248,6 +248,38 @@ function createRadarChart() {
 // UTILITY FUNCTIONS
 // =========================================================
 
+function downloadJSON() {
+    if (!interviewData) {
+        alert('Data belum dimuat!');
+        return;
+    }
+
+    // Konversi data ke JSON string dengan format yang rapi
+    const jsonString = JSON.stringify(interviewData, null, 2);
+    
+    // Buat blob dari JSON string
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    
+    // Buat URL untuk blob
+    const url = URL.createObjectURL(blob);
+    
+    // Buat element anchor untuk download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `interview_data_${new Date().getTime()}.json`;
+    
+    // Trigger download
+    document.body.appendChild(a);
+    a.click();
+    
+    // Cleanup
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    console.log('✅ JSON berhasil didownload');
+}
+
+
 async function downloadPDF() {
     if (!interviewData) {
         alert('Data belum dimuat!');
@@ -460,9 +492,6 @@ function getScoreCategoryText(score) {
     if (score >= 70) return 'Cukup Bagus';
     return 'Perlu Peningkatan';
 }
-
-
-
 
 // =========================================================
 // INITIALIZATION

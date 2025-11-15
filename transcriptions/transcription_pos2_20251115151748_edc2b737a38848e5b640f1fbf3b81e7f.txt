@@ -1,0 +1,8 @@
+Candidate: Daffa
+Position ID: 2
+Video URL: http://127.0.0.1:8888/uploads/20251115151657_88f034b7e260413487798522753ed990.webm
+Transcribed at: 2025-11-15T15:17:48.125388+00:00
+
+==================================================
+
+sudah dapat mengun<|ko|> rebel organismnya jadi usi aurang, biasa otir tinggi Karten밥 seperti untuk beberapa hal yang kita perlu menggunakan jelorning, menggunakan keras aplikasi seperti image classification, kita bisa menggunakan natural learning models, yang sudah train model dengan ekasional hi-accurasi, hi-performat ya, mungkin, train model data sets, but it will help improve model performa, model accuracy model loss and for example, MobileNet, 5GG19, 5GG60, yeah, efficient net it will help improve our models comparing to the one if you use traditional CNN model yeah, CNN model with the convolutional 2D, max pulling and yeah, it it's quite good actually to use transfor learning our model performance to improve our model performance
