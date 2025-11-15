@@ -19,6 +19,11 @@ const JSON_ENDPOINT = VIDEO_ENDPOINT;
 let uploadedUrls = [];
 let uploadedNames = [];
 
+// NEW: flag to prevent duplicate submission
+let isSubmittingVideo = false;
+let lastSubmitTime = 0;
+const SUBMIT_DEBOUNCE_MS = 3000; // 3 detik debounce
+
 // DEFAULT base URL — ganti dengan domain produksi ketika di-deploy
 const DEFAULT_BASE_URL = "http://127.0.0.1:5500"; // <- ubah ini nanti ke https://your-domain.com
 
@@ -165,7 +170,7 @@ async function uploadOne(indexOrFile) {
   }
 }
 
-// Saat user drop / pilih file: langsung tambah dan upload tiap file
+// Saat user drop / pilih file: HANYA preview, TIDAK upload
 function handleFilesVideo(fileList) {
   const files = Array.from(fileList).filter((f) => f.type.startsWith("video/"));
   if (files.length === 0) {
@@ -176,7 +181,7 @@ function handleFilesVideo(fileList) {
   // append files and ensure arrays alignment
   const startIndex = selectedFilesVideo.length;
   selectedFilesVideo = selectedFilesVideo.concat(files);
-  // extend storage arrays
+  // extend storage arrays (kosong dulu, akan diisi saat upload)
   for (let i = 0; i < files.length; i++) {
     uploadedUrls[startIndex + i] = null;
     uploadedNames[startIndex + i] = null;
@@ -186,10 +191,10 @@ function handleFilesVideo(fileList) {
   // update clear button visibility
   updateClearButtonsVisibility();
 
-  // Upload each new file automatically (pass the File object to avoid index-shift issues)
-  files.forEach((f) => {
-    uploadOne(f);
-  });
+  // REMOVED: Auto-upload - sekarang hanya upload saat tombol "Kirim" ditekan
+  // files.forEach((f) => {
+  //   uploadOne(f);
+  // });
 }
 
 // --- CHANGED: defer DOM element binding & event listener setup until DOM ready ---
@@ -492,29 +497,85 @@ async function buildPayloadVideo() {
   return payload;
 }
 
-// Kirim Video: build payload, show loading, POST to /upload, wait for processing result
+// Kirim Video - upload semua video + buat JSON di server + proses transcription
 async function buildAndSendVideo() {
+  // Prevent duplicate submission
+  const now = Date.now();
+  if (isSubmittingVideo) {
+    console.warn("⚠️ Submission already in progress. Ignoring duplicate call.");
+    return;
+  }
+
+  // Debounce
+  if (now - lastSubmitTime < SUBMIT_DEBOUNCE_MS) {
+    console.warn(
+      `⚠️ Please wait ${SUBMIT_DEBOUNCE_MS / 1000} seconds between submissions.`
+    );
+    alert(
+      `Mohon tunggu ${SUBMIT_DEBOUNCE_MS / 1000} detik sebelum mengirim ulang.`
+    );
+    return;
+  }
+
+  // Validasi
+  if (!selectedFilesVideo.length) {
+    alert("Pilih minimal satu file video.");
+    return;
+  }
+  const name = participantNameInput.value.trim();
+  if (!name) {
+    alert("Nama Peserta wajib diisi.");
+    return;
+  }
+
+  isSubmittingVideo = true;
+  lastSubmitTime = now;
+
   try {
-    const payload = await buildPayloadVideo();
-    showLoading("Sending payload and processing on server...");
+    showLoading("Uploading videos and processing...");
+    resetStatus(statusAreaVideo, "Mengunggah video ke server...");
+
+    // Upload semua video dan kirim ke endpoint /upload yang akan:
+    // 1. Upload semua video
+    // 2. Build JSON otomatis
+    // 3. Proses transcription
+    // 4. Return hasil
+
+    const formData = new FormData();
+    formData.append("candidate_name", name);
+
+    // Append semua video files
+    selectedFilesVideo.forEach((file, idx) => {
+      formData.append("videos", file);
+    });
+
+    console.log(
+      `🔵 Uploading ${selectedFilesVideo.length} video(s) to server...`
+    );
+
     const res = await fetch(VIDEO_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: formData,
+      // IMPORTANT: Jangan set Content-Type header, biarkan browser set otomatis untuk multipart/form-data
     });
 
     if (!res.ok) {
       const text = await res.text().catch(() => res.statusText);
       alert("Gagal mengirim data ke server: " + text);
       hideLoading();
+      isSubmittingVideo = false;
       return;
     }
+
     const result = await res.json().catch(() => null);
     hideLoading();
+
+    console.log("✅ Server response:", result);
+
     statusAreaVideo.textContent = "Selesai diproses.";
-    // jika server menyertakan properti redirect, lakukan navigasi
+
+    // Jika server menyertakan properti redirect, lakukan navigasi
     if (result && result.redirect) {
-      // support relatif / absolut; jika relatif, ubah ke origin
       let redirectUrl = result.redirect;
       if (redirectUrl && redirectUrl.startsWith("/")) {
         const origin =
@@ -523,14 +584,20 @@ async function buildAndSendVideo() {
             : getBaseUrl();
         redirectUrl = origin.replace(/\/+$/, "") + redirectUrl;
       }
+
+      // Reset flag sebelum redirect
+      isSubmittingVideo = false;
       window.location.href = redirectUrl;
       return;
     }
-    alert("Server processed payload. Result: " + JSON.stringify(result));
+
+    alert("Server processed videos. Result: " + JSON.stringify(result));
+    isSubmittingVideo = false;
   } catch (err) {
     console.error(err);
     hideLoading();
     statusAreaVideo.textContent = "Terjadi kesalahan saat mengirim.";
+    isSubmittingVideo = false;
   }
 }
 
@@ -726,11 +793,44 @@ async function buildPayloadFromJSONFiles() {
   return payload;
 }
 
+// NEW: flag to prevent duplicate JSON submission
+let isSubmittingJSON = false;
+let lastSubmitTimeJSON = 0;
+
 async function buildAndSendJSONFiles() {
+  // Prevent duplicate submission
+  const now = Date.now();
+  if (isSubmittingJSON) {
+    console.warn(
+      "⚠️ JSON submission already in progress. Ignoring duplicate call."
+    );
+    return;
+  }
+
+  // Debounce
+  if (now - lastSubmitTimeJSON < SUBMIT_DEBOUNCE_MS) {
+    console.warn(
+      `⚠️ Please wait ${SUBMIT_DEBOUNCE_MS / 1000} seconds between submissions.`
+    );
+    alert(
+      `Mohon tunggu ${SUBMIT_DEBOUNCE_MS / 1000} detik sebelum mengirim ulang.`
+    );
+    return;
+  }
+
+  isSubmittingJSON = true;
+  lastSubmitTimeJSON = now;
+
   try {
     const payload = await buildPayloadFromJSONFiles();
     const endpoint = JSON_ENDPOINT; // gunakan konstanta
     statusAreaJSON.textContent = "Mengirim payload JSON ke server...";
+
+    console.log(
+      "🔵 Sending JSON payload to server:",
+      JSON.stringify(payload, null, 2)
+    );
+
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -741,10 +841,14 @@ async function buildAndSendJSONFiles() {
       const text = await res.text().catch(() => res.statusText);
       statusAreaJSON.textContent = `Gagal mengirim: ${res.status} ${text}`;
       alert("Gagal mengirim data ke server. Periksa endpoint dan CORS.");
+      isSubmittingJSON = false;
       return;
     }
 
     const result = await res.json().catch(() => null);
+
+    console.log("✅ Server response:", result);
+
     statusAreaJSON.textContent = "Berhasil dikirim.";
     // jika server meminta redirect, ikuti (support relatif)
     if (result && result.redirect) {
@@ -756,6 +860,10 @@ async function buildAndSendJSONFiles() {
             : getBaseUrl();
         redirectUrl = origin.replace(/\/+$/, "") + redirectUrl;
       }
+
+      // Reset flag sebelum redirect
+      isSubmittingJSON = false;
+
       window.location.href = redirectUrl;
       return;
     }
@@ -763,10 +871,12 @@ async function buildAndSendJSONFiles() {
       "Payload JSON berhasil dikirim. Server merespon: " +
         (result ? JSON.stringify(result) : "OK")
     );
+    isSubmittingJSON = false;
   } catch (err) {
     console.error(err);
     if (err.message !== "No json")
       statusAreaJSON.textContent = "Terjadi kesalahan saat mengirim.";
+    isSubmittingJSON = false;
   }
 }
 

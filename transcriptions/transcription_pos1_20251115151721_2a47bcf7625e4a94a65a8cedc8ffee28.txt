@@ -1,0 +1,8 @@
+Candidate: Daffa
+Position ID: 1
+Video URL: http://127.0.0.1:8888/uploads/20251115151657_128c0e10044342478681fb1e6a8bffff.webm
+Transcribed at: 2025-11-15T15:17:21.074873+00:00
+
+==================================================
+
+Thsubsembly, stun ya di sihat attackedан. untuk ini, ada satu yang terjadi when I took the certifications especially for the project submission that I already working with it the first one is actually to meet to meet the specific accuracy or television loss for the evaluation matrix and actually that just need to take some trial and error with the with different architecture for example, like we can try to add more linear, more neurons changes the neurons or even I also apply the dropout layer so yeah it really helps with the the television loss to become more lower and yeah, I think that's one of the biggest challenges that I have while working on these certifications

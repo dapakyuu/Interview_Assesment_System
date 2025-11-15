@@ -1,0 +1,8 @@
+Candidate: Daffa
+Position ID: 2
+Video URL: http://127.0.0.1:8888/uploads/20251115153527_39ec26fae8cb4517af431a96e7d8e78d.webm
+Transcribed at: 2025-11-15T15:44:26.153218+00:00
+
+==================================================
+
+Can you describe your experience with transfer learning and time short flow? How do you benefit from projects? Ah, okay. About transfer learning is actually we use existing train model from time short flow for example like VGC 16, VGC 19, right? Especially for some cases that we need to use deep learning using Keras applications, for example like image classification, we can use transfer learning models which is already train model with exceptionally high accuracy, high performance. Yeah, even though it's train with different data sets, but it really helps to improve our model performance, model accuracy, model loss. For example like mobile net, VGG 19, VGG 16, efficient net, it will help to improve our models comparing to the one if we use traditional CNN model. Yeah, CNN model with the convolutional 2D max pooling and yeah, it's quite good actually to use transfer learning. It really helps with our model performance to improve our model performance.

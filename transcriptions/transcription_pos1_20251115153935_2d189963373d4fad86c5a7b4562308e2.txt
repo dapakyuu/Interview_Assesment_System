@@ -1,0 +1,8 @@
+Candidate: Daffa
+Position ID: 1
+Video URL: http://127.0.0.1:8888/uploads/20251115153527_ab112b770f2148efa75f0c64f9ef0340.webm
+Transcribed at: 2025-11-15T15:39:35.608288+00:00
+
+==================================================
+
+Can you share any specific challenges you faced while working on certification and how you overcome them? Ah, okay actually, for the challenges, there are some challenges when I took the certifications, especially for the project submission that I already working with it. The first one is actually to meet the specific accuracy or validation loss for the evaluation matrix. Actually, that's just need to take some trial and error with different architecture. For example, we can try to add more layer, more neurons, changes the neurons. I also applied the dropout layer, so it really helps with the validation loss to become more lower. I think that's one of the biggest challenges that I have while working on these certifications.
