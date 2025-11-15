@@ -16,7 +16,27 @@
                 "cheating_detection": "Ya",
                 "alasan_cheating": "Terdeteksi adanya manipulasi suara",
                 "analisis_non_verbal": "Lancar dan tidak mencurigakan",
-                "keputusan_akhir": "Lulus"
+                "keputusan_akhir": "Lulus",
+                "Transkrip": "Pengalaman saya dalam pengembangan aplikasi web meliputi penggunaan berbagai teknologi seperti HTML, CSS, JavaScript, dan framework seperti React dan Angular. Saya telah bekerja pada beberapa proyek yang melibatkan pembuatan antarmuka pengguna yang responsif dan interaktif. Selain itu, saya juga memiliki pengalaman dalam mengintegrasikan API dan mengelola basis data untuk memastikan aplikasi berjalan dengan lancar."
+            }
+        },{
+            "id": 2,
+            "question": "Ceritakan pengalaman Anda dalam pengembangan aplikasi web",
+            "result": {
+                "penilaian": {
+                    "confidence_score": 94,
+                    "kualitas_jawaban": 100,
+                    "relevansi": 90,
+                    "koherensi": 80,
+                    "tempo_bicara": 100,
+                    "total": 90
+                },
+                "penilaian_akhir": 5,
+                "cheating_detection": "Ya",
+                "alasan_cheating": "Terdeteksi adanya manipulasi suara",
+                "analisis_non_verbal": "Lancar dan tidak mencurigakan",
+                "keputusan_akhir": "Lulus",
+                "Transkrip": "CSS, JavaScript, dan framework seperti React dan Angular. Saya telah bekerja pada beberapa proyek yang melibatkan pembuatan antarmuka pengguna yang responsif dan interaktif. Selain itu, saya juga memiliki pengalaman dalam mengintegrasikan API dan mengelola basis data untuk memastikan aplikasi berjalan dengan lancar."
             }
         }
     ]
