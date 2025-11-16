@@ -25,7 +25,7 @@ async function loadJSONData() {
     showLoadingIndicator();
 
     // Fetch data from API
-    const response = await fetch(`${API_BASE_URL}/results/${sessionId}`);
+    const response = await fetch(`${API_BASE_URL}/results/${sessionId}.json`);
 
     if (!response.ok) {
       if (response.status === 404) {

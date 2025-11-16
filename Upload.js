@@ -71,11 +71,70 @@ function resetStatus(el, message) {
 
 function updateClearButtonsVisibility() {
   try {
+    // Update Clear buttons
     if (clearAllVideoBtn)
       clearAllVideoBtn.style.display = selectedFilesVideo.length ? "" : "none";
     if (clearAllJSONBtn)
       clearAllJSONBtn.style.display = selectedFilesJSON.length ? "" : "none";
+
+    // Update Send buttons mode
+    updateSendVideoButtonMode();
+    updateSendJSONButtonMode();
   } catch (e) {}
+}
+
+function updateSendVideoButtonMode() {
+  const sendVideoBtn = document.querySelector(
+    "#videoCard .btn-primary, #videoCard .btn-outline"
+  );
+  if (!sendVideoBtn) return;
+
+  if (selectedFilesVideo.length === 0) {
+    // MODE: Select Files
+    sendVideoBtn.innerHTML = '<i class="fas fa-folder-open"></i> Pilih Video';
+    sendVideoBtn.onclick = function (e) {
+      e.preventDefault();
+      fileInputVideo?.click();
+    };
+    sendVideoBtn.classList.remove("btn-primary");
+    sendVideoBtn.classList.add("btn-outline");
+  } else {
+    // MODE: Send Videos
+    sendVideoBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim Video';
+    sendVideoBtn.onclick = function (e) {
+      e.preventDefault();
+      buildAndSendVideo();
+    };
+    sendVideoBtn.classList.remove("btn-outline");
+    sendVideoBtn.classList.add("btn-primary");
+  }
+}
+
+function updateSendJSONButtonMode() {
+  const sendJSONBtn = document.querySelector(
+    "#jsonCard .btn-primary, #jsonCard .btn-outline"
+  );
+  if (!sendJSONBtn) return;
+
+  if (selectedFilesJSON.length === 0) {
+    // MODE: Select File
+    sendJSONBtn.innerHTML = '<i class="fas fa-folder-open"></i> Pilih JSON';
+    sendJSONBtn.onclick = function (e) {
+      e.preventDefault();
+      fileInputJSON?.click();
+    };
+    sendJSONBtn.classList.remove("btn-primary");
+    sendJSONBtn.classList.add("btn-outline");
+  } else {
+    // MODE: Send JSON
+    sendJSONBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Kirim JSON';
+    sendJSONBtn.onclick = function (e) {
+      e.preventDefault();
+      buildAndSendJSONFiles();
+    };
+    sendJSONBtn.classList.remove("btn-outline");
+    sendJSONBtn.classList.add("btn-primary");
+  }
 }
 
 /* ============================
@@ -141,6 +200,9 @@ function renderPreviewsVideo() {
       statusAreaVideo,
       `${selectedFilesVideo.length} file siap diproses.`
     );
+
+  // Update button mode after rendering
+  updateSendVideoButtonMode();
 }
 
 function removeFileVideo(index) {
@@ -648,6 +710,9 @@ async function renderPreviewsJSON() {
       `${selectedFilesJSON.length} file JSON siap diproses.`
     );
   updateClearButtonsVisibility();
+
+  // Update button mode after rendering
+  updateSendJSONButtonMode();
 }
 
 function removeFileJSON(index) {
@@ -661,6 +726,166 @@ function clearAllJSON() {
   previewGridJSON.innerHTML = "";
   resetStatus(statusAreaJSON, "Belum ada file JSON dipilih.");
   updateClearButtonsVisibility();
+}
+
+async function buildAndSendJSONFiles() {
+  event?.preventDefault?.();
+
+  const now = Date.now();
+  if (isSubmittingJSON) {
+    console.warn("Already submitting JSON");
+    return false;
+  }
+  if (now - lastSubmitTimeJSON < SUBMIT_DEBOUNCE_MS) {
+    alert(
+      `Mohon tunggu ${SUBMIT_DEBOUNCE_MS / 1000} detik sebelum mengirim ulang.`
+    );
+    return;
+  }
+
+  if (!selectedFilesJSON.length) {
+    return alert("Pilih file JSON terlebih dahulu.");
+  }
+
+  isSubmittingJSON = true;
+  lastSubmitTimeJSON = now;
+
+  try {
+    // Read JSON file
+    const file = selectedFilesJSON[0];
+    const jsonText = await file.text();
+    let jsonData;
+
+    try {
+      jsonData = JSON.parse(jsonText);
+    } catch (e) {
+      throw new Error("File JSON tidak valid atau rusak.");
+    }
+
+    // Validate JSON structure
+    if (
+      !jsonData.success ||
+      !jsonData.data ||
+      !jsonData.data.candidate ||
+      !jsonData.data.reviewChecklists ||
+      !jsonData.data.reviewChecklists.interviews
+    ) {
+      throw new Error(
+        "Struktur JSON tidak valid. Pastikan JSON mengandung data candidate dan interviews."
+      );
+    }
+
+    const candidateName = jsonData.data.candidate.name;
+    const interviews = jsonData.data.reviewChecklists.interviews;
+
+    if (!candidateName) {
+      throw new Error("Nama kandidat tidak ditemukan di JSON.");
+    }
+
+    if (!interviews || !Array.isArray(interviews) || interviews.length === 0) {
+      throw new Error("Tidak ada data interview di JSON.");
+    }
+
+    console.log(`📋 Processing JSON for: ${candidateName}`);
+    console.log(`📹 Found ${interviews.length} interview videos`);
+
+    // Show loading
+    showLoading(
+      `Sending JSON data...\nCandidate: ${candidateName}\nVideos: ${interviews.length}\n\nPlease wait...`
+    );
+    resetStatus(statusAreaJSON, "Mengirim data ke server...");
+
+    // Send to server
+    const response = await fetch(`${VIDEO_ENDPOINT}_json`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(jsonData),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Server error: ${response.status} - ${errorText || response.statusText}`
+      );
+    }
+
+    const result = await response.json();
+    console.log("✅ JSON processing started:", result);
+
+    if (!result.success) {
+      throw new Error(result.error || "Server returned error");
+    }
+
+    const sessionId = result.session_id;
+    console.log(`📊 Session ID: ${sessionId}`);
+
+    // Save session
+    const sessionData = {
+      sessionId,
+      candidateName,
+      videoCount: interviews.length,
+      startTime: Date.now(),
+    };
+    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(sessionData));
+    console.log("💾 Session saved to localStorage");
+
+    // Update loading message
+    showLoading(
+      `JSON uploaded!\n\nDownloading and processing videos...\nCandidate: ${candidateName}\nVideos: ${interviews.length}\n\nThis page will auto-reload.\nProcessing will continue in background.`
+    );
+
+    // Clear JSON selection
+    clearAllJSON();
+
+    // Wait then reload
+    await new Promise((r) => setTimeout(r, 3000));
+
+    console.log("🔄 Reloading page to start background polling...");
+    window.location.reload();
+
+    return false;
+  } catch (err) {
+    console.error("❌ JSON upload error:", err);
+
+    // ALWAYS hide loading on error
+    hideLoading();
+    isSubmittingJSON = false;
+
+    // Update status area
+    if (statusAreaJSON) {
+      statusAreaJSON.textContent = "❌ Upload gagal: " + err.message;
+      statusAreaJSON.style.color = "#e74c3c";
+    }
+
+    // Show user-friendly error message
+    let errorMessage = "Gagal mengirim JSON ke server.\n\n";
+
+    if (err.message.includes("tidak valid")) {
+      errorMessage += `Penyebab: ${err.message}\n\n`;
+      errorMessage += "Solusi:\n";
+      errorMessage += "1. Pastikan file JSON memiliki struktur yang benar\n";
+      errorMessage +=
+        "2. Cek field: candidate.name dan reviewChecklists.interviews\n";
+      errorMessage += "3. Validasi JSON di jsonlint.com";
+    } else if (err.message.includes("Server error")) {
+      errorMessage += `Penyebab: ${err.message}\n\n`;
+      errorMessage += "Solusi:\n";
+      errorMessage +=
+        "1. Pastikan server FastAPI berjalan di http://127.0.0.1:8888\n";
+      errorMessage += "2. Cek log server untuk detail error\n";
+      errorMessage += "3. Restart server jika perlu";
+    } else {
+      errorMessage += `Error: ${err.message}\n\n`;
+      errorMessage += "Silakan coba lagi atau hubungi administrator.";
+    }
+
+    alert(errorMessage);
+
+    return false;
+  }
 }
 
 /* ============================
@@ -758,6 +983,10 @@ function initUploadModule() {
   hideLoading();
 
   updateClearButtonsVisibility();
+
+  // Set initial button modes
+  updateSendVideoButtonMode();
+  updateSendJSONButtonMode();
 }
 
 let isInitialized = false;
