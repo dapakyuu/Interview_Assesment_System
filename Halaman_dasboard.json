@@ -19,7 +19,8 @@
         "alasan_cheating": "Terdeteksi adanya manipulasi suara",
         "analisis_non_verbal": "Lancar dan tidak mencurigakan",
         "keputusan_akhir": "Lulus",
-        "transkripsi": "Selamat pagi, saya siap untuk wawancara ini."
+        "transkripsi_en": "Good morning, I am ready for this interview.",
+        "transkripsi_id": "Selamat pagi, saya siap untuk wawancara ini."
       }
     }
   ]
