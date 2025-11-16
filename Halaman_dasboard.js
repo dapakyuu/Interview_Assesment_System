@@ -8,7 +8,7 @@ let interviewData = null;
 // =========================================================
 async function loadJSONData() {
     try {
-        const response = await fetch('Halaman_dasboard.json');
+        const response = await fetch('../output_json_akhir/Halaman_dasboard.json');
         if (!response.ok) throw new Error('Failed to load data');
         
         interviewData = await response.json();
@@ -76,6 +76,7 @@ function loadDashboardData() {
     updateNonVerbalDisplay();
     updateFinalDecision();
     updateFinalRating();
+    updateTranscriptDisplay();
     createRadarChart();
     
     console.log('✅ Dashboard berhasil dimuat');
@@ -194,6 +195,82 @@ function updateSummaryCards() {
     const stdDev = Math.round(Math.sqrt(variance));
     document.getElementById('consistencyScore').textContent = `±${stdDev}`;
 }
+
+function updateTranscriptDisplay() {
+    const transcriptContainer = document.querySelector('#transcript-container');
+    if (!transcriptContainer) return;
+    
+    // Hapus semua row yang ada
+    transcriptContainer.innerHTML = '';
+    
+    // Buat row baru untuk setiap transkrip
+    interviewData.content.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'dashboard-grid';
+        row.style.marginBottom = '20px';
+        
+        row.innerHTML = `
+            <div class="card" style="grid-column: span 1;">
+                <div class="card-title">
+                    <i class="fas fa-video"></i>
+                    Transkrip Video ${index + 1} - Indonesia
+                </div>
+                <div class="card-content">
+                    <div style="margin-bottom: 15px; padding: 15px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <div style="width: 36px; height: 36px; background: #0052d3; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">
+                                ${index + 1}
+                            </div>
+                            <div style="font-weight: 600; color: black; font-size: 15px;">
+                                Video ${index + 1}
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 13px; color: #495057; margin-bottom: 12px; font-style: italic; padding: 10px; background: white; border-radius: 6px; border: 1px dashed #dee2e6; text-align: left;">
+                            <i class="fas fa-question-circle" style="color: #0052d3; margin-right: 5px;"></i>
+                            ${item.question}
+                        </div>
+                        
+                        <div style="font-size: 14px; color: #2d3748; line-height: 1.8; padding: 12px; background: white; border-radius: 6px; text-align: left;">
+                            ${item.result.Transkrip || 'Transkrip tidak tersedia'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="grid-column: span 1;">
+                <div class="card-title">
+                    <i class="fas fa-video"></i>
+                    Transkrip Video ${index + 1} - English
+                </div>
+                <div class="card-content">
+                    <div style="margin-bottom: 15px; padding: 15px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <div style="width: 36px; height: 36px; background: #fff3d9; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; font-size: 16px;">
+                                ${index + 1}
+                            </div>
+                            <div style="font-weight: 600; color: black; font-size: 15px;">
+                                Video ${index + 1}
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 13px; color: #495057; margin-bottom: 12px; font-style: italic; padding: 10px; background: white; border-radius: 6px; border: 1px dashed #dee2e6; text-align: left;">
+                            <i class="fas fa-question-circle" style="color: black; margin-right: 5px;"></i>
+                            ${item.question}
+                        </div>
+                        
+                        <div style="font-size: 14px; color: #2d3748; line-height: 1.8; padding: 12px; background: white; border-radius: 6px; text-align: left;">
+                            ${item.result.Transkrip_en || 'Transcript not available'}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        transcriptContainer.appendChild(row);
+    });
+}
+
 
 // =========================================================
 // RADAR CHART
