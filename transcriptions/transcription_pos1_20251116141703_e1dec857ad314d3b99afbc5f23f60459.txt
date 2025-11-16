@@ -1,0 +1,18 @@
+Candidate: Daffa
+Position ID: 1
+Video URL: http://127.0.0.1:8888/uploads/20251116141506_828a35650b3543a8a99b45331d2f9f32.webm
+Transcribed at: 2025-11-16T14:17:03.565937+00:00
+Model: faster-whisper large-v3
+Accuracy: Maximum (98%+ for clear speech)
+
+==================================================
+ENGLISH TRANSCRIPTION:
+==================================================
+
+Can you share any specific challenges you faced while working on certification and how you overcome them?  Actually, for the challenges, there are some challenges when I took the certification, especially for the project I mentioned that I already working with it.  The first one is actually to meet the specific accuracy or violation laws for the evaluation matrix.  Actually, that's just need to take some trial and error with different architecture.  For example, like we can...  try to add more layer, more neurons, changes the neurons or even I also apply the dropout layer.  So, yeah, it really helps with the validation laws to become more lower, right?  And yeah, I think that's one of the biggest challenges that I have while...  working on these certifications.
+
+==================================================
+INDONESIAN TRANSLATION (DeepL):
+==================================================
+
+Dapatkah Anda menceritakan tantangan spesifik yang Anda hadapi saat mengerjakan sertifikasi dan bagaimana Anda mengatasinya?  Sebenarnya, untuk tantangan, ada beberapa tantangan ketika saya mengambil sertifikasi, terutama untuk proyek yang saya sebutkan yang sudah saya kerjakan.  Yang pertama sebenarnya adalah memenuhi hukum akurasi atau pelanggaran tertentu untuk matriks evaluasi.  Sebenarnya, hal itu hanya perlu melakukan beberapa trial and error dengan arsitektur yang berbeda.  Misalnya, seperti kita bisa... mencoba menambahkan lebih banyak layer, lebih banyak neuron, mengubah neuron atau bahkan saya juga menerapkan dropout layer.  Jadi, ya, itu benar-benar membantu hukum validasi menjadi lebih rendah, bukan?  Dan ya, saya rasa itulah salah satu tantangan terbesar yang saya hadapi saat... mengerjakan sertifikasi ini.

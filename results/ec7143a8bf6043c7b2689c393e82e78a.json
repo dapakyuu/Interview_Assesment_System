@@ -1,0 +1,68 @@
+{
+  "success": true,
+  "name": "Daffa",
+  "session": "ec7143a8bf6043c7b2689c393e82e78a",
+  "content": [
+    {
+      "id": 1,
+      "result": {
+        "penilaian": {
+          "confidence_score": 98,
+          "kualitas_jawaban": 90,
+          "relevansi": 91,
+          "koherensi": 70,
+          "tempo_bicara": 87,
+          "total": 87
+        },
+        "penilaian_akhir": 4,
+        "cheating_detection": "Tidak",
+        "alasan_cheating": "Tidak ada indikasi kecurangan",
+        "analisis_non_verbal": "Sangat percaya diri",
+        "keputusan_akhir": "Lulus",
+        "transkripsi_en": "Can you share any specific challenges you faced while working on certification and how you overcome them?  Actually, for the challenges, there are some challenges when I took the certification, especially for the project I mentioned that I already working with it.  The first one is actually to meet the specific accuracy or violation laws for the evaluation matrix.  Actually, that's just need to take some trial and error with different architecture.  For example, like we can...  try to add more l...",
+        "transkripsi_id": "Dapatkah Anda menceritakan tantangan spesifik yang Anda hadapi saat mengerjakan sertifikasi dan bagaimana Anda mengatasinya?  Sebenarnya, untuk tantangan, ada beberapa tantangan ketika saya mengambil sertifikasi, terutama untuk proyek yang saya sebutkan yang sudah saya kerjakan.  Yang pertama sebenarnya adalah memenuhi hukum akurasi atau pelanggaran tertentu untuk matriks evaluasi.  Sebenarnya, hal itu hanya perlu melakukan beberapa trial and error dengan arsitektur yang berbeda.  Misalnya, sepe...",
+        "metadata": {
+          "word_count": 127,
+          "char_count": 771,
+          "processed_at": "2025-11-16T14:47:35.700262+00:00",
+          "translation_available": true
+        }
+      }
+    },
+    {
+      "id": 2,
+      "result": {
+        "penilaian": {
+          "confidence_score": 93,
+          "kualitas_jawaban": 90,
+          "relevansi": 90,
+          "koherensi": 80,
+          "tempo_bicara": 93,
+          "total": 89
+        },
+        "penilaian_akhir": 4,
+        "cheating_detection": "Tidak",
+        "alasan_cheating": "Tidak ada indikasi kecurangan",
+        "analisis_non_verbal": "Sedikit gugup namun natural",
+        "keputusan_akhir": "Lulus",
+        "transkripsi_en": "Can you describe your experience with transfer learning and time-short flow? How do you benefit from the projects?  Okay about transfer learning is actually  we use existing trained model from time-short flow for example like  VGC 16, VGC 19, right?  especially  for  for some cases  that we need to use  deep learning using Keras applications  For example like image classification we can use transfer learning  models, which is that's already  trained model with  exceptionally high accuracy, high ...",
+        "transkripsi_id": "Dapatkah Anda menjelaskan pengalaman Anda dengan pembelajaran transfer dan aliran waktu singkat? Apa manfaat yang Anda dapatkan dari proyek-proyek tersebut?  Oke, mengenai transfer learning, sebenarnya kita menggunakan model yang sudah terlatih dari time-short flow, misalnya seperti VGC 16, VGC 19, kan?  terutama untuk beberapa kasus yang kita perlu menggunakan deep learning dengan menggunakan aplikasi Keras. Misalnya seperti klasifikasi gambar, kita bisa menggunakan model transfer learning, yai...",
+        "metadata": {
+          "word_count": 1365,
+          "char_count": 7466,
+          "processed_at": "2025-11-16T15:01:59.850435+00:00",
+          "translation_available": true
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "total_videos": 2,
+    "successful_videos": 2,
+    "processed_at": "2025-11-16T15:01:59.930593+00:00",
+    "model": "faster-whisper large-v3",
+    "videos_deleted": true,
+    "translation_provider": "DeepL",
+    "translation_language": "Indonesian (ID)"
+  }
+}
