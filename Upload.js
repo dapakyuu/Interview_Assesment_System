@@ -17,11 +17,14 @@ let isSubmittingJSON = false;
 let lastSubmitTimeJSON = 0;
 
 // Config
-// const VIDEO_ENDPOINT = "http://127.0.0.1:8888/upload";
 const DEFAULT_BASE_URL = "http://127.0.0.1:5500";
 const SUBMIT_DEBOUNCE_MS = 3000;
 const SESSION_STORAGE_KEY = "video_processing_session";
 
+// const VIDEO_ENDPOINT = "http://127.0.0.1:8888/upload";
+// const API_BASE_URL = "http://127.0.0.1:8888";
+
+// jika menggunakan ngrok, ganti dengan URL ngrok Anda
 const VIDEO_ENDPOINT = "https://6c047270d940.ngrok-free.app/upload";
 const API_BASE_URL = "https://6c047270d940.ngrok-free.app";
 
