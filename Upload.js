@@ -17,10 +17,13 @@ let isSubmittingJSON = false;
 let lastSubmitTimeJSON = 0;
 
 // Config
-const VIDEO_ENDPOINT = "http://127.0.0.1:8888/upload";
+// const VIDEO_ENDPOINT = "http://127.0.0.1:8888/upload";
 const DEFAULT_BASE_URL = "http://127.0.0.1:5500";
 const SUBMIT_DEBOUNCE_MS = 3000;
 const SESSION_STORAGE_KEY = "video_processing_session";
+
+const VIDEO_ENDPOINT = "https://6c047270d940.ngrok-free.app/upload";
+const API_BASE_URL = "https://6c047270d940.ngrok-free.app";
 
 /* ============================
    HELPERS
@@ -270,13 +273,18 @@ function checkOngoingSession() {
 async function verifyAndResumeSession(sessionId, candidateName, videoCount) {
   try {
     // Check if session exists on server FIRST
-    const statusRes = await fetch(`http://127.0.0.1:8888/status/${sessionId}`, {
-      method: "GET",
-      cache: "no-cache",
-      headers: {
-        Accept: "application/json",
-      },
-    });
+      const statusRes = await fetch(
+        // `http://127.0.0.1:8888/status/${sessionId}`,
+        `${API_BASE_URL}/status/${sessionId}`,
+        {
+          method: "GET",
+          cache: "no-cache",
+          headers: {
+            Accept: "application/json",
+            "ngrok-skip-browser-warning": "true",
+          },
+        }
+      );
 
     if (!statusRes.ok) {
       console.warn(
@@ -354,12 +362,14 @@ async function resumePolling(sessionId, candidateName) {
   const pollStatus = async () => {
     try {
       const statusRes = await fetch(
-        `http://127.0.0.1:8888/status/${sessionId}`,
+        // `http://127.0.0.1:8888/status/${sessionId}`,
+        `${API_BASE_URL}/status/${sessionId}`,
         {
           method: "GET",
           cache: "no-cache",
           headers: {
             Accept: "application/json",
+            "ngrok-skip-browser-warning": "true",
           },
         }
       );
@@ -556,6 +566,7 @@ async function buildAndSendVideo() {
       });
 
       xhr.open("POST", VIDEO_ENDPOINT);
+      xhr.setRequestHeader("ngrok-skip-browser-warning", "true");
       xhr.send(formData);
     });
 

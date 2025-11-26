@@ -2,7 +2,9 @@
 // GLOBAL VARIABLES
 // =========================================================
 let interviewData = null;
-const API_BASE_URL = "http://127.0.0.1:8888";
+
+// const API_BASE_URL = "http://127.0.0.1:8888";
+const API_BASE_URL = "https://6c047270d940.ngrok-free.app";
 
 // =========================================================
 // DATA LOADING
@@ -25,7 +27,11 @@ async function loadJSONData() {
     showLoadingIndicator();
 
     // Fetch data from API
-    const response = await fetch(`${API_BASE_URL}/results/${sessionId}.json`);
+    const response = await fetch(`${API_BASE_URL}/results/${sessionId}.json`, {
+        headers: {
+            "ngrok-skip-browser-warning": "true",
+        }
+    });
 
     if (!response.ok) {
       if (response.status === 404) {
@@ -329,65 +335,98 @@ function updateTranscriptDisplay() {
   transcriptContainer.innerHTML = "";
 
   interviewData.content.forEach((item, index) => {
+    // Buat section untuk setiap transkrip
+    const transcriptSection = document.createElement("div");
+    transcriptSection.className = "transcript-section";
+
+    // Buat header dropdown untuk transkrip ini
+    const transcriptHeader = document.createElement("div");
+    transcriptHeader.className = "transcript-header";
+    transcriptHeader.innerHTML = `
+      <div class="transcript-header-title">
+        <i class="fas fa-file-alt"></i>
+        <span>Transkrip Video ${index + 1}</span>
+      </div>
+      <i class="fas fa-chevron-down transcript-toggle"></i>
+    `;
+
+    // Buat content container untuk transkrip ini
+    const transcriptContent = document.createElement("div");
+    transcriptContent.className = "transcript-content";
+
+    // Buat wrapper untuk smooth transition
+    const contentWrapper = document.createElement("div");
+    contentWrapper.className = "transcript-content-wrapper";
+
+    // Isi dengan card Indonesia dan English
     const row = document.createElement("div");
     row.className = "dashboard-grid";
     row.style.marginBottom = "20px";
 
     row.innerHTML = `
-            <div class="card" style="grid-column: span 1;">
-                <div class="card-title">
-                    <i class="fas fa-video"></i>
-                    Transkrip Video ${index + 1} - Indonesia
-                </div>
-                <div class="card-content">
-                    <div style="margin-bottom: 15px; padding: 15px;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                            <div style="width: 36px; height: 36px; background: #0052d3; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">
-                                ${index + 1}
-                            </div>
-                            <div style="font-weight: 600; color: black; font-size: 15px;">
-                                Video ${index + 1}
-                            </div>
-                        </div>
-                        
-                        <div style="font-size: 14px; color: #2d3748; line-height: 1.8; padding: 12px; background: white; border-radius: 6px; text-align: left;">
-                            ${
-                              item.result.transkripsi_id ||
-                              "Transkrip Indonesia tidak tersedia"
-                            }
-                        </div>
-                    </div>
-                </div>
+      <div class="card" style="grid-column: span 1;">
+        <div class="card-title">
+          <i class="fas fa-video"></i>
+          Transkrip Video ${index + 1} - Indonesia
+        </div>
+        <div class="card-content">
+          <div style="margin-bottom: 15px; padding: 15px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <div style="width: 36px; height: 36px; background: #0052d3; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">
+                ${index + 1}
+              </div>
+              <div style="font-weight: 600; color: black; font-size: 15px;">
+                Video ${index + 1}
+              </div>
             </div>
-
-            <div class="card" style="grid-column: span 1;">
-                <div class="card-title">
-                    <i class="fas fa-video"></i>
-                    Transkrip Video ${index + 1} - English
-                </div>
-                <div class="card-content">
-                    <div style="margin-bottom: 15px; padding: 15px;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                            <div style="width: 36px; height: 36px; background: #fff3d9; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; font-size: 16px;">
-                                ${index + 1}
-                            </div>
-                            <div style="font-weight: 600; color: black; font-size: 15px;">
-                                Video ${index + 1}
-                            </div>
-                        </div>
-                        
-                        <div style="font-size: 14px; color: #2d3748; line-height: 1.8; padding: 12px; background: white; border-radius: 6px; text-align: left;">
-                            ${
-                              item.result.transkripsi_en ||
-                              "English transcript not available"
-                            }
-                        </div>
-                    </div>
-                </div>
+            
+            <div style="font-size: 14px; color: #2d3748; line-height: 1.8; padding: 12px; background: white; border-radius: 6px; text-align: justify;">
+              ${item.result.transkripsi_id || "Transkrip Indonesia tidak tersedia"}
             </div>
-        `;
+          </div>
+        </div>
+      </div>
 
-    transcriptContainer.appendChild(row);
+      <div class="card" style="grid-column: span 1;">
+        <div class="card-title">
+          <i class="fas fa-video"></i>
+          Transkrip Video ${index + 1} - English
+        </div>
+        <div class="card-content">
+          <div style="margin-bottom: 15px; padding: 15px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+              <div style="width: 36px; height: 36px; background: #fff3d9; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: black; font-weight: bold; font-size: 16px;">
+                ${index + 1}
+              </div>
+              <div style="font-weight: 600; color: black; font-size: 15px;">
+                Video ${index + 1}
+              </div>
+            </div>
+            
+            <div style="font-size: 14px; color: #2d3748; line-height: 1.8; padding: 12px; background: white; border-radius: 6px; text-align: justify;">
+              ${item.result.transkripsi_en || "English transcript not available"}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    contentWrapper.appendChild(row);
+    transcriptContent.appendChild(contentWrapper);
+
+    // Toggle functionality untuk transkrip ini
+    transcriptHeader.addEventListener("click", () => {
+      const toggle = transcriptHeader.querySelector(".transcript-toggle");
+      transcriptContent.classList.toggle("active");
+      toggle.classList.toggle("active");
+    });
+
+    // Append header dan content ke section
+    transcriptSection.appendChild(transcriptHeader);
+    transcriptSection.appendChild(transcriptContent);
+    
+    // Append section ke container utama
+    transcriptContainer.appendChild(transcriptSection);
   });
 }
 

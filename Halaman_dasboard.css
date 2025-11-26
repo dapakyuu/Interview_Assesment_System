@@ -553,3 +553,89 @@ body {
     font-weight: bold;
     color: #2d3748;
 }
+
+/* =========================================================
+   TRANSCRIPT DROPDOWN SECTION
+========================================================= */
+.transcript-section {
+    margin-bottom: 20px;
+}
+
+.transcript-header {
+    background: white;
+    padding: 16px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.transcript-header:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+}
+
+.transcript-header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #2d3748;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.transcript-header-title i {
+    color: #667eea;
+    font-size: 16px;
+    background: #f0f4ff;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.transcript-toggle {
+    color: #94a3b8;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.transcript-toggle.active {
+    transform: rotate(180deg);
+}
+
+.transcript-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease-in-out;
+}
+
+.transcript-content.active {
+    grid-template-rows: 1fr;
+}
+
+.transcript-content-wrapper {
+    overflow: hidden;
+    padding-top: 0;
+    transition: padding-top 0.5s ease-in-out;
+}
+
+.transcript-content.active .transcript-content-wrapper {
+    padding-top: 20px;
+}
+
+/* Responsive untuk transcript */
+@media (max-width: 768px) {
+    .transcript-header {
+        padding: 15px 20px;
+    }
+    
+    .transcript-header-title {
+        font-size: 14px;
+    }
+    
+    .transcript-toggle {
+        font-size: 16px;
+    }
+}
