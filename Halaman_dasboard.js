@@ -3,8 +3,8 @@
 // =========================================================
 let interviewData = null;
 
-const API_BASE_URL = "http://127.0.0.1:8888";
-// const API_BASE_URL = "https://6c047270d940.ngrok-free.app";
+// const API_BASE_URL = "http://127.0.0.1:8888";
+const API_BASE_URL = "https://56e7844ff969.ngrok-free.app";
 
 // =========================================================
 // DATA LOADING
@@ -235,11 +235,30 @@ function updateNonVerbalDisplay() {
   if (!nonVerbalElement) return;
 
   const lastIndex = interviewData.content.length - 1;
-  const analisisText =
-    interviewData.content[lastIndex].result.analisis_non_verbal;
+  const interpretation = interviewData.content[lastIndex].result.non_verbal_analysis.interpretation;
 
-  nonVerbalElement.textContent = analisisText;
+  // Bangun HTML rapi
+  let output = `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+      <h3 style="color: #2c3e50;">🗣️ Speech Analysis</h3>
+      <p>${interpretation.speech_analysis}</p>
+
+      <hr style="margin: 1em 0; border: none; border-top: 1px solid #ccc;" />
+
+      <h3 style="color: #2c3e50;">😊 Facial Expression Analysis</h3>
+      <p>${interpretation.facial_expression_analysis}</p>
+
+      <hr style="margin: 1em 0; border: none; border-top: 1px solid #ccc;" />
+
+      <h3 style="color: #2c3e50;">👁️ Eye Movement Analysis</h3>
+      <p>${interpretation.eye_movement_analysis}</p>
+    </div>
+  `;
+
+  // Tampilkan ke elemen HTML
+  nonVerbalElement.innerHTML = output.trim();
 }
+
 
 function updateFinalDecision() {
   const decisionElement = document.getElementById("final-decision");
@@ -303,29 +322,30 @@ function updateSummaryCards() {
     { label: "Tempo Bicara", score: aggregate.avgTempo },
   ];
 
-  // Update rata-rata skor total
+  // Update skor rata-rata total
   document.getElementById("averageScore").textContent = aggregate.avgTotal;
 
-  // Update aspek tertinggi
-  const maxScore = Math.max(...aspects.map((a) => a.score));
-  const maxAspect = aspects.find((a) => a.score === maxScore);
+  // Aspek tertinggi
+  const maxScore = Math.max(...aspects.map(a => a.score));
+  const maxAspect = aspects.find(a => a.score === maxScore);
   document.getElementById("highestAspect").textContent = maxAspect.label;
   document.getElementById("highestScore").textContent = maxScore;
 
-  // Update aspek terendah
-  const minScore = Math.min(...aspects.map((a) => a.score));
-  const minAspect = aspects.find((a) => a.score === minScore);
+  // Aspek terendah
+  const minScore = Math.min(...aspects.map(a => a.score));
+  const minAspect = aspects.find(a => a.score === minScore);
   document.getElementById("lowestAspect").textContent = minAspect.label;
   document.getElementById("lowestScore").textContent = minScore;
 
-  // Update konsistensi (Standard Deviation)
-  const scores = aspects.map((a) => a.score);
-  const average = scores.reduce((a, b) => a + b, 0) / scores.length;
-  const variance =
-    scores.reduce((sum, score) => sum + Math.pow(score - average, 2), 0) /
-    scores.length;
-  const stdDev = Math.round(Math.sqrt(variance));
-  document.getElementById("consistencyScore").textContent = `±${stdDev}`;
+  // Ambil index terakhir
+  const lastIndex = interviewData.content.length - 1;
+
+  // 🔥 Ambil analisis LLM sesuai JSON kamu
+  const analysisLLM =
+    interviewData.content[lastIndex].result.penilaian.analisis_llm;
+
+  // Tampilkan ke HTML
+  document.getElementById("analisisllm").textContent = analysisLLM;
 }
 
 function updateTranscriptDisplay() {
