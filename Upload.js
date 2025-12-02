@@ -22,8 +22,8 @@ const DEFAULT_BASE_URL = "http://127.0.0.1:5500";
 const SUBMIT_DEBOUNCE_MS = 3000;
 const SESSION_STORAGE_KEY = "video_processing_session";
 
-const VIDEO_ENDPOINT = "http://127.0.0.1:8888/upload";
-const API_BASE_URL = "http://127.0.0.1:8888";
+const VIDEO_ENDPOINT = "https://redemptory-lavern-fiendishly.ngrok-free.dev/upload";
+const API_BASE_URL = "https://redemptory-lavern-fiendishly.ngrok-free.dev";
 
 // jika menggunakan ngrok, ganti dengan URL ngrok Anda
 // const VIDEO_ENDPOINT = "https://allena-untransfigured-anomalistically.ngrok-free.dev/upload";
