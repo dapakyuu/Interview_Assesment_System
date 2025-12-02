@@ -203,6 +203,9 @@ function loadDashboardData() {
   updateFinalRating();
   updateTranscriptDisplay();
   createRadarChart();
+  
+  // ✅ TAMBAHKAN FUNGSI BARU
+  updateCheatingConfidenceCard();
 
   console.log("✅ Dashboard berhasil dimuat");
 }
@@ -276,34 +279,138 @@ function updateCheatingDisplay() {
   }
 }
 
+// ============================================================================
+// ✅ NEW FUNCTION: Update Cheating Confidence Score Card
+// ============================================================================
+function updateCheatingConfidenceCard() {
+  const card = document.getElementById("cheating-confidence-card");
+  if (!card || !interviewData?.aggregate_cheating_analysis) return;
+
+  const agg = interviewData.aggregate_cheating_analysis;
+  const confScore = agg.average_confidence_score || 0;
+  
+  let confColor = "#28a745";
+  let statusText = "High";
+  
+  if (confScore < 45) {
+    confColor = "#dc3545";
+    statusText = "Very Low";
+  } else if (confScore < 60) {
+    confColor = "#ffc107";
+    statusText = "Low";
+  } else if (confScore < 75) {
+    confColor = "#17a2b8";
+    statusText = "Medium";
+  } else if (confScore >= 85) {
+    confColor = "#155724";
+    statusText = "Very High";
+  }
+
+  card.innerHTML = `
+    <div style="padding: 20px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+          Detection Confidence Score
+        </div>
+        <div style="font-size: 48px; font-weight: bold; color: ${confColor};">
+          ${confScore}%
+        </div>
+        <div style="font-size: 13px; color: ${confColor}; font-weight: 600; margin-top: 4px;">
+          ${statusText} Confidence
+        </div>
+      </div>
+
+      <div style="height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;">
+        <div style="height: 100%; background: ${confColor}; width: ${confScore}%; transition: width 0.5s ease;"></div>
+      </div>
+
+      <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-left: 3px solid ${confColor}; border-radius: 4px;">
+        <div style="font-size: 12px; color: #666; line-height: 1.6;">
+          <strong>ℹ️ Keterangan:</strong><br/>
+          Score ini menunjukkan tingkat kepercayaan sistem AI dalam mendeteksi kecurangan.
+          ${confScore >= 75 ? "Sistem memiliki kepercayaan tinggi terhadap hasil deteksi." : 
+            confScore >= 60 ? "Sistem memiliki kepercayaan sedang, hasil perlu verifikasi manual." :
+            "Sistem memiliki kepercayaan rendah, sangat disarankan untuk review manual."}
+        </div>
+      </div>
+    </div>
+  `;
+}
+// Helper function: Get confidence breakdown from individual videos
+function getConfidenceBreakdown(agg) {
+  // If we have per-video confidence data
+  if (interviewData?.content && interviewData.content.length > 0) {
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+    
+    interviewData.content.forEach((item, index) => {
+      const videoConf = item.result?.cheating_confidence_score || 0;
+      const videoConfLevel = item.result?.cheating_confidence_level || 'N/A';
+      
+      let barColor = "#28a745";
+      if (videoConf < 60) barColor = "#ffc107";
+      if (videoConf < 45) barColor = "#dc3545";
+      
+      html += `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
+            Video ${index + 1}:
+          </div>
+          <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+            <div style="height: 100%; background: ${barColor}; width: ${videoConf}%;"></div>
+          </div>
+          <div style="flex: 0 0 60px; font-size: 11px; font-weight: 600; color: ${barColor}; text-align: right;">
+            ${videoConf}%
+          </div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    return html;
+  }
+  
+  // Fallback: show only average
+  return `
+    <div style="text-align: center; font-size: 12px; color: #666;">
+      Average confidence across ${agg.total_videos} video(s): <strong>${agg.average_confidence_score}%</strong>
+    </div>
+  `;
+}
+
+// Helper function: Explain what the confidence score means
+function getConfidenceExplanation(score) {
+  if (score >= 85) {
+    return "The system has very high certainty in its cheating detection analysis. The detection methods produced consistent and reliable results.";
+  } else if (score >= 75) {
+    return "The system has high certainty in its analysis. Most detection methods produced reliable results.";
+  } else if (score >= 60) {
+    return "The system has moderate certainty. Some detection methods may have produced inconsistent results.";
+  } else if (score >= 45) {
+    return "The system has low certainty. Detection results may be unreliable due to video quality or technical limitations.";
+  } else {
+    return "The system has very low certainty. Results should be interpreted with caution and may require manual review.";
+  }
+}
+
 function updateNonVerbalDisplay() {
   const nonVerbalElement = document.getElementById("nonverbal-analysis");
   if (!nonVerbalElement) return;
 
-  const lastIndex = interviewData.content.length - 1;
-  const interpretation = interviewData.content[lastIndex].result.non_verbal_analysis.interpretation;
+  // Ambil summary dari aggregate non-verbal batch
+  const summary =
+    interviewData.aggregate_non_verbal_analysis?.aggregated_non_verbal?.summary ||
+    "Tidak ada ringkasan non-verbal.";
 
-  // Bangun HTML rapi
   let output = `
     <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-      <h3 style="color: #2c3e50;">🗣️ Speech Analysis</h3>
-      <p>${interpretation.speech_analysis}</p>
-
-      <hr style="margin: 1em 0; border: none; border-top: 1px solid #ccc;" />
-
-      <h3 style="color: #2c3e50;">😊 Facial Expression Analysis</h3>
-      <p>${interpretation.facial_expression_analysis}</p>
-
-      <hr style="margin: 1em 0; border: none; border-top: 1px solid #ccc;" />
-
-      <h3 style="color: #2c3e50;">👁️ Eye Movement Analysis</h3>
-      <p>${interpretation.eye_movement_analysis}</p>
+      <h3 style="color: #2c3e50;"> Ringkasan Analisis Non-Verbal </h3>
+      <p>${summary}</p>
     </div>
   `;
 
-  // Tampilkan ke elemen HTML
   nonVerbalElement.innerHTML = output.trim();
 }
+
 
 
 function updateFinalDecision() {

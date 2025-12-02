@@ -116,17 +116,19 @@
                         <div class="summary-title" id="highestAspect">Kepercayaan Diri</div>
                         <div class="summary-value" id="highestScore">90</div>
                     </div>
+
                     <div class="summary-card">
                         <div class="summary-label">Perlu Peningkatan</div>
                         <div class="summary-title" id="lowestAspect">Kesiapan</div>
                         <div class="summary-value" id="lowestScore">82</div>
                     </div>
-                    <div class="summary-card">
-                        <div class="summary-label">Konsistensi</div>
-                        <div class="summary-title" style="color: #3b82f6;">Sangat Baik</div>
-                        <div class="summary-value" style="color: #3b82f6;" id="consistencyScore">±4</div>
+
+                    <div class="summary-card llm-card">
+                        <div class="summary-label">Analisis LLM</div>
+                        <div class="llm-text" id="analisisllm"></div>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -144,16 +146,7 @@
                 </div>
             </div>
 
-            <!-- Analisis Non-Verbal -->
-            <div class="card card-wide">
-                <div class="card-title">
-                    <i class="fas fa-user"></i>
-                    Analisis Non-Verbal
-                </div>
-                <div class="card-content" id="nonverbal-analysis">
-                    <!-- Ekspresi wajah menunjukkan kepercayaan diri dan konsistensi jawaban. -->
-                </div>
-            </div>
+
 
             <!-- Penilaian Akhir -->
             <div class="card">
@@ -177,6 +170,62 @@
                 </div>
             </div>
 
+        </div>
+
+            <!-- Row 3 -->
+        <div class="dashboard-grid">
+            <!-- Analisis Non-Verbal -->
+            <div class="card card-wide">
+                <div class="card-title">
+                    <i class="fas fa-user"></i>
+                    Analisis Non-Verbal
+                </div>
+                <div class="card-content" id="nonverbal-analysis">
+                    <!-- Ekspresi wajah menunjukkan kepercayaan diri dan konsistensi jawaban. -->
+                </div>
+            </div>
+        </div>
+
+                <!-- Row 3 -->
+        <div class="dashboard-grid">
+
+            <!-- Cheating Detection -->
+                <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Confidence score dari Cheating Detection
+                </div>
+                <div class="card-content" id="cheating-confidence-card">
+                    <!-- Akan diisi oleh JavaScript -->
+                    <div style="text-align: center; padding: 40px; color: #999;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 32px;"></i>
+                        <p style="margin-top: 10px;">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cheating Detection -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-eye"></i>
+                   Confidence score dari analisis non verbal
+                </div>
+                <div class="card-content" id="cheating-detect">
+                        <!-- Tidak -->
+                </div>
+            </div>
+
+
+            <!-- Cheating Detection -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-eye"></i>
+                   Confidence score dari translat dari english hke indonesia
+                </div>
+                <div class="card-content" id="cheating-detect">
+                        <!-- Tidak -->
+                </div>
+            </div>
         </div>
 
         <!-- Row 4 -->
