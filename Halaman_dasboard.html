@@ -187,33 +187,55 @@
         </div>
 
                 <!-- Row 3 -->
-        <div class="dashboard-grid">
+        <!-- Row 3: Confidence Scores -->
+<div class="dashboard-grid">
 
-            <!-- Cheating Detection -->
-                <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-shield-alt"></i>
-                    Confidence score dari Cheating Detection
-                </div>
-                <div class="card-content" id="cheating-confidence-card">
-                    <!-- Akan diisi oleh JavaScript -->
-                    <div style="text-align: center; padding: 40px; color: #999;">
-                        <i class="fas fa-spinner fa-spin" style="font-size: 32px;"></i>
-                        <p style="margin-top: 10px;">Loading...</p>
-                    </div>
-                </div>
+    <!-- 1️⃣ Cheating Detection Confidence -->
+    <div class="card">
+        <div class="card-title">
+            <i class="fas fa-shield-alt"></i>
+            Confidence score dari Cheating Detection
+        </div>
+        <div class="card-content" id="cheating-confidence-card">
+            <!-- ✅ ID BENAR (sudah dipanggil di JS line 131) -->
+            <div style="text-align: center; padding: 40px; color: #999;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 32px;"></i>
+                <p style="margin-top: 10px;">Loading...</p>
             </div>
+        </div>
+    </div>
 
-            <!-- Cheating Detection -->
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-eye"></i>
-                   Confidence score dari analisis non verbal
-                </div>
-                <div class="card-content" id="cheating-detect">
-                        <!-- Tidak -->
-                </div>
+    <!-- 2️⃣ Non-Verbal Analysis Confidence -->
+    <div class="card">
+        <div class="card-title">
+            <i class="fas fa-user-check"></i>
+            Confidence score dari analisis non verbal
+        </div>
+        <div class="card-content" id="nonverbal-confidence-card">
+            <!-- ✅ GANTI ID DARI "cheating-detect" → "nonverbal-confidence-card" -->
+            <div style="text-align: center; padding: 40px; color: #999;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 32px;"></i>
+                <p style="margin-top: 10px;">Loading...</p>
             </div>
+        </div>
+    </div>
+
+    <!-- 3️⃣ Translation Confidence -->
+    <div class="card">
+        <div class="card-title">
+            <i class="fas fa-language"></i>
+            Confidence score dari translate dari english ke indonesia
+        </div>
+        <div class="card-content" id="translation-confidence-card">
+            <!-- ✅ GANTI ID DARI "cheating-detect" → "translation-confidence-card" -->
+            <div style="text-align: center; padding: 40px; color: #999;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 32px;"></i>
+                <p style="margin-top: 10px;">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
             <!-- Cheating Detection -->

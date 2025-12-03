@@ -206,7 +206,8 @@ function loadDashboardData() {
   
   // ✅ TAMBAHKAN FUNGSI BARU
   updateCheatingConfidenceCard();
-
+  updateNonVerbalConfidenceCard();
+  updateTranslationConfidenceCard(); 
   console.log("✅ Dashboard berhasil dimuat");
 }
 
@@ -279,9 +280,6 @@ function updateCheatingDisplay() {
   }
 }
 
-// ============================================================================
-// ✅ NEW FUNCTION: Update Cheating Confidence Score Card
-// ============================================================================
 // ============================================================================
 // ✅ NEW FUNCTION: Update Cheating Confidence Score Card
 // ============================================================================
@@ -472,6 +470,235 @@ function getConfidenceExplanation(score) {
     return "The system has very low certainty. Results should be interpreted with caution and may require manual review.";
   }
 }
+
+// ...existing code... (line 1-409)
+
+// ============================================================================
+// ✅ NEW: Non-Verbal Confidence Card
+// ============================================================================
+function updateNonVerbalConfidenceCard() {
+  const confidenceCard = document.getElementById("nonverbal-confidence-card");
+  if (!confidenceCard || !interviewData?.aggregate_non_verbal_analysis) return;
+
+  const agg = interviewData.aggregate_non_verbal_analysis;
+  const confScore = agg.average_confidence_score || 0;
+  const confLevel = agg.overall_confidence_level || "N/A";
+  
+  let confColor = "#28a745";
+  let bgColor = "#d4edda";
+  
+  if (confScore < 45) {
+    confColor = "#dc3545";
+    bgColor = "#f8d7da";
+  } else if (confScore < 60) {
+    confColor = "#ffc107";
+    bgColor = "#fff3cd";
+  } else if (confScore < 75) {
+    confColor = "#17a2b8";
+    bgColor = "#d1ecf1";
+  } else if (confScore < 85) {
+    confColor = "#28a745";
+    bgColor = "#d4edda";
+  }
+
+  confidenceCard.innerHTML = `
+    <div style="padding: 20px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+          Non-Verbal Analysis Confidence
+        </div>
+        <div style="font-size: 48px; font-weight: bold; color: ${confColor};">
+          ${confScore}%
+        </div>
+        <div style="font-size: 13px; color: ${confColor}; font-weight: 600; margin-top: 4px;">
+          ${confLevel}
+        </div>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <div style="height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;">
+          <div style="height: 100%; background: ${confColor}; width: ${confScore}%; transition: width 0.5s ease;"></div>
+        </div>
+      </div>
+
+      <div style="background: ${bgColor}; padding: 15px; border-radius: 8px;">
+        <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">
+          📊 Component Breakdown:
+        </div>
+        ${getNonVerbalBreakdown()}
+      </div>
+
+      <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-left: 3px solid ${confColor}; border-radius: 4px;">
+        <div style="font-size: 12px; color: #666; line-height: 1.6;">
+          <strong>ℹ️ Analysis Quality:</strong><br/>
+          ${getNonVerbalExplanation(confScore)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function getNonVerbalBreakdown() {
+  if (interviewData?.content && interviewData.content.length > 0) {
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+    
+    interviewData.content.forEach((item, index) => {
+      const nvConf = item.result?.non_verbal_confidence_score || 0;
+      
+      let barColor = "#28a745";
+      if (nvConf < 60) barColor = "#ffc107";
+      if (nvConf < 45) barColor = "#dc3545";
+      
+      html += `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
+            Video ${index + 1}:
+          </div>
+          <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+            <div style="height: 100%; background: ${barColor}; width: ${nvConf}%;"></div>
+          </div>
+          <div style="flex: 0 0 60px; font-size: 11px; font-weight: 600; color: ${barColor}; text-align: right;">
+            ${nvConf}%
+          </div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    return html;
+  }
+  
+  return '<div style="text-align: center; font-size: 12px; color: #666;">No detailed breakdown available</div>';
+}
+
+function getNonVerbalExplanation(score) {
+  if (score >= 85) return "Excellent non-verbal analysis with high-quality facial, speech, and eye tracking data.";
+  if (score >= 75) return "Good analysis quality with reliable non-verbal indicators detected.";
+  if (score >= 60) return "Moderate quality - some non-verbal features may be limited.";
+  if (score >= 45) return "Low quality - limited non-verbal data captured.";
+  return "Very low quality - non-verbal analysis may be unreliable.";
+}
+
+// ============================================================================
+// ✅ NEW: Translation Confidence Card  
+// ============================================================================
+function updateTranslationConfidenceCard() {
+  const confidenceCard = document.getElementById("translation-confidence-card");
+  if (!confidenceCard || !interviewData?.content) return;
+
+  // Calculate average translation confidence
+  let totalConf = 0;
+  let count = 0;
+  
+  interviewData.content.forEach(item => {
+    if (item.result?.translation_confidence_score) {
+      totalConf += item.result.translation_confidence_score;
+      count++;
+    }
+  });
+  
+  const avgConf = count > 0 ? Math.round(totalConf / count) : 0;
+  
+  let confColor = "#28a745";
+  let bgColor = "#d4edda";
+  let confLevel = "Very High";
+  
+  if (avgConf < 45) {
+    confColor = "#dc3545";
+    bgColor = "#f8d7da";
+    confLevel = "Very Low";
+  } else if (avgConf < 60) {
+    confColor = "#ffc107";
+    bgColor = "#fff3cd";
+    confLevel = "Low";
+  } else if (avgConf < 75) {
+    confColor = "#17a2b8";
+    bgColor = "#d1ecf1";
+    confLevel = "Medium";
+  } else if (avgConf < 85) {
+    confColor = "#28a745";
+    bgColor = "#d4edda";
+    confLevel = "High";
+  }
+
+  confidenceCard.innerHTML = `
+    <div style="padding: 20px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+          Translation Quality Score
+        </div>
+        <div style="font-size: 48px; font-weight: bold; color: ${confColor};">
+          ${avgConf}%
+        </div>
+        <div style="font-size: 13px; color: ${confColor}; font-weight: 600; margin-top: 4px;">
+          ${confLevel}
+        </div>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <div style="height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;">
+          <div style="height: 100%; background: ${confColor}; width: ${avgConf}%; transition: width 0.5s ease;"></div>
+        </div>
+      </div>
+
+      <div style="background: ${bgColor}; padding: 15px; border-radius: 8px;">
+        <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">
+          📊 Per-Video Quality:
+        </div>
+        ${getTranslationBreakdown()}
+      </div>
+
+      <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-left: 3px solid ${confColor}; border-radius: 4px;">
+        <div style="font-size: 12px; color: #666; line-height: 1.6;">
+          <strong>ℹ️ Translation Reliability:</strong><br/>
+          ${getTranslationExplanation(avgConf)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function getTranslationBreakdown() {
+  if (interviewData?.content && interviewData.content.length > 0) {
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+    
+    interviewData.content.forEach((item, index) => {
+      const transConf = item.result?.translation_confidence_score || 0;
+      
+      let barColor = "#28a745";
+      if (transConf < 60) barColor = "#ffc107";
+      if (transConf < 45) barColor = "#dc3545";
+      
+      html += `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
+            Video ${index + 1}:
+          </div>
+          <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+            <div style="height: 100%; background: ${barColor}; width: ${transConf}%;"></div>
+          </div>
+          <div style="flex: 0 0 60px; font-size: 11px; font-weight: 600; color: ${barColor}; text-align: right;">
+            ${transConf}%
+          </div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    return html;
+  }
+  
+  return '<div style="text-align: center; font-size: 12px; color: #666;">No translation data available</div>';
+}
+
+function getTranslationExplanation(score) {
+  if (score >= 85) return "Excellent translation quality with high accuracy and natural language flow.";
+  if (score >= 75) return "Good translation quality - minor nuances may be simplified.";
+  if (score >= 60) return "Acceptable translation - some context may be lost.";
+  if (score >= 45) return "Low quality translation - manual review recommended.";
+  return "Very low quality - translation may be unreliable.";
+}
+
 
 function updateNonVerbalDisplay() {
   const nonVerbalElement = document.getElementById("nonverbal-analysis");
