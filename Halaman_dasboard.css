@@ -264,7 +264,7 @@ body {
 ========================================================= */
 .summary-cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 2fr 2fr; /* Rasio 1 : 1 : 2 */
     gap: 20px;
     margin-top: 20px;
 }
@@ -274,6 +274,13 @@ body {
     border: 1px solid #e2e8f0;
     padding: 20px;
     border-radius: 12px;
+}
+
+.summary-card.llm-card {
+    padding: 24px;
+    max-height: 240px;
+    overflow-y: auto;
+    text-align: justify;
 }
 
 .summary-label {
@@ -293,6 +300,13 @@ body {
     font-size: 28px;
     font-weight: bold;
     color: #2d3748;
+}
+
+.llm-text {
+    font-size: 14px;
+    color: #2d3748;
+    line-height: 1.6;
+    white-space: pre-wrap;
 }
 
 /* =========================================================

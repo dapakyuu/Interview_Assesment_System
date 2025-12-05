@@ -3,8 +3,8 @@
 // =========================================================
 let interviewData = null;
 
-const API_BASE_URL = "http://127.0.0.1:8888";
-// const API_BASE_URL = "https://6c047270d940.ngrok-free.app";
+// const API_BASE_URL = "http://127.0.0.1:8888";
+const API_BASE_URL = "https://f3747c00f42f.ngrok-free.app";
 
 // =========================================================
 // DATA LOADING
@@ -203,7 +203,11 @@ function loadDashboardData() {
   updateFinalRating();
   updateTranscriptDisplay();
   createRadarChart();
-
+  
+  // ✅ TAMBAHKAN FUNGSI BARU
+  updateCheatingConfidenceCard();
+  updateNonVerbalConfidenceCard();
+  updateTranslationConfidenceCard(); 
   console.log("✅ Dashboard berhasil dimuat");
 }
 
@@ -212,34 +216,510 @@ function loadDashboardData() {
 // =========================================================
 function updateCheatingDisplay() {
   const cheatingElement = document.getElementById("cheating-detect");
-  if (!cheatingElement || !interviewData?.content) return;
+  if (!cheatingElement || !interviewData?.aggregate_cheating_analysis) return;
 
-  const result = interviewData.content[0].result;
+  // ✅ Ambil dari aggregate analysis (bukan per-video)
+  const agg = interviewData.aggregate_cheating_analysis;
 
-  if (result.cheating_detection.toLowerCase() === "ya") {
+  // Tentukan warna berdasarkan risk level
+  let statusColor = "#28a745"; // Green (LOW RISK)
+  let bgColor = "#d4edda";
+  
+  if (agg.risk_level === "HIGH RISK") {
+    statusColor = "#dc3545"; // Red
+    bgColor = "#f8d7da";
+  } else if (agg.risk_level === "MEDIUM RISK") {
+    statusColor = "#ffc107"; // Yellow
+    bgColor = "#fff3cd";
+  }
+
+  // Build HTML berdasarkan status
+  if (agg.overall_cheating_status.toLowerCase() === "ya") {
     cheatingElement.innerHTML = `
-            <div class="content-text">
-                YA
-                <p style="font-size: 12px; margin-top: 5px; color: #e74c3c;">
-                    Alasan: ${result.alasan_cheating || "Tidak ada alasan"}
-                </p>
-            </div>
-        `;
+      <div class="content-text" style="background: ${bgColor}; padding: 15px; border-radius: 8px;">
+        <div style="font-size: 18px; font-weight: bold; color: ${statusColor}; margin-bottom: 8px;">
+          YA
+        </div>
+        <div style="font-size: 13px; color: #666; margin-bottom: 5px;">
+          <strong>Risk Level:</strong> ${agg.risk_level}
+        </div>
+        <div style="font-size: 13px; color: #666; margin-bottom: 5px;">
+          <strong>Confidence:</strong> ${agg.confidence_level}
+        </div>
+        <div style="font-size: 12px; color: ${statusColor}; margin-top: 8px; padding: 8px; background: white; border-radius: 4px;">
+          <strong>📊 Summary:</strong><br/>
+          ${agg.summary}
+        </div>
+        <div style="font-size: 12px; color: #555; margin-top: 8px;">
+          <strong>⚠️ Recommendation:</strong> ${agg.recommendation}
+        </div>
+        <div style="font-size: 11px; color: #888; margin-top: 8px; border-top: 1px solid #ddd; padding-top: 8px;">
+          Videos Flagged: ${agg.videos_flagged}/${agg.total_videos} (${agg.flagged_percentage}%) | 
+          Avg Score: ${agg.overall_cheating_score}/100
+        </div>
+      </div>
+    `;
   } else {
-    cheatingElement.innerHTML = '<div class="content-text">TIDAK</div>';
+    cheatingElement.innerHTML = `
+      <div class="content-text" style="background: ${bgColor}; padding: 15px; border-radius: 8px;">
+        <div style="font-size: 18px; font-weight: bold; color: ${statusColor}; margin-bottom: 8px;">
+          TIDAK
+        </div>
+        <div style="font-size: 13px; color: #666; margin-bottom: 5px;">
+          <strong>Risk Level:</strong> ${agg.risk_level}
+        </div>
+        <div style="font-size: 12px; color: #555; margin-top: 8px;">
+          ${agg.summary}
+        </div>
+        <div style="font-size: 11px; color: #888; margin-top: 8px; border-top: 1px solid #ddd; padding-top: 8px;">
+          Videos Analyzed: ${agg.total_videos} | 
+          Avg Score: ${agg.overall_cheating_score}/100
+        </div>
+      </div>
+    `;
   }
 }
+
+// ============================================================================
+// ✅ NEW FUNCTION: Update Cheating Confidence Score Card
+// ============================================================================
+function updateCheatingConfidenceCard() {
+  const confidenceCard = document.getElementById("cheating-confidence-card");
+  if (!confidenceCard || !interviewData?.aggregate_cheating_analysis) return;
+
+  const agg = interviewData.aggregate_cheating_analysis;
+  const confScore = agg.average_confidence_score || 0;
+  
+  // Determine color based on confidence level
+  let confColor = "#28a745"; // Green
+  let bgColor = "#d4edda";
+  let statusText = "High Confidence";
+  
+  if (confScore < 45) {
+    confColor = "#dc3545"; // Red
+    bgColor = "#f8d7da";
+    statusText = "Very Low Confidence";
+  } else if (confScore < 60) {
+    confColor = "#ffc107"; // Yellow
+    bgColor = "#fff3cd";
+    statusText = "Low Confidence";
+  } else if (confScore < 75) {
+    confColor = "#17a2b8"; // Blue
+    bgColor = "#d1ecf1";
+    statusText = "Medium Confidence";
+  } else if (confScore < 85) {
+    confColor = "#28a745"; // Green
+    bgColor = "#d4edda";
+    statusText = "High Confidence";
+  } else {
+    confColor = "#155724"; // Dark Green
+    bgColor = "#c3e6cb";
+    statusText = "Very High Confidence";
+  }
+
+  confidenceCard.innerHTML = `
+    <div style="padding: 20px;">
+      <!-- Header -->
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+          Detection Confidence Score
+        </div>
+        <div style="font-size: 48px; font-weight: bold; color: ${confColor};">
+          ${confScore}%
+        </div>
+        <div style="font-size: 13px; color: ${confColor}; font-weight: 600; margin-top: 4px;">
+          ${agg.overall_confidence_level || statusText}
+        </div>
+      </div>
+
+      <!-- Progress Bar -->
+      <div style="margin: 20px 0;">
+        <div style="height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;">
+          <div style="height: 100%; background: ${confColor}; width: ${confScore}%; transition: width 0.5s ease;"></div>
+        </div>
+      </div>
+
+      <!-- Confidence Breakdown -->
+      <div style="background: ${bgColor}; padding: 15px; border-radius: 8px; margin-top: 15px;">
+        <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">
+          📊 Confidence Breakdown:
+        </div>
+        
+        ${getConfidenceBreakdown(agg)}
+      </div>
+
+      <!-- Explanation -->
+      <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-left: 3px solid ${confColor}; border-radius: 4px;">
+        <div style="font-size: 12px; color: #666; line-height: 1.6;">
+          <strong>ℹ️ What this means:</strong><br/>
+          This score represents how confident the AI system is in detecting potential cheating behaviors. 
+          ${getConfidenceExplanation(confScore)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Helper function: Get confidence breakdown from individual videos
+function getConfidenceBreakdown(agg) {
+  // If we have per-video confidence data
+  if (interviewData?.content && interviewData.content.length > 0) {
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+    
+    interviewData.content.forEach((item, index) => {
+      const videoConf = item.result?.cheating_confidence_score || 0;
+      const videoConfLevel = item.result?.cheating_confidence_level || 'N/A';
+      
+      let barColor = "#28a745";
+      if (videoConf < 60) barColor = "#ffc107";
+      if (videoConf < 45) barColor = "#dc3545";
+      
+      html += `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
+            Video ${index + 1}:
+          </div>
+          <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+            <div style="height: 100%; background: ${barColor}; width: ${videoConf}%;"></div>
+          </div>
+          <div style="flex: 0 0 60px; font-size: 11px; font-weight: 600; color: ${barColor}; text-align: right;">
+            ${videoConf}%
+          </div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    return html;
+  }
+  
+  // Fallback: show only average
+  return `
+    <div style="text-align: center; font-size: 12px; color: #666;">
+      Average confidence across ${agg.total_videos} video(s): <strong>${agg.average_confidence_score}%</strong>
+    </div>
+  `;
+}
+
+// Helper function: Explain what the confidence score means
+function getConfidenceExplanation(score) {
+  if (score >= 85) {
+    return "The system has very high certainty in its cheating detection analysis. The detection methods produced consistent and reliable results.";
+  } else if (score >= 75) {
+    return "The system has high certainty in its analysis. Most detection methods produced reliable results.";
+  } else if (score >= 60) {
+    return "The system has moderate certainty. Some detection methods may have produced inconsistent results.";
+  } else if (score >= 45) {
+    return "The system has low certainty. Detection results may be unreliable due to video quality or technical limitations.";
+  } else {
+    return "The system has very low certainty. Results should be interpreted with caution and may require manual review.";
+  }
+}
+// Helper function: Get confidence breakdown from individual videos
+function getConfidenceBreakdown(agg) {
+  // If we have per-video confidence data
+  if (interviewData?.content && interviewData.content.length > 0) {
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+    
+    interviewData.content.forEach((item, index) => {
+      const videoConf = item.result?.cheating_confidence_score || 0;
+      const videoConfLevel = item.result?.cheating_confidence_level || 'N/A';
+      
+      let barColor = "#28a745";
+      if (videoConf < 60) barColor = "#ffc107";
+      if (videoConf < 45) barColor = "#dc3545";
+      
+      html += `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
+            Video ${index + 1}:
+          </div>
+          <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+            <div style="height: 100%; background: ${barColor}; width: ${videoConf}%;"></div>
+          </div>
+          <div style="flex: 0 0 60px; font-size: 11px; font-weight: 600; color: ${barColor}; text-align: right;">
+            ${videoConf}%
+          </div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    return html;
+  }
+  
+  // Fallback: show only average
+  return `
+    <div style="text-align: center; font-size: 12px; color: #666;">
+      Average confidence across ${agg.total_videos} video(s): <strong>${agg.average_confidence_score}%</strong>
+    </div>
+  `;
+}
+
+// Helper function: Explain what the confidence score means
+function getConfidenceExplanation(score) {
+  if (score >= 85) {
+    return "The system has very high certainty in its cheating detection analysis. The detection methods produced consistent and reliable results.";
+  } else if (score >= 75) {
+    return "The system has high certainty in its analysis. Most detection methods produced reliable results.";
+  } else if (score >= 60) {
+    return "The system has moderate certainty. Some detection methods may have produced inconsistent results.";
+  } else if (score >= 45) {
+    return "The system has low certainty. Detection results may be unreliable due to video quality or technical limitations.";
+  } else {
+    return "The system has very low certainty. Results should be interpreted with caution and may require manual review.";
+  }
+}
+
+// ...existing code... (line 1-409)
+
+// ============================================================================
+// ✅ NEW: Non-Verbal Confidence Card
+// ============================================================================
+function updateNonVerbalConfidenceCard() {
+  const confidenceCard = document.getElementById("nonverbal-confidence-card");
+  if (!confidenceCard || !interviewData?.aggregate_non_verbal_analysis) return;
+
+  const agg = interviewData.aggregate_non_verbal_analysis;
+  const confScore = agg.overall_confidence_score || 0;
+  const confLevel = agg.overall_performance_status || "N/A";
+  
+  let confColor = "#28a745";
+  let bgColor = "#d4edda";
+  
+  if (confScore < 45) {
+    confColor = "#dc3545";
+    bgColor = "#f8d7da";
+  } else if (confScore < 60) {
+    confColor = "#ffc107";
+    bgColor = "#fff3cd";
+  } else if (confScore < 75) {
+    confColor = "#17a2b8";
+    bgColor = "#d1ecf1";
+  } else if (confScore < 85) {
+    confColor = "#28a745";
+    bgColor = "#d4edda";
+  }
+
+  confidenceCard.innerHTML = `
+    <div style="padding: 20px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+          Non-Verbal Analysis Confidence
+        </div>
+        <div style="font-size: 48px; font-weight: bold; color: ${confColor};">
+          ${confScore}%
+        </div>
+        <div style="font-size: 13px; color: ${confColor}; font-weight: 600; margin-top: 4px;">
+          ${confLevel}
+        </div>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <div style="height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;">
+          <div style="height: 100%; background: ${confColor}; width: ${confScore}%; transition: width 0.5s ease;"></div>
+        </div>
+      </div>
+
+      <div style="background: ${bgColor}; padding: 15px; border-radius: 8px;">
+        <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">
+          📊 Component Breakdown:
+        </div>
+        ${getNonVerbalBreakdown()}
+      </div>
+
+      <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-left: 3px solid ${confColor}; border-radius: 4px;">
+        <div style="font-size: 12px; color: #666; line-height: 1.6;">
+          <strong>ℹ️ Analysis Quality:</strong><br/>
+          ${getNonVerbalExplanation(confScore)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function getNonVerbalBreakdown() {
+  if (interviewData?.content && interviewData.content.length > 0) {
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+    
+    interviewData.content.forEach((item, index) => {
+      const nvConf = item.result?.non_verbal_confidence_score || 0;
+      
+      let barColor = "#28a745";
+      if (nvConf < 60) barColor = "#ffc107";
+      if (nvConf < 45) barColor = "#dc3545";
+      
+      html += `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
+            Video ${index + 1}:
+          </div>
+          <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+            <div style="height: 100%; background: ${barColor}; width: ${nvConf}%;"></div>
+          </div>
+          <div style="flex: 0 0 60px; font-size: 11px; font-weight: 600; color: ${barColor}; text-align: right;">
+            ${nvConf}%
+          </div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    return html;
+  }
+  
+  return '<div style="text-align: center; font-size: 12px; color: #666;">No detailed breakdown available</div>';
+}
+
+function getNonVerbalExplanation(score) {
+  if (score >= 85) return "Excellent non-verbal analysis with high-quality facial, speech, and eye tracking data.";
+  if (score >= 75) return "Good analysis quality with reliable non-verbal indicators detected.";
+  if (score >= 60) return "Moderate quality - some non-verbal features may be limited.";
+  if (score >= 45) return "Low quality - limited non-verbal data captured.";
+  return "Very low quality - non-verbal analysis may be unreliable.";
+}
+
+// ============================================================================
+// ✅ NEW: Translation Confidence Card  
+// ============================================================================
+function updateTranslationConfidenceCard() {
+  const confidenceCard = document.getElementById("translation-confidence-card");
+  if (!confidenceCard || !interviewData?.content) return;
+
+  // Calculate average translation confidence
+  let totalConf = 0;
+  let count = 0;
+  
+  interviewData.content.forEach(item => {
+    if (item.result?.translation_confidence_score) {
+      totalConf += item.result.translation_confidence_score;
+      count++;
+    }
+  });
+  
+  const avgConf = count > 0 ? Math.round(totalConf / count) : 0;
+  
+  let confColor = "#28a745";
+  let bgColor = "#d4edda";
+  let confLevel = "Very High";
+  
+  if (avgConf < 45) {
+    confColor = "#dc3545";
+    bgColor = "#f8d7da";
+    confLevel = "Very Low";
+  } else if (avgConf < 60) {
+    confColor = "#ffc107";
+    bgColor = "#fff3cd";
+    confLevel = "Low";
+  } else if (avgConf < 75) {
+    confColor = "#17a2b8";
+    bgColor = "#d1ecf1";
+    confLevel = "Medium";
+  } else if (avgConf < 85) {
+    confColor = "#28a745";
+    bgColor = "#d4edda";
+    confLevel = "High";
+  }
+
+  confidenceCard.innerHTML = `
+    <div style="padding: 20px;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
+          Translation Quality Score
+        </div>
+        <div style="font-size: 48px; font-weight: bold; color: ${confColor};">
+          ${avgConf}%
+        </div>
+        <div style="font-size: 13px; color: ${confColor}; font-weight: 600; margin-top: 4px;">
+          ${confLevel}
+        </div>
+      </div>
+
+      <div style="margin: 20px 0;">
+        <div style="height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;">
+          <div style="height: 100%; background: ${confColor}; width: ${avgConf}%; transition: width 0.5s ease;"></div>
+        </div>
+      </div>
+
+      <div style="background: ${bgColor}; padding: 15px; border-radius: 8px;">
+        <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">
+          📊 Per-Video Quality:
+        </div>
+        ${getTranslationBreakdown()}
+      </div>
+
+      <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-left: 3px solid ${confColor}; border-radius: 4px;">
+        <div style="font-size: 12px; color: #666; line-height: 1.6;">
+          <strong>ℹ️ Translation Reliability:</strong><br/>
+          ${getTranslationExplanation(avgConf)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function getTranslationBreakdown() {
+  if (interviewData?.content && interviewData.content.length > 0) {
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
+    
+    interviewData.content.forEach((item, index) => {
+      const transConf = item.result?.translation_confidence_score || 0;
+      
+      let barColor = "#28a745";
+      if (transConf < 60) barColor = "#ffc107";
+      if (transConf < 45) barColor = "#dc3545";
+      
+      html += `
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
+            Video ${index + 1}:
+          </div>
+          <div style="flex: 1; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+            <div style="height: 100%; background: ${barColor}; width: ${transConf}%;"></div>
+          </div>
+          <div style="flex: 0 0 60px; font-size: 11px; font-weight: 600; color: ${barColor}; text-align: right;">
+            ${transConf}%
+          </div>
+        </div>
+      `;
+    });
+    
+    html += '</div>';
+    return html;
+  }
+  
+  return '<div style="text-align: center; font-size: 12px; color: #666;">No translation data available</div>';
+}
+
+function getTranslationExplanation(score) {
+  if (score >= 85) return "Excellent translation quality with high accuracy and natural language flow.";
+  if (score >= 75) return "Good translation quality - minor nuances may be simplified.";
+  if (score >= 60) return "Acceptable translation - some context may be lost.";
+  if (score >= 45) return "Low quality translation - manual review recommended.";
+  return "Very low quality - translation may be unreliable.";
+}
+
 
 function updateNonVerbalDisplay() {
   const nonVerbalElement = document.getElementById("nonverbal-analysis");
   if (!nonVerbalElement) return;
 
-  const lastIndex = interviewData.content.length - 1;
-  const analisisText =
-    interviewData.content[lastIndex].result.analisis_non_verbal;
+  // Ambil summary dari aggregate non-verbal batch
+  const summary =
+    interviewData.aggregate_non_verbal_analysis?.summary ||
+    "Tidak ada ringkasan non-verbal.";
 
-  nonVerbalElement.textContent = analisisText;
+  let output = `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6;">
+      <h3 style="color: #2c3e50;"> Ringkasan Analisis Non-Verbal </h3>
+      <p>${summary}</p>
+    </div>
+  `;
+
+  nonVerbalElement.innerHTML = output.trim();
 }
+
+
 
 function updateFinalDecision() {
   const decisionElement = document.getElementById("final-decision");
@@ -264,11 +744,11 @@ function updateAspectDetails() {
 
   const aggregate = calculateAggregateData();
   const aspects = [
-    { label: "Confidence Score", score: aggregate.avgConfidence },
+    // { label: "Confidence Score", score: aggregate.avgConfidence },
     { label: "Kualitas Jawaban", score: aggregate.avgKualitas },
     { label: "Relevansi", score: aggregate.avgRelevansi },
     { label: "Koherensi", score: aggregate.avgKoherensi },
-    { label: "Tempo Bicara", score: aggregate.avgTempo },
+    // { label: "Tempo Bicara", score: aggregate.avgTempo },
   ];
 
   detailsList.innerHTML = aspects
@@ -296,36 +776,37 @@ function updateAspectDetails() {
 function updateSummaryCards() {
   const aggregate = calculateAggregateData();
   const aspects = [
-    { label: "Confidence Score", score: aggregate.avgConfidence },
+    // { label: "Confidence Score", score: aggregate.avgConfidence },
     { label: "Kualitas Jawaban", score: aggregate.avgKualitas },
     { label: "Relevansi", score: aggregate.avgRelevansi },
     { label: "Koherensi", score: aggregate.avgKoherensi },
-    { label: "Tempo Bicara", score: aggregate.avgTempo },
+    // { label: "Tempo Bicara", score: aggregate.avgTempo },
   ];
 
-  // Update rata-rata skor total
+  // Update skor rata-rata total
   document.getElementById("averageScore").textContent = aggregate.avgTotal;
 
-  // Update aspek tertinggi
-  const maxScore = Math.max(...aspects.map((a) => a.score));
-  const maxAspect = aspects.find((a) => a.score === maxScore);
-  document.getElementById("highestAspect").textContent = maxAspect.label;
+  // Aspek tertinggi
+  const maxScore = Math.max(...aspects.map(a => a.score));
+  const maxAspect = aspects.find(a => a.score === maxScore);
+  // document.getElementById("highestAspect").textContent = maxAspect.label;
   document.getElementById("highestScore").textContent = maxScore;
 
-  // Update aspek terendah
-  const minScore = Math.min(...aspects.map((a) => a.score));
-  const minAspect = aspects.find((a) => a.score === minScore);
-  document.getElementById("lowestAspect").textContent = minAspect.label;
-  document.getElementById("lowestScore").textContent = minScore;
+  // Aspek terendah
+  const minScore = Math.min(...aspects.map(a => a.score));
+  const minAspect = aspects.find(a => a.score === minScore);
+  // document.getElementById("lowestAspect").textContent = minAspect.label;
+  // document.getElementById("lowestScore").textContent = minScore;
 
-  // Update konsistensi (Standard Deviation)
-  const scores = aspects.map((a) => a.score);
-  const average = scores.reduce((a, b) => a + b, 0) / scores.length;
-  const variance =
-    scores.reduce((sum, score) => sum + Math.pow(score - average, 2), 0) /
-    scores.length;
-  const stdDev = Math.round(Math.sqrt(variance));
-  document.getElementById("consistencyScore").textContent = `±${stdDev}`;
+  // Ambil index terakhir
+  const lastIndex = interviewData.content.length - 1;
+
+  // 🔥 Ambil analisis LLM sesuai JSON kamu
+  const analysisLLM =
+    interviewData.content[lastIndex].result.penilaian.analisis_llm;
+
+  // Tampilkan ke HTML
+  document.getElementById("analisisllm").textContent = analysisLLM;
 }
 
 function updateTranscriptDisplay() {
@@ -444,17 +925,17 @@ function createRadarChart() {
 
   const aggregate = calculateAggregateData();
   const chartData = [
-    aggregate.avgConfidence,
+    // aggregate.avgConfidence,
     aggregate.avgKualitas,
     aggregate.avgRelevansi,
     aggregate.avgKoherensi,
-    aggregate.avgTempo,
+    // aggregate.avgTempo,
   ];
 
   new Chart(ctx, {
     type: "radar",
     data: {
-      labels: ["Confidence", "Kualitas", "Relevansi", "Koherensi", "Tempo"],
+      labels: ["Kualitas", "Relevansi", "Koherensi"],
       datasets: [
         {
           label: "Skor Kandidat",
@@ -578,11 +1059,11 @@ async function downloadPDF() {
       blue
     );
     const aspects = [
-      [
-        "Confidence Score",
-        aggregate.avgConfidence,
-        getScoreCategoryText(aggregate.avgConfidence),
-      ],
+      // [
+      //   "Confidence Score",
+      //   aggregate.avgConfidence,
+      //   getScoreCategoryText(aggregate.avgConfidence),
+      // ],
       [
         "Kualitas Jawaban",
         aggregate.avgKualitas,
@@ -598,11 +1079,11 @@ async function downloadPDF() {
         aggregate.avgKoherensi,
         getScoreCategoryText(aggregate.avgKoherensi),
       ],
-      [
-        "Tempo Bicara",
-        aggregate.avgTempo,
-        getScoreCategoryText(aggregate.avgTempo),
-      ],
+      // [
+      //   "Tempo Bicara",
+      //   aggregate.avgTempo,
+      //   getScoreCategoryText(aggregate.avgTempo),
+      // ],
     ];
     yPos = drawTable(
       doc,
@@ -667,11 +1148,11 @@ async function downloadPDF() {
       yPos += qLines.length * 5 + 5;
 
       const scores = [
-        ["Confidence Score", item.result.penilaian.confidence_score],
+        // ["Confidence Score", item.result.penilaian.confidence_score],
         ["Kualitas Jawaban", item.result.penilaian.kualitas_jawaban],
         ["Relevansi", item.result.penilaian.relevansi],
         ["Koherensi", item.result.penilaian.koherensi],
-        ["Tempo Bicara", item.result.penilaian.tempo_bicara],
+        // ["Tempo Bicara", item.result.penilaian.tempo_bicara],
         ["Total Skor", item.result.penilaian.total],
       ];
       yPos = drawTable(
