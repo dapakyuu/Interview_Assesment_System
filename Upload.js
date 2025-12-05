@@ -22,12 +22,12 @@ const DEFAULT_BASE_URL = "http://127.0.0.1:5500";
 const SUBMIT_DEBOUNCE_MS = 3000;
 const SESSION_STORAGE_KEY = "video_processing_session";
 
-const VIDEO_ENDPOINT = "http://127.0.0.1:8888/upload";
-const API_BASE_URL = "http://127.0.0.1:8888";
+// const VIDEO_ENDPOINT = "http://127.0.0.1:8888/upload";
+// const API_BASE_URL = "http://127.0.0.1:8888";
 
 // jika menggunakan ngrok, ganti dengan URL ngrok Anda
-const VIDEO_ENDPOINT = "https://c8a1cf66a84d.ngrok-free.app/upload";
-const API_BASE_URL = "https://c8a1cf66a84d.ngrok-free.app";
+const VIDEO_ENDPOINT = "https://f3747c00f42f.ngrok-free.app/upload";
+const API_BASE_URL = "https://f3747c00f42f.ngrok-free.app";
 
 /* ============================
    HELPERS

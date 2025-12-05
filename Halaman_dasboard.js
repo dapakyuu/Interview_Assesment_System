@@ -4,7 +4,7 @@
 let interviewData = null;
 
 // const API_BASE_URL = "http://127.0.0.1:8888";
-const API_BASE_URL = "https://c8a1cf66a84d.ngrok-free.app";
+const API_BASE_URL = "https://f3747c00f42f.ngrok-free.app";
 
 // =========================================================
 // DATA LOADING
@@ -481,8 +481,8 @@ function updateNonVerbalConfidenceCard() {
   if (!confidenceCard || !interviewData?.aggregate_non_verbal_analysis) return;
 
   const agg = interviewData.aggregate_non_verbal_analysis;
-  const confScore = agg.average_confidence_score || 0;
-  const confLevel = agg.overall_confidence_level || "N/A";
+  const confScore = agg.overall_confidence_score || 0;
+  const confLevel = agg.overall_performance_status || "N/A";
   
   let confColor = "#28a745";
   let bgColor = "#d4edda";
@@ -706,7 +706,7 @@ function updateNonVerbalDisplay() {
 
   // Ambil summary dari aggregate non-verbal batch
   const summary =
-    interviewData.aggregate_non_verbal_analysis?.aggregated_non_verbal?.summary ||
+    interviewData.aggregate_non_verbal_analysis?.summary ||
     "Tidak ada ringkasan non-verbal.";
 
   let output = `
@@ -744,11 +744,11 @@ function updateAspectDetails() {
 
   const aggregate = calculateAggregateData();
   const aspects = [
-    { label: "Confidence Score", score: aggregate.avgConfidence },
+    // { label: "Confidence Score", score: aggregate.avgConfidence },
     { label: "Kualitas Jawaban", score: aggregate.avgKualitas },
     { label: "Relevansi", score: aggregate.avgRelevansi },
     { label: "Koherensi", score: aggregate.avgKoherensi },
-    { label: "Tempo Bicara", score: aggregate.avgTempo },
+    // { label: "Tempo Bicara", score: aggregate.avgTempo },
   ];
 
   detailsList.innerHTML = aspects
@@ -776,11 +776,11 @@ function updateAspectDetails() {
 function updateSummaryCards() {
   const aggregate = calculateAggregateData();
   const aspects = [
-    { label: "Confidence Score", score: aggregate.avgConfidence },
+    // { label: "Confidence Score", score: aggregate.avgConfidence },
     { label: "Kualitas Jawaban", score: aggregate.avgKualitas },
     { label: "Relevansi", score: aggregate.avgRelevansi },
     { label: "Koherensi", score: aggregate.avgKoherensi },
-    { label: "Tempo Bicara", score: aggregate.avgTempo },
+    // { label: "Tempo Bicara", score: aggregate.avgTempo },
   ];
 
   // Update skor rata-rata total
@@ -789,14 +789,14 @@ function updateSummaryCards() {
   // Aspek tertinggi
   const maxScore = Math.max(...aspects.map(a => a.score));
   const maxAspect = aspects.find(a => a.score === maxScore);
-  document.getElementById("highestAspect").textContent = maxAspect.label;
+  // document.getElementById("highestAspect").textContent = maxAspect.label;
   document.getElementById("highestScore").textContent = maxScore;
 
   // Aspek terendah
   const minScore = Math.min(...aspects.map(a => a.score));
   const minAspect = aspects.find(a => a.score === minScore);
-  document.getElementById("lowestAspect").textContent = minAspect.label;
-  document.getElementById("lowestScore").textContent = minScore;
+  // document.getElementById("lowestAspect").textContent = minAspect.label;
+  // document.getElementById("lowestScore").textContent = minScore;
 
   // Ambil index terakhir
   const lastIndex = interviewData.content.length - 1;
@@ -925,17 +925,17 @@ function createRadarChart() {
 
   const aggregate = calculateAggregateData();
   const chartData = [
-    aggregate.avgConfidence,
+    // aggregate.avgConfidence,
     aggregate.avgKualitas,
     aggregate.avgRelevansi,
     aggregate.avgKoherensi,
-    aggregate.avgTempo,
+    // aggregate.avgTempo,
   ];
 
   new Chart(ctx, {
     type: "radar",
     data: {
-      labels: ["Confidence", "Kualitas", "Relevansi", "Koherensi", "Tempo"],
+      labels: ["Kualitas", "Relevansi", "Koherensi"],
       datasets: [
         {
           label: "Skor Kandidat",
@@ -1059,11 +1059,11 @@ async function downloadPDF() {
       blue
     );
     const aspects = [
-      [
-        "Confidence Score",
-        aggregate.avgConfidence,
-        getScoreCategoryText(aggregate.avgConfidence),
-      ],
+      // [
+      //   "Confidence Score",
+      //   aggregate.avgConfidence,
+      //   getScoreCategoryText(aggregate.avgConfidence),
+      // ],
       [
         "Kualitas Jawaban",
         aggregate.avgKualitas,
@@ -1079,11 +1079,11 @@ async function downloadPDF() {
         aggregate.avgKoherensi,
         getScoreCategoryText(aggregate.avgKoherensi),
       ],
-      [
-        "Tempo Bicara",
-        aggregate.avgTempo,
-        getScoreCategoryText(aggregate.avgTempo),
-      ],
+      // [
+      //   "Tempo Bicara",
+      //   aggregate.avgTempo,
+      //   getScoreCategoryText(aggregate.avgTempo),
+      // ],
     ];
     yPos = drawTable(
       doc,
@@ -1148,11 +1148,11 @@ async function downloadPDF() {
       yPos += qLines.length * 5 + 5;
 
       const scores = [
-        ["Confidence Score", item.result.penilaian.confidence_score],
+        // ["Confidence Score", item.result.penilaian.confidence_score],
         ["Kualitas Jawaban", item.result.penilaian.kualitas_jawaban],
         ["Relevansi", item.result.penilaian.relevansi],
         ["Koherensi", item.result.penilaian.koherensi],
-        ["Tempo Bicara", item.result.penilaian.tempo_bicara],
+        // ["Tempo Bicara", item.result.penilaian.tempo_bicara],
         ["Total Skor", item.result.penilaian.total],
       ];
       yPos = drawTable(
