@@ -26,7 +26,7 @@ body {
     background: #0052d3;
     padding: 25px 30px;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     margin-bottom: 25px;
     display: flex;
     justify-content: space-between;
@@ -100,62 +100,101 @@ body {
 }
 
 .card {
-    background: linear-gradient(145deg, #ffffff, #f9fafc);
-    border-radius: 15px;
-    padding: 20px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+    border-radius: 18px;
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
 .card-title {
-    font-size: 16px;
-    color: #2d3748;
+    font-size: 18px;
     font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 12px;
 }
 
 .card-title i {
-    color: #667eea;
-    background: #e0e7ff;
-    padding: 8px;
-    border-radius: 10px;
-    font-size: 16px;
-    transition: 0.3s ease;
+    background: #eef2ff;
+    color: #5a67d8;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 12px;
 }
 
-.card:hover .card-title i {
-    background: #667eea;
-    color: white;
+.card-wide {
+    grid-column: span 2;
 }
 
-.card-content {
-    font-size: 16px;
-    color: #2d3748;
-    background: transparent;
-    padding: 15px;
-    border-radius: 10px;
+.full-width-card {
+    grid-column: 1 / -1;
+}
+
+/* =========================================================
+   CHEATING DETECTION BLOCK
+========================================================= */
+#cheating-detect {
+    border-radius: 12px;
+    padding: 25px 20px;
     text-align: center;
-    font-weight: 700;
-    min-height: 140px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #1a3d1a;
     line-height: 1.6;
+}
+
+#cheating-detect b {
+    font-size: 18px;
+    color: #0f5132;
+}
+
+/* =========================================================
+   NON-VERBAL ANALYSIS BLOCK
+========================================================= */
+#nonverbal-analysis {
+    padding: 20px 10px;
+    text-align: center;
+    line-height: 1.7;
+    font-size: 15px;
+    color: #2d3748;
+}
+
+#nonverbal-analysis h3,
+#nonverbal-analysis .title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1f2937;
+}
+
+/* =========================================================
+   FINAL SCORE BLOCK
+========================================================= */
+#final-score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+}
+
+#scoreImage {
+    width: 90px;
+    height: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+#final-decision {
+    margin-top: 12px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #c53030;
 }
 
 /* =========================================================
    SCORE & ASPECTS SECTION
 ========================================================= */
-
 .card-header-with-score {
     display: flex;
     justify-content: space-between;
@@ -172,29 +211,29 @@ body {
 
 .aspects-container {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Ubah menjadi 50:50 */
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
     margin-bottom: 30px;
-    align-items: center; /* Tambahkan ini */
+    align-items: center;
 }
 
 .radar-section {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px; /* Tambahkan padding */
+    padding: 20px;
 }
 
 .radar-section .chart-container {
-    width: 100%; /* Tambahkan ini */
-    max-width: 500px; /* Batas maksimal untuk radar */
-    margin: 0 auto; /* Center radar */
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .details-section {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center vertikal */
+    justify-content: center;
 }
 
 .aspect-detail-item {
@@ -248,23 +287,12 @@ body {
     text-align: right;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .aspects-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .radar-section {
-        order: -1; /* Radar di atas pada mobile */
-    }
-}
-
 /* =========================================================
    SUMMARY SECTION
 ========================================================= */
 .summary-cards {
     display: grid;
-    grid-template-columns: 2fr 2fr; /* Rasio 1 : 1 : 2 */
+    grid-template-columns: 1fr 3fr;
     gap: 20px;
     margin-top: 20px;
 }
@@ -274,6 +302,8 @@ body {
     border: 1px solid #e2e8f0;
     padding: 20px;
     border-radius: 12px;
+    display: flex;
+    flex-direction: column;
 }
 
 .summary-card.llm-card {
@@ -297,9 +327,16 @@ body {
 }
 
 .summary-value {
-    font-size: 28px;
+    font-size: 48px;
     font-weight: bold;
     color: #2d3748;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    letter-spacing: -2px;
 }
 
 .llm-text {
@@ -307,44 +344,6 @@ body {
     color: #2d3748;
     line-height: 1.6;
     white-space: pre-wrap;
-}
-
-/* =========================================================
-   RESPONSIVE DESIGN
-========================================================= */
-@media (max-width: 1024px) {
-    .aspects-container {
-        grid-template-columns: 1fr;
-    }
-    .summary-cards {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .header-actions {
-        width: 100%;
-    }
-    .btn {
-        flex: 1;
-        justify-content: center;
-    }
-    .dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-    .score-range-container-horizontal {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
-    .score-range-container-horizontal {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* =========================================================
@@ -371,7 +370,7 @@ body {
 
 .score-range-item-compact:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .score-range-item-compact.excellent {
@@ -437,17 +436,25 @@ body {
     font-weight: 600;
 }
 
-.score-range-item-compact.excellent .score-range-value { color: #10b981; }
-.score-range-item-compact.good .score-range-value { color: #3b82f6; }
-.score-range-item-compact.fair .score-range-value { color: #f59e0b; }
-.score-range-item-compact.poor .score-range-value { color: #ef4444; }
+.score-range-item-compact.excellent .score-range-value {
+    color: #10b981;
+}
+
+.score-range-item-compact.good .score-range-value {
+    color: #3b82f6;
+}
+
+.score-range-item-compact.fair .score-range-value {
+    color: #f59e0b;
+}
+
+.score-range-item-compact.poor .score-range-value {
+    color: #ef4444;
+}
 
 /* =========================================================
-   ADDITIONAL ELEMENTS
+   DECISION CARD
 ========================================================= */
-
-.card-wide { grid-column: span 2; }
-
 .decision-card {
     background: linear-gradient(145deg, #ebf8ff, #bee3f8);
     border: 1px solid #90cdf4;
@@ -459,6 +466,9 @@ body {
     color: #2b6cb0;
 }
 
+/* =========================================================
+   STATS & CHARTS
+========================================================= */
 .score-image {
     width: 100px;
     height: auto;
@@ -488,43 +498,11 @@ body {
     font-size: 16px;
 }
 
-.keyword-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.keyword-tag {
-    background: #edf2f7;
-    color: #4a5568;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
-}
-
 .chart-container {
     position: relative;
     height: 300px;
     margin-top: 20px;
 }
-
-.insight-box {
-    background: #f7fafc;
-    border-left: 4px solid #667eea;
-    padding: 20px;
-    border-radius: 8px;
-    margin-top: 15px;
-}
-
-.insight-box p {
-    color: #4a5568;
-    line-height: 1.7;
-    font-size: 14px;
-}
-
-.full-width-card { grid-column: 1 / -1; }
 
 .progress-bar {
     width: 100%;
@@ -542,6 +520,45 @@ body {
     transition: width 0.5s ease;
 }
 
+/* =========================================================
+   KEYWORDS & TAGS
+========================================================= */
+.keyword-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.keyword-tag {
+    background: #edf2f7;
+    color: #4a5568;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* =========================================================
+   INSIGHT BOX
+========================================================= */
+.insight-box {
+    background: #f7fafc;
+    border-left: 4px solid #667eea;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.insight-box p {
+    color: #4a5568;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+/* =========================================================
+   EMOJI CHART
+========================================================= */
 .emoji-chart {
     display: flex;
     justify-content: space-around;
@@ -549,7 +566,9 @@ body {
     text-align: center;
 }
 
-.emoji-item { flex: 1; }
+.emoji-item {
+    flex: 1;
+}
 
 .emoji-icon {
     font-size: 48px;
@@ -584,11 +603,11 @@ body {
     justify-content: space-between;
     align-items: center;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .transcript-header:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transform: translateY(-1px);
 }
 
@@ -639,17 +658,66 @@ body {
     padding-top: 20px;
 }
 
-/* Responsive untuk transcript */
+/* =========================================================
+   RESPONSIVE DESIGN
+========================================================= */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .aspects-container {
+        grid-template-columns: 1fr;
+    }
+
+    .radar-section {
+        order: -1;
+    }
+
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .btn {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .score-range-container-horizontal {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
     .transcript-header {
         padding: 15px 20px;
     }
-    
+
     .transcript-header-title {
         font-size: 14px;
     }
-    
+
     .transcript-toggle {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .score-range-container-horizontal {
+        grid-template-columns: 1fr;
     }
 }

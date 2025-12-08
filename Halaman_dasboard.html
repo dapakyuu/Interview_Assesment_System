@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Dashboard Analisis Interview - AI Interview Platform</title>
+
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
@@ -11,16 +13,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <link rel="stylesheet" href="Halaman_dasboard.css" />
   </head>
+
   <body>
     <div class="container">
       <!-- Header -->
       <div class="header">
         <div class="header-left">
-          <h1>
-            <i class="fas fa-chart-line"></i> Dashboard Analisis Interview
-          </h1>
+          <h1><i class="fas fa-chart-line"></i> Dashboard Analisis Interview</h1>
           <p>Platform AI Interview Assessment System</p>
         </div>
+
         <div class="header-actions">
           <button class="btn btn-primary" onclick="downloadJSON()">
             <i class="fas fa-download"></i> Download Json
@@ -29,6 +31,7 @@
           <button class="btn btn-secondary" onclick="downloadPDF()">
             <i class="fas fa-file-pdf"></i> Download Report
           </button>
+
           <a href="Upload.html">
             <button class="btn btn-outline" onclick="backToList()">
               <i class="fas fa-arrow-left"></i> Kembali
@@ -37,52 +40,8 @@
         </div>
       </div>
 
-      <!-- Dashboard Grid -->
-      <!-- <div class="dashboard-grid">
-            <div class="card">
-                <div class="card-title">
-                    <i class="fas fa-award"></i>
-                    Kategori Penilaian
-                </div>
-                <div class="score-range-container-horizontal">
-                    <div class="score-range-item-compact excellent">
-                        <div class="score-range-badge-compact">
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <div class="score-range-label">Luar Biasa</div>
-                        <div class="score-range-value">90 - 100</div>
-                    </div>
-                    
-                    <div class="score-range-item-compact good">
-                        <div class="score-range-badge-compact">
-                            <i class="fas fa-thumbs-up"></i>
-                        </div>
-                        <div class="score-range-label">Bagus</div>
-                        <div class="score-range-value">80 - 89</div>
-                    </div>
-                    
-                    <div class="score-range-item-compact fair">
-                        <div class="score-range-badge-compact">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="score-range-label">Cukup Bagus</div>
-                        <div class="score-range-value">70 - 79</div>
-                    </div>
-                    
-                    <div class="score-range-item-compact poor">
-                        <div class="score-range-badge-compact">
-                            <i class="fas fa-exclamation-circle"></i>
-                        </div>
-                        <div class="score-range-label">Tidak Bagus</div>
-                        <div class="score-range-value">< 70</div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
       <!-- Row 2 -->
       <div class="dashboard-grid">
-        <!-- Skor per Aspek -->
         <div class="card full-width-card">
           <div class="card-header-with-score">
             <div>
@@ -90,26 +49,27 @@
                 <i class="fas fa-chart-radar"></i>
                 Skor per Aspek Kompetensi
               </div>
-              <p style="color: #718096; font-size: 14px; margin-top: 5px">
+              <p style="color:#718096; font-size:14px; margin-top:5px">
                 Evaluasi mendalam terhadap berbagai aspek penilaian
               </p>
             </div>
+
             <div class="average-score-badge">
-              <div style="font-size: 12px; color: #667eea; margin-bottom: 5px">
+              <div style="font-size:12px; color:#667eea; margin-bottom:5px">
                 Rata-rata Skor
               </div>
               <div
-                style="font-size: 32px; font-weight: bold; color: #667eea"
+                style="font-size:32px; font-weight:bold; color:#667eea"
                 id="averageScore"
               >
-                86
+                -
               </div>
             </div>
           </div>
 
           <div class="aspects-container">
             <div class="radar-section">
-              <div class="chart-container" style="height: 300px">
+              <div class="chart-container" style="height:300px">
                 <canvas id="radarChart"></canvas>
               </div>
             </div>
@@ -117,17 +77,18 @@
             <div class="details-section">
               <div
                 style="
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                  margin-bottom: 20px;
-                  color: #667eea;
-                  font-weight: 600;
+                  display:flex;
+                  align-items:center;
+                  gap:8px;
+                  margin-bottom:20px;
+                  color:#667eea;
+                  font-weight:600;
                 "
               >
                 <i class="fas fa-arrow-trend-up"></i>
                 Detail Penilaian
               </div>
+
               <div id="aspectDetailsList"></div>
             </div>
           </div>
@@ -135,15 +96,8 @@
           <div class="summary-cards">
             <div class="summary-card">
               <div class="summary-label">Confidence Score</div>
-              <!-- <div class="summary-title" id="highestAspect">Kepercayaan Diri</div> -->
-              <div class="summary-value" id="highestScore">90</div>
+              <div class="summary-value" id="highestScore">-</div>
             </div>
-
-            <!-- <div class="summary-card">
-                        <div class="summary-label">Perlu Peningkatan</div>
-                        <div class="summary-title" id="lowestAspect">Kesiapan</div>
-                        <div class="summary-value" id="lowestScore">82</div>
-                    </div> -->
 
             <div class="summary-card llm-card">
               <div class="summary-label">Analisis LLM</div>
@@ -161,21 +115,16 @@
             <i class="fas fa-eye"></i>
             Cheating Detection
           </div>
-          <div class="card-content" id="cheating-detect">
-            <!-- Tidak -->
-          </div>
+          <div class="card-content" id="cheating-detect"></div>
         </div>
 
         <!-- Analisis Non-Verbal -->
-
         <div class="card card-wide">
           <div class="card-title">
             <i class="fas fa-user"></i>
             Analisis Non-Verbal
           </div>
-          <div class="card-content" id="nonverbal-analysis">
-            <!-- Ekspresi wajah menunjukkan kepercayaan diri dan konsistensi jawaban. -->
-          </div>
+          <div class="card-content" id="nonverbal-analysis"></div>
         </div>
 
         <!-- Penilaian Akhir -->
@@ -184,80 +133,65 @@
             <i class="fas fa-star"></i>
             Penilaian Akhir (1 - 5)
           </div>
+
           <div class="card-content" id="final-score">
             <img id="scoreImage" src="" alt="Score Icon" class="score-image" />
           </div>
-          <div class="card-content" id="final-decision">
-            <!-- Lulus -->
-          </div>
-        </div>
 
-        <!-- Keputusan Akhir -->
-        <!-- <div class="card decision-card">
-                <div class="card-title">
-                    <i class="fas fa-check-circle"></i>
-                    Keputusan Akhir
-                </div>
-            </div> -->
+          <div class="card-content" id="final-decision"></div>
+        </div>
       </div>
 
-      <!-- Row 3 -->
       <!-- Row 3: Confidence Scores -->
       <div class="dashboard-grid">
-        <!-- 1️⃣ Cheating Detection Confidence -->
+        <!-- Cheating Confidence -->
         <div class="card">
           <div class="card-title">
             <i class="fas fa-shield-alt"></i>
             Confidence score dari Cheating Detection
           </div>
           <div class="card-content" id="cheating-confidence-card">
-            <!-- ✅ ID BENAR (sudah dipanggil di JS line 131) -->
-            <div style="text-align: center; padding: 40px; color: #999">
-              <i class="fas fa-spinner fa-spin" style="font-size: 32px"></i>
-              <p style="margin-top: 10px">Loading...</p>
+            <div style="text-align:center; padding:40px; color:#999">
+              <i class="fas fa-spinner fa-spin" style="font-size:32px"></i>
+              <p style="margin-top:10px">Loading...</p>
             </div>
           </div>
         </div>
 
-        <!-- 2️⃣ Non-Verbal Analysis Confidence -->
+        <!-- Non-Verbal Confidence -->
         <div class="card">
           <div class="card-title">
             <i class="fas fa-user-check"></i>
             Confidence score dari analisis non verbal
           </div>
           <div class="card-content" id="nonverbal-confidence-card">
-            <!-- ✅ GANTI ID DARI "cheating-detect" → "nonverbal-confidence-card" -->
-            <div style="text-align: center; padding: 40px; color: #999">
-              <i class="fas fa-spinner fa-spin" style="font-size: 32px"></i>
-              <p style="margin-top: 10px">Loading...</p>
+            <div style="text-align:center; padding:40px; color:#999">
+              <i class="fas fa-spinner fa-spin" style="font-size:32px"></i>
+              <p style="margin-top:10px">Loading...</p>
             </div>
           </div>
         </div>
 
-        <!-- 3️⃣ Translation Confidence -->
+        <!-- Transcription Confidence -->
         <div class="card">
           <div class="card-title">
             <i class="fas fa-language"></i>
             Confidence score dari transkripsi video
           </div>
           <div class="card-content" id="transcription-confidence-card">
-            <div style="text-align: center; padding: 40px; color: #999">
-              <i class="fas fa-spinner fa-spin" style="font-size: 32px"></i>
-              <p style="margin-top: 10px">Loading...</p>
+            <div style="text-align:center; padding:40px; color:#999">
+              <i class="fas fa-spinner fa-spin" style="font-size:32px"></i>
+              <p style="margin-top:10px">Loading...</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Row 4 -->
-
-      <!-- Tambahkan container baru untuk transkrip dinamis -->
-      <div id="transcript-container">
-        <!-- Rows akan ditambahkan di sini -->
-      </div>
+      <!-- Row 4: Transcript -->
+      <div id="transcript-container"></div>
     </div>
 
     <script src="Halaman_dasboard.js"></script>
-    <!-- <script src="Halaman_dasboard_perid.js"></script> -->
+
   </body>
 </html>
