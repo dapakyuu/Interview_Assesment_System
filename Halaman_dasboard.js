@@ -4,7 +4,8 @@
 let interviewData = null;
 
 // const API_BASE_URL = "http://127.0.0.1:8888";
-const API_BASE_URL = "https://f3747c00f42f.ngrok-free.app";
+const API_BASE_URL =
+  "https://allena-untransfigured-anomalistically.ngrok-free.dev";
 
 // =========================================================
 // DATA LOADING
@@ -158,7 +159,6 @@ function calculateAggregateData() {
     avgKualitas: 0,
     avgRelevansi: 0,
     avgKoherensi: 0,
-    avgTempo: 0,
     avgTotal: 0,
   };
 
@@ -169,7 +169,6 @@ function calculateAggregateData() {
     aggregate.avgKualitas += p.kualitas_jawaban;
     aggregate.avgRelevansi += p.relevansi;
     aggregate.avgKoherensi += p.koherensi;
-    aggregate.avgTempo += p.tempo_bicara;
     aggregate.avgTotal += p.total;
   });
 
@@ -180,7 +179,6 @@ function calculateAggregateData() {
   aggregate.avgKualitas = Math.round(aggregate.avgKualitas / totalQuestions);
   aggregate.avgRelevansi = Math.round(aggregate.avgRelevansi / totalQuestions);
   aggregate.avgKoherensi = Math.round(aggregate.avgKoherensi / totalQuestions);
-  aggregate.avgTempo = Math.round(aggregate.avgTempo / totalQuestions);
   aggregate.avgTotal = Math.round(aggregate.avgTotal / totalQuestions);
 
   return aggregate;
@@ -203,11 +201,11 @@ function loadDashboardData() {
   updateFinalRating();
   updateTranscriptDisplay();
   createRadarChart();
-  
+
   // ✅ TAMBAHKAN FUNGSI BARU
   updateCheatingConfidenceCard();
   updateNonVerbalConfidenceCard();
-  updateTranslationConfidenceCard(); 
+  updateTranscriptionConfidenceCard();
   console.log("✅ Dashboard berhasil dimuat");
 }
 
@@ -224,7 +222,7 @@ function updateCheatingDisplay() {
   // Tentukan warna berdasarkan risk level
   let statusColor = "#28a745"; // Green (LOW RISK)
   let bgColor = "#d4edda";
-  
+
   if (agg.risk_level === "HIGH RISK") {
     statusColor = "#dc3545"; // Red
     bgColor = "#f8d7da";
@@ -289,12 +287,12 @@ function updateCheatingConfidenceCard() {
 
   const agg = interviewData.aggregate_cheating_analysis;
   const confScore = agg.average_confidence_score || 0;
-  
+
   // Determine color based on confidence level
   let confColor = "#28a745"; // Green
   let bgColor = "#d4edda";
   let statusText = "High Confidence";
-  
+
   if (confScore < 45) {
     confColor = "#dc3545"; // Red
     bgColor = "#f8d7da";
@@ -365,15 +363,15 @@ function getConfidenceBreakdown(agg) {
   // If we have per-video confidence data
   if (interviewData?.content && interviewData.content.length > 0) {
     let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
-    
+
     interviewData.content.forEach((item, index) => {
       const videoConf = item.result?.cheating_confidence_score || 0;
-      const videoConfLevel = item.result?.cheating_confidence_level || 'N/A';
-      
+      const videoConfLevel = item.result?.cheating_confidence_level || "N/A";
+
       let barColor = "#28a745";
       if (videoConf < 60) barColor = "#ffc107";
       if (videoConf < 45) barColor = "#dc3545";
-      
+
       html += `
         <div style="display: flex; align-items: center; gap: 10px;">
           <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
@@ -388,11 +386,11 @@ function getConfidenceBreakdown(agg) {
         </div>
       `;
     });
-    
-    html += '</div>';
+
+    html += "</div>";
     return html;
   }
-  
+
   // Fallback: show only average
   return `
     <div style="text-align: center; font-size: 12px; color: #666;">
@@ -420,15 +418,15 @@ function getConfidenceBreakdown(agg) {
   // If we have per-video confidence data
   if (interviewData?.content && interviewData.content.length > 0) {
     let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
-    
+
     interviewData.content.forEach((item, index) => {
       const videoConf = item.result?.cheating_confidence_score || 0;
-      const videoConfLevel = item.result?.cheating_confidence_level || 'N/A';
-      
+      const videoConfLevel = item.result?.cheating_confidence_level || "N/A";
+
       let barColor = "#28a745";
       if (videoConf < 60) barColor = "#ffc107";
       if (videoConf < 45) barColor = "#dc3545";
-      
+
       html += `
         <div style="display: flex; align-items: center; gap: 10px;">
           <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
@@ -443,11 +441,11 @@ function getConfidenceBreakdown(agg) {
         </div>
       `;
     });
-    
-    html += '</div>';
+
+    html += "</div>";
     return html;
   }
-  
+
   // Fallback: show only average
   return `
     <div style="text-align: center; font-size: 12px; color: #666;">
@@ -483,10 +481,10 @@ function updateNonVerbalConfidenceCard() {
   const agg = interviewData.aggregate_non_verbal_analysis;
   const confScore = agg.overall_confidence_score || 0;
   const confLevel = agg.overall_performance_status || "N/A";
-  
+
   let confColor = "#28a745";
   let bgColor = "#d4edda";
-  
+
   if (confScore < 45) {
     confColor = "#dc3545";
     bgColor = "#f8d7da";
@@ -541,14 +539,14 @@ function updateNonVerbalConfidenceCard() {
 function getNonVerbalBreakdown() {
   if (interviewData?.content && interviewData.content.length > 0) {
     let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
-    
+
     interviewData.content.forEach((item, index) => {
       const nvConf = item.result?.non_verbal_confidence_score || 0;
-      
+
       let barColor = "#28a745";
       if (nvConf < 60) barColor = "#ffc107";
       if (nvConf < 45) barColor = "#dc3545";
-      
+
       html += `
         <div style="display: flex; align-items: center; gap: 10px;">
           <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
@@ -563,46 +561,51 @@ function getNonVerbalBreakdown() {
         </div>
       `;
     });
-    
-    html += '</div>';
+
+    html += "</div>";
     return html;
   }
-  
+
   return '<div style="text-align: center; font-size: 12px; color: #666;">No detailed breakdown available</div>';
 }
 
 function getNonVerbalExplanation(score) {
-  if (score >= 85) return "Excellent non-verbal analysis with high-quality facial, speech, and eye tracking data.";
-  if (score >= 75) return "Good analysis quality with reliable non-verbal indicators detected.";
-  if (score >= 60) return "Moderate quality - some non-verbal features may be limited.";
+  if (score >= 85)
+    return "Excellent non-verbal analysis with high-quality facial, speech, and eye tracking data.";
+  if (score >= 75)
+    return "Good analysis quality with reliable non-verbal indicators detected.";
+  if (score >= 60)
+    return "Moderate quality - some non-verbal features may be limited.";
   if (score >= 45) return "Low quality - limited non-verbal data captured.";
   return "Very low quality - non-verbal analysis may be unreliable.";
 }
 
 // ============================================================================
-// ✅ NEW: Translation Confidence Card  
+// ✅ UPDATED: Transcription Confidence Card (was Translation Confidence Card)
 // ============================================================================
-function updateTranslationConfidenceCard() {
-  const confidenceCard = document.getElementById("translation-confidence-card");
+function updateTranscriptionConfidenceCard() {
+  const confidenceCard = document.getElementById(
+    "transcription-confidence-card"
+  );
   if (!confidenceCard || !interviewData?.content) return;
 
-  // Calculate average translation confidence
+  // Calculate average transcription confidence
   let totalConf = 0;
   let count = 0;
-  
-  interviewData.content.forEach(item => {
-    if (item.result?.translation_confidence_score) {
-      totalConf += item.result.translation_confidence_score;
+
+  interviewData.content.forEach((item) => {
+    if (item.result?.transkripsi_confidence) {
+      totalConf += item.result.transkripsi_confidence;
       count++;
     }
   });
-  
+
   const avgConf = count > 0 ? Math.round(totalConf / count) : 0;
-  
+
   let confColor = "#28a745";
   let bgColor = "#d4edda";
   let confLevel = "Very High";
-  
+
   if (avgConf < 45) {
     confColor = "#dc3545";
     bgColor = "#f8d7da";
@@ -625,7 +628,7 @@ function updateTranslationConfidenceCard() {
     <div style="padding: 20px;">
       <div style="text-align: center; margin-bottom: 20px;">
         <div style="font-size: 14px; color: #666; margin-bottom: 8px;">
-          Translation Quality Score
+          Transcription Confidence Score
         </div>
         <div style="font-size: 48px; font-weight: bold; color: ${confColor};">
           ${avgConf}%
@@ -643,32 +646,32 @@ function updateTranslationConfidenceCard() {
 
       <div style="background: ${bgColor}; padding: 15px; border-radius: 8px;">
         <div style="font-size: 13px; font-weight: 600; color: #333; margin-bottom: 10px;">
-          📊 Per-Video Quality:
+          📊 Per-Video Confidence:
         </div>
-        ${getTranslationBreakdown()}
+        ${getTranscriptionBreakdown()}
       </div>
 
       <div style="margin-top: 15px; padding: 12px; background: #f8f9fa; border-left: 3px solid ${confColor}; border-radius: 4px;">
         <div style="font-size: 12px; color: #666; line-height: 1.6;">
-          <strong>ℹ️ Translation Reliability:</strong><br/>
-          ${getTranslationExplanation(avgConf)}
+          <strong>ℹ️ Transcription Reliability:</strong><br/>
+          ${getTranscriptionExplanation(avgConf)}
         </div>
       </div>
     </div>
   `;
 }
 
-function getTranslationBreakdown() {
+function getTranscriptionBreakdown() {
   if (interviewData?.content && interviewData.content.length > 0) {
     let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
-    
+
     interviewData.content.forEach((item, index) => {
-      const transConf = item.result?.translation_confidence_score || 0;
-      
+      const transConf = item.result?.transkripsi_confidence || 0;
+
       let barColor = "#28a745";
       if (transConf < 60) barColor = "#ffc107";
       if (transConf < 45) barColor = "#dc3545";
-      
+
       html += `
         <div style="display: flex; align-items: center; gap: 10px;">
           <div style="flex: 0 0 80px; font-size: 11px; color: #666;">
@@ -683,22 +686,25 @@ function getTranslationBreakdown() {
         </div>
       `;
     });
-    
-    html += '</div>';
+
+    html += "</div>";
     return html;
   }
-  
-  return '<div style="text-align: center; font-size: 12px; color: #666;">No translation data available</div>';
+
+  return '<div style="text-align: center; font-size: 12px; color: #666;">No transcription data available</div>';
 }
 
-function getTranslationExplanation(score) {
-  if (score >= 85) return "Excellent translation quality with high accuracy and natural language flow.";
-  if (score >= 75) return "Good translation quality - minor nuances may be simplified.";
-  if (score >= 60) return "Acceptable translation - some context may be lost.";
-  if (score >= 45) return "Low quality translation - manual review recommended.";
-  return "Very low quality - translation may be unreliable.";
+function getTranscriptionExplanation(score) {
+  if (score >= 85)
+    return "Excellent transcription quality with very high accuracy from the speech-to-text model.";
+  if (score >= 75)
+    return "Good transcription quality - the model is confident in the recognized speech.";
+  if (score >= 60)
+    return "Acceptable transcription - some words may have lower confidence due to audio quality.";
+  if (score >= 45)
+    return "Low quality transcription - audio quality or speech clarity may be poor. Manual review recommended.";
+  return "Very low quality - transcription may be unreliable due to poor audio or unclear speech.";
 }
-
 
 function updateNonVerbalDisplay() {
   const nonVerbalElement = document.getElementById("nonverbal-analysis");
@@ -718,8 +724,6 @@ function updateNonVerbalDisplay() {
 
   nonVerbalElement.innerHTML = output.trim();
 }
-
-
 
 function updateFinalDecision() {
   const decisionElement = document.getElementById("final-decision");
@@ -774,39 +778,33 @@ function updateAspectDetails() {
 }
 
 function updateSummaryCards() {
-  const aggregate = calculateAggregateData();
-  const aspects = [
-    // { label: "Confidence Score", score: aggregate.avgConfidence },
-    { label: "Kualitas Jawaban", score: aggregate.avgKualitas },
-    { label: "Relevansi", score: aggregate.avgRelevansi },
-    { label: "Koherensi", score: aggregate.avgKoherensi },
-    // { label: "Tempo Bicara", score: aggregate.avgTempo },
-  ];
+  // ✅ Ambil data dari llm_results (hanya 2 field: confidence & kesimpulan)
+  const llmResults = interviewData.llm_results;
 
-  // Update skor rata-rata total
-  document.getElementById("averageScore").textContent = aggregate.avgTotal;
+  if (!llmResults) {
+    console.warn("⚠️ llm_results tidak tersedia");
+    // Fallback ke perhitungan manual jika llm_results tidak ada
+    const aggregate = calculateAggregateData();
+    document.getElementById("highestScore").textContent =
+      aggregate.avgConfidence;
+    document.getElementById("analisisllm").textContent =
+      "Kesimpulan LLM tidak tersedia.";
+    return;
+  }
 
-  // Aspek tertinggi
-  const maxScore = Math.max(...aspects.map(a => a.score));
-  const maxAspect = aspects.find(a => a.score === maxScore);
-  // document.getElementById("highestAspect").textContent = maxAspect.label;
-  document.getElementById("highestScore").textContent = maxScore;
+  // ✅ 1. Update Confidence Score LLM
+  const avgConfidence = llmResults.rata_rata_confidence_score || 0;
+  document.getElementById("highestScore").textContent = avgConfidence;
 
-  // Aspek terendah
-  const minScore = Math.min(...aspects.map(a => a.score));
-  const minAspect = aspects.find(a => a.score === minScore);
-  // document.getElementById("lowestAspect").textContent = minAspect.label;
-  // document.getElementById("lowestScore").textContent = minScore;
+  // ✅ 2. Update Kesimpulan LLM
+  const kesimpulanLLM =
+    llmResults.kesimpulan_llm || "Kesimpulan LLM tidak tersedia.";
+  document.getElementById("analisisllm").textContent = kesimpulanLLM;
 
-  // Ambil index terakhir
-  const lastIndex = interviewData.content.length - 1;
-
-  // 🔥 Ambil analisis LLM sesuai JSON kamu
-  const analysisLLM =
-    interviewData.content[lastIndex].result.penilaian.analisis_llm;
-
-  // Tampilkan ke HTML
-  document.getElementById("analisisllm").textContent = analysisLLM;
+  console.log("✅ Summary cards updated from llm_results:", {
+    avgConfidence,
+    kesimpulanLength: kesimpulanLLM.length,
+  });
 }
 
 function updateTranscriptDisplay() {
