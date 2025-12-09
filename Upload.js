@@ -10,6 +10,9 @@ let clearAllVideoBtn;
 let isSubmittingVideo = false;
 let lastSubmitTime = 0;
 
+// Language
+let languageSelect, languageSelectJSON;
+
 // JSON
 let fileInputJSON, previewGridJSON, statusAreaJSON;
 let selectedFilesJSON = [];
@@ -27,9 +30,9 @@ const SESSION_STORAGE_KEY = "video_processing_session";
 
 // jika menggunakan ngrok, ganti dengan URL ngrok Anda
 const VIDEO_ENDPOINT =
-  "https://c9032efccb59.ngrok-free.app/upload";
+  "https://allena-untransfigured-anomalistically.ngrok-free.dev/upload";
 const API_BASE_URL =
-  "https://c9032efccb59.ngrok-free.app";
+  "https://allena-untransfigured-anomalistically.ngrok-free.dev";
 
 /* ============================
    HELPERS
@@ -147,6 +150,91 @@ function updateSendJSONButtonMode() {
 }
 
 /* ============================
+   FLAG UPDATE HANDLERS
+   ============================ */
+function initCustomSelect(displayId, optionsId, hiddenInputId) {
+  const display = document.getElementById(displayId);
+  const optionsContainer = document.getElementById(optionsId);
+  const hiddenInput = document.getElementById(hiddenInputId);
+
+  if (!display || !optionsContainer || !hiddenInput) return;
+
+  // Toggle dropdown
+  display.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    // Close other dropdowns
+    document.querySelectorAll(".custom-options.show").forEach((opt) => {
+      if (opt !== optionsContainer) {
+        opt.classList.remove("show");
+        opt.previousElementSibling?.classList.remove("active");
+      }
+    });
+
+    // Toggle current dropdown
+    optionsContainer.classList.toggle("show");
+    display.classList.toggle("active");
+  });
+
+  // Handle option selection
+  const options = optionsContainer.querySelectorAll(".custom-option");
+  options.forEach((option) => {
+    option.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const value = option.getAttribute("data-value");
+      const flagCode = option.getAttribute("data-flag");
+      const text = option.textContent.trim();
+
+      // Update hidden input
+      hiddenInput.value = value;
+
+      // Update display
+      const selectedOption = display.querySelector(".selected-option");
+      if (flagCode) {
+        selectedOption.innerHTML = `<span class="fi fi-${flagCode}"></span> ${text}`;
+      } else {
+        selectedOption.innerHTML = text;
+      }
+
+      // Remove selected class from all options
+      options.forEach((opt) => opt.classList.remove("selected"));
+
+      // Add selected class to current option
+      option.classList.add("selected");
+
+      // Close dropdown
+      optionsContainer.classList.remove("show");
+      display.classList.remove("active");
+
+      console.log(`Selected language: ${value} (${text})`);
+    });
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", () => {
+    optionsContainer.classList.remove("show");
+    display.classList.remove("active");
+  });
+}
+
+function initFlagHandlers() {
+  // Initialize custom select for video language
+  initCustomSelect(
+    "languageSelectDisplay",
+    "languageOptions",
+    "languageSelect"
+  );
+
+  // Initialize custom select for JSON language
+  initCustomSelect(
+    "languageSelectJSONDisplay",
+    "languageOptionsJSON",
+    "languageSelectJSON"
+  );
+}
+
+/* ============================
    VIDEO HANDLERS
    ============================ */
 function handleFilesVideo(fileList) {
@@ -260,11 +348,30 @@ function clearAllVideo() {
     } catch (e) {}
   });
   selectedFilesVideo = [];
-  videoQuestions = []; // NEW: Reset pertanyaan
+  videoQuestions = [];
   objectUrlsVideo = [];
   if (previewGridVideo) previewGridVideo.innerHTML = "";
   if (statusAreaVideo) resetStatus(statusAreaVideo, "Tidak ada file dipilih.");
   if (participantNameInput) participantNameInput.value = "";
+
+  // Reset language select
+  const languageSelect = document.getElementById("languageSelect");
+  const languageDisplay = document.getElementById("languageSelectDisplay");
+  if (languageSelect) languageSelect.value = "";
+  if (languageDisplay) {
+    const selectedOption = languageDisplay.querySelector(".selected-option");
+    if (selectedOption) {
+      selectedOption.innerHTML = '<i class="fas fa-globe"></i> Pilih bahasa';
+    }
+  }
+
+  // Remove selected class from options
+  document
+    .querySelectorAll("#languageOptions .custom-option")
+    .forEach((opt) => {
+      opt.classList.remove("selected");
+    });
+
   updateClearButtonsVisibility();
 }
 
@@ -539,6 +646,10 @@ async function buildAndSendVideo() {
   const name = participantNameInput.value.trim();
   if (!name) return alert("Nama Peserta wajib diisi.");
 
+  // NEW: Validasi bahasa
+  const language = languageSelect?.value;
+  if (!language) return alert("Pilih bahasa wajib diisi.");
+
   // NEW: Validasi pertanyaan
   const emptyQuestions = [];
   videoQuestions.forEach((q, idx) => {
@@ -562,6 +673,78 @@ async function buildAndSendVideo() {
     "temp_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
 
   try {
+    // ✅ NEW: Translate questions to English if language is Indonesian
+    let questionsToSend = [...videoQuestions]; // Clone array
+
+    if (language === "id") {
+      console.log("🌐 Translating questions from Indonesian to English...");
+      showLoading(
+        `Translating ${videoQuestions.length} question(s) to English...\n\nPlease wait...`
+      );
+
+      try {
+        // ✅ GOOGLE TRANSLATE API (Free)
+        const translationPromises = videoQuestions.map(
+          async (question, idx) => {
+            const trimmedQuestion = question.trim();
+
+            // Google Translate API endpoint (free, no API key needed for basic usage)
+            const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=id&tl=en&dt=t&q=${encodeURIComponent(
+              trimmedQuestion
+            )}`;
+
+            const response = await fetch(url, {
+              method: "GET",
+            });
+
+            if (!response.ok) {
+              throw new Error(`Translation failed for question ${idx + 1}`);
+            }
+
+            const data = await response.json();
+
+            // Parse Google Translate response
+            // Response format: [[[translated_text, original_text, null, null, 10]], null, "id", ...]
+            const translatedText = data[0][0][0];
+
+            console.log(
+              `✅ Question ${
+                idx + 1
+              } translated: "${trimmedQuestion}" → "${translatedText}"`
+            );
+            return translatedText;
+          }
+        );
+
+        questionsToSend = await Promise.all(translationPromises);
+        console.log(
+          `✅ All ${questionsToSend.length} questions translated successfully`
+        );
+      } catch (translateError) {
+        console.error("❌ Translation error:", translateError);
+
+        // Ask user if they want to continue without translation
+        const continueWithoutTranslation = confirm(
+          `⚠️ Gagal menerjemahkan pertanyaan ke bahasa Inggris.\n\n` +
+            `Error: ${translateError.message}\n\n` +
+            `Apakah Anda ingin melanjutkan dengan pertanyaan dalam bahasa Indonesia?\n\n` +
+            `⚠️ CATATAN: Hasil analisis mungkin kurang akurat jika pertanyaan tidak dalam bahasa Inggris.`
+        );
+
+        if (!continueWithoutTranslation) {
+          throw new Error("Translation cancelled by user");
+        }
+
+        // Continue with original Indonesian questions
+        console.log(
+          "⚠️ Continuing with Indonesian questions (translation failed)"
+        );
+        questionsToSend = [...videoQuestions];
+      }
+    } else {
+      console.log("🌐 Language is English, no translation needed");
+    }
+
     // PHASE 1: Upload - SHOW loading here
     showLoading(
       `Uploading ${selectedFilesVideo.length} video(s)...\n\nPlease wait, do not close this page.`
@@ -570,15 +753,18 @@ async function buildAndSendVideo() {
 
     const formData = new FormData();
     formData.append("candidate_name", name);
+    formData.append("language", language); // Original language
 
-    // NEW: Tambahkan pertanyaan untuk setiap video
+    // ✅ CHANGED: Append translated questions (or original if translation failed)
     selectedFilesVideo.forEach((file, idx) => {
       formData.append("videos", file);
-      formData.append("questions", videoQuestions[idx].trim());
+      formData.append("questions", questionsToSend[idx].trim()); // Use translated questions
     });
 
     console.log(
-      `📤 Uploading ${selectedFilesVideo.length} video(s) with questions...`
+      `📤 Uploading ${selectedFilesVideo.length} video(s) with questions (${
+        language === "id" ? "translated to English" : "original English"
+      }) and language: ${language}...`
     );
 
     const controller = new AbortController();
@@ -677,7 +863,10 @@ async function buildAndSendVideo() {
 
     let errorMessage = "Gagal mengirim video ke server.\n\n";
 
-    if (err.message.includes("Network error")) {
+    if (err.message.includes("Translation cancelled")) {
+      errorMessage =
+        "Upload dibatalkan.\n\nTerjemahan pertanyaan gagal dan pengguna memilih untuk tidak melanjutkan.";
+    } else if (err.message.includes("Network error")) {
       errorMessage += "Penyebab: Koneksi jaringan terputus.\n\n";
       errorMessage += "Solusi:\n";
       errorMessage +=
@@ -795,6 +984,28 @@ function clearAllJSON() {
   selectedFilesJSON = [];
   previewGridJSON.innerHTML = "";
   resetStatus(statusAreaJSON, "Belum ada file JSON dipilih.");
+
+  // Reset language select
+  const languageSelectJSON = document.getElementById("languageSelectJSON");
+  const languageDisplayJSON = document.getElementById(
+    "languageSelectJSONDisplay"
+  );
+  if (languageSelectJSON) languageSelectJSON.value = "";
+  if (languageDisplayJSON) {
+    const selectedOption =
+      languageDisplayJSON.querySelector(".selected-option");
+    if (selectedOption) {
+      selectedOption.innerHTML = '<i class="fas fa-globe"></i> Pilih bahasa';
+    }
+  }
+
+  // Remove selected class from options
+  document
+    .querySelectorAll("#languageOptionsJSON .custom-option")
+    .forEach((opt) => {
+      opt.classList.remove("selected");
+    });
+
   updateClearButtonsVisibility();
 }
 
@@ -816,6 +1027,10 @@ async function buildAndSendJSONFiles() {
   if (!selectedFilesJSON.length) {
     return alert("Pilih file JSON terlebih dahulu.");
   }
+
+  // NEW: Validasi bahasa
+  const language = languageSelectJSON?.value;
+  if (!language) return alert("Pilih bahasa wajib diisi.");
 
   isSubmittingJSON = true;
   lastSubmitTimeJSON = now;
@@ -864,6 +1079,9 @@ async function buildAndSendJSONFiles() {
       `Sending JSON data...\nCandidate: ${candidateName}\nVideos: ${interviews.length}\n\nPlease wait...`
     );
     resetStatus(statusAreaJSON, "Mengirim data ke server...");
+
+    // NEW: Add language to JSON data
+    jsonData.language = language;
 
     // Send to server
     const response = await fetch(`${VIDEO_ENDPOINT}_json`, {
@@ -966,6 +1184,7 @@ function initUploadModule() {
   previewGridVideo = document.getElementById("previewGridVideo");
   statusAreaVideo = document.getElementById("statusAreaVideo");
   participantNameInput = document.getElementById("participantName");
+  languageSelect = document.getElementById("languageSelect");
   clearAllVideoBtn = document.getElementById("clearAllVideoBtn");
   clearAllJSONBtn = document.getElementById("clearAllJSONBtn");
 
@@ -1010,6 +1229,7 @@ function initUploadModule() {
   fileInputJSON = document.getElementById("fileInputJSON");
   previewGridJSON = document.getElementById("previewGridJSON");
   statusAreaJSON = document.getElementById("statusAreaJSON");
+  languageSelectJSON = document.getElementById("languageSelectJSON");
   const uploadAreaJSON = document.getElementById("uploadAreaJSON");
 
   if (fileInputJSON) {
@@ -1057,6 +1277,9 @@ function initUploadModule() {
   // Set initial button modes
   updateSendVideoButtonMode();
   updateSendJSONButtonMode();
+
+  // Initialize flag handlers
+  initFlagHandlers();
 }
 
 let isInitialized = false;

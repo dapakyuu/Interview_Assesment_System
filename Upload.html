@@ -8,6 +8,10 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css"
+    />
     <link rel="stylesheet" href="Halaman_dasboard.css" />
     <link rel="stylesheet" href="Upload.css" />
 
@@ -84,26 +88,42 @@
             <i class="fas fa-file-video"></i> Upload Video
           </div>
 
-          <div
-            style="
-              margin-top: 8px;
-              margin-bottom: 8px;
-              display: flex;
-              gap: 12px;
-              align-items: center;
-              flex-wrap: wrap;
-            "
-          >
-            <label style="font-weight: 600"
-              >Nama Peserta<span class="required">*</span></label
-            >
-            <input
-              id="participantName"
-              class="small-input"
-              type="text"
-              placeholder="Masukkan nama peserta"
-              autocomplete="off"
-            />
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label"
+                >Nama Peserta<span class="required">*</span></label
+              >
+              <input
+                id="participantName"
+                class="form-input"
+                type="text"
+                placeholder="Masukkan nama peserta"
+                autocomplete="off"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label"
+                >Bahasa<span class="required">*</span></label
+              >
+              <div class="custom-select-wrapper">
+                <div class="custom-select" id="languageSelectDisplay">
+                  <span class="selected-option">
+                    <i class="fas fa-globe"></i> Pilih Bahasa
+                  </span>
+                  <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+                <div class="custom-options" id="languageOptions">
+                  <div class="custom-option" data-value="en" data-flag="gb">
+                    <span class="fi fi-gb"></span> English
+                  </div>
+                  <div class="custom-option" data-value="id" data-flag="id">
+                    <span class="fi fi-id"></span> Bahasa Indonesia
+                  </div>
+                </div>
+                <input type="hidden" id="languageSelect" value="" />
+              </div>
+            </div>
           </div>
 
           <div
@@ -158,6 +178,30 @@
         <div class="card upload-wrapper" id="jsonCard">
           <div class="card-title">
             <i class="fas fa-file-code"></i> Upload File JSON
+          </div>
+          <div class="form-grid" style="margin-bottom: 16px">
+            <div class="form-group">
+              <label class="form-label"
+                >Bahasa<span class="required">*</span></label
+              >
+              <div class="custom-select-wrapper">
+                <div class="custom-select" id="languageSelectJSONDisplay">
+                  <span class="selected-option">
+                    <i class="fas fa-globe"></i> Pilih Bahasa
+                  </span>
+                  <i class="fas fa-chevron-down dropdown-arrow"></i>
+                </div>
+                <div class="custom-options" id="languageOptionsJSON">
+                  <div class="custom-option" data-value="en" data-flag="gb">
+                    <span class="fi fi-gb"></span> English
+                  </div>
+                  <div class="custom-option" data-value="id" data-flag="id">
+                    <span class="fi fi-id"></span> Bahasa Indonesia
+                  </div>
+                </div>
+                <input type="hidden" id="languageSelectJSON" value="" />
+              </div>
+            </div>
           </div>
 
           <div
