@@ -5,7 +5,7 @@ let interviewData = null;
 
 // const API_BASE_URL = "http://127.0.0.1:8888";
 const API_BASE_URL =
-  "https://61cd979776e7.ngrok-free.app";
+  "https://allena-untransfigured-anomalistically.ngrok-free.dev";
 
 // =========================================================
 // DATA LOADING
@@ -714,7 +714,7 @@ function updateNonVerbalDisplay() {
 
   // Ambil data dari aggregate non-verbal batch
   const data = interviewData.aggregate_non_verbal_analysis;
-  
+
   if (!data) {
     nonVerbalElement.innerHTML = `
       <div style="padding: 20px; text-align: center; color: #95a5a6;">
@@ -728,13 +728,41 @@ function updateNonVerbalDisplay() {
 
   // Parse data metrics dari summary string
   const metrics = [
-    { label: 'Speaking Ratio', value: extractMetric(summary, /speaking ratio ([\d.]+)/), status: extractStatus(summary, /speaking ratio [\d.]+ \((.*?)\)/) },
-    { label: 'Pauses', value: extractMetric(summary, /pauses ([\d.]+)/), status: extractStatus(summary, /pauses [\d.]+ \((.*?)\)/) },
-    { label: 'Speech Rate', value: extractMetric(summary, /speech rate ([\d.]+)/) + ' wpm', status: extractStatus(summary, /speech rate [\d.]+ wpm \((.*?)\)/) },
-    { label: 'Smile Intensity', value: extractMetric(summary, /smile intensity = ([\d.]+)/), status: extractStatus(summary, /smile intensity = [\d.]+ \((.*?)\)/) },
-    { label: 'Eyebrow Movement', value: extractMetric(summary, /eyebrow movement = ([\d.]+)/), status: extractStatus(summary, /eyebrow movement = [\d.]+ \((.*?)\)/) },
-    { label: 'Eye Contact', value: extractMetric(summary, /eye contact = ([\d.]+)/) + '%', status: extractStatus(summary, /eye contact = [\d.]+% \((.*?)\)/) },
-    { label: 'Blink Rate', value: extractMetric(summary, /blink rate = ([\d.]+)/), status: extractStatus(summary, /blink rate = [\d.]+ \((.*?)\)/) }
+    {
+      label: "Speaking Ratio",
+      value: extractMetric(summary, /speaking ratio ([\d.]+)/),
+      status: extractStatus(summary, /speaking ratio [\d.]+ \((.*?)\)/),
+    },
+    {
+      label: "Pauses",
+      value: extractMetric(summary, /pauses ([\d.]+)/),
+      status: extractStatus(summary, /pauses [\d.]+ \((.*?)\)/),
+    },
+    {
+      label: "Speech Rate",
+      value: extractMetric(summary, /speech rate ([\d.]+)/) + " wpm",
+      status: extractStatus(summary, /speech rate [\d.]+ wpm \((.*?)\)/),
+    },
+    {
+      label: "Smile Intensity",
+      value: extractMetric(summary, /smile intensity = ([\d.]+)/),
+      status: extractStatus(summary, /smile intensity = [\d.]+ \((.*?)\)/),
+    },
+    {
+      label: "Eyebrow Movement",
+      value: extractMetric(summary, /eyebrow movement = ([\d.]+)/),
+      status: extractStatus(summary, /eyebrow movement = [\d.]+ \((.*?)\)/),
+    },
+    {
+      label: "Eye Contact",
+      value: extractMetric(summary, /eye contact = ([\d.]+)/) + "%",
+      status: extractStatus(summary, /eye contact = [\d.]+% \((.*?)\)/),
+    },
+    {
+      label: "Blink Rate",
+      value: extractMetric(summary, /blink rate = ([\d.]+)/),
+      status: extractStatus(summary, /blink rate = [\d.]+ \((.*?)\)/),
+    },
   ];
 
   const output = `
@@ -747,15 +775,27 @@ function updateNonVerbalDisplay() {
         </tr>
       </thead>
       <tbody>
-        ${metrics.map((metric, index) => `
-          <tr style="border-bottom: 1px solid #f1f3f5; ${index % 2 === 0 ? 'background: #ffffff;' : 'background: #f8f9fa;'}">
-            <td style="padding: 10px; color: #495057; text-align: justify;">${metric.label}</td>
-            <td style="padding: 10px; color: #212529; font-weight: 500; text-align: center;">${metric.value}</td>
+        ${metrics
+          .map(
+            (metric, index) => `
+          <tr style="border-bottom: 1px solid #f1f3f5; ${
+            index % 2 === 0 ? "background: #ffffff;" : "background: #f8f9fa;"
+          }">
+            <td style="padding: 10px; color: #495057; text-align: justify;">${
+              metric.label
+            }</td>
+            <td style="padding: 10px; color: #212529; font-weight: 500; text-align: center;">${
+              metric.value
+            }</td>
             <td style="padding: 10px; text-align: center;">
-              <span style="display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; ${getStatusStyle(metric.status)}">${metric.status || '-'}</span>
+              <span style="display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; ${getStatusStyle(
+                metric.status
+              )}">${metric.status || "-"}</span>
             </td>
           </tr>
-        `).join('')}
+        `
+          )
+          .join("")}
       </tbody>
     </table>
   `;
@@ -765,36 +805,43 @@ function updateNonVerbalDisplay() {
 
 function extractMetric(text, regex) {
   const match = text.match(regex);
-  return match ? match[1] : 'N/A';
+  return match ? match[1] : "N/A";
 }
 
 function extractStatus(text, regex) {
   const match = text.match(regex);
-  return match ? match[1] : '';
+  return match ? match[1] : "";
 }
 
 function getStatusStyle(status) {
   const lower = status.toLowerCase();
-  if (lower.includes('ideal') || lower.includes('good') || lower.includes('active')) {
-    return 'background: #d4edda; color: #155724;';
+  if (
+    lower.includes("ideal") ||
+    lower.includes("good") ||
+    lower.includes("active")
+  ) {
+    return "background: #d4edda; color: #155724;";
   }
-  if (lower.includes('normal') || lower.includes('neutral') || lower.includes('controlled')) {
-    return 'background: #d1ecf1; color: #0c5460;';
+  if (
+    lower.includes("normal") ||
+    lower.includes("neutral") ||
+    lower.includes("controlled")
+  ) {
+    return "background: #d1ecf1; color: #0c5460;";
   }
-  if (lower.includes('high')) {
-    return 'background: #fff3cd; color: #856404;';
+  if (lower.includes("high")) {
+    return "background: #fff3cd; color: #856404;";
   }
-  return 'background: #e2e3e5; color: #383d41;';
+  return "background: #e2e3e5; color: #383d41;";
 }
 
 function updateFinalDecision() {
   const decisionElement = document.getElementById("final-decision");
   if (!decisionElement) return;
 
-
   const projectScore = 100;
-  const interviewScore = interviewData.llm_results.avg_total_llm; 
-  const totalScore = (projectScore * 0.7) + (interviewScore * 0.3);
+  const interviewScore = interviewData.llm_results.avg_total_llm;
+  const totalScore = projectScore * 0.7 + interviewScore * 0.3;
   let scoreLabel = "";
   if (totalScore > 90) {
     scoreLabel = "Sangat Baik";
@@ -821,15 +868,13 @@ function updateFinalDecision() {
   `;
 }
 
-
-
 function updateFinalRating() {
   const scoreImageElement = document.getElementById("scoreImage");
   if (!scoreImageElement) return;
 
   const projectScore = 100;
-  let interviewScore = interviewData.llm_results.avg_total_llm; 
-  let totalScore = (projectScore * 0.7) + (interviewScore * 0.3);
+  let interviewScore = interviewData.llm_results.avg_total_llm;
+  let totalScore = projectScore * 0.7 + interviewScore * 0.3;
   let finalRating = 1;
 
   if (totalScore > 90) {
@@ -847,9 +892,6 @@ function updateFinalRating() {
   scoreImageElement.src = `Assest/rating-dark-${finalRating}.png`;
   scoreImageElement.alt = `Rating ${finalRating} dari 5`;
 }
-
-
-
 
 function updateAspectDetails() {
   const detailsList = document.getElementById("aspectDetailsList");

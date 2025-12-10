@@ -30,9 +30,9 @@ const SESSION_STORAGE_KEY = "video_processing_session";
 
 // jika menggunakan ngrok, ganti dengan URL ngrok Anda
 const VIDEO_ENDPOINT =
-  "https://61cd979776e7.ngrok-free.app/upload";
+  "https://allena-untransfigured-anomalistically.ngrok-free.dev/upload";
 const API_BASE_URL =
-  "https://61cd979776e7.ngrok-free.app";
+  "https://allena-untransfigured-anomalistically.ngrok-free.dev";
 
 /* ============================
    HELPERS
@@ -1028,7 +1028,7 @@ async function buildAndSendJSONFiles() {
     return alert("Pilih file JSON terlebih dahulu.");
   }
 
-  // NEW: Validasi bahasa
+  // Validasi bahasa
   const language = languageSelectJSON?.value;
   if (!language) return alert("Pilih bahasa wajib diisi.");
 
@@ -1047,41 +1047,93 @@ async function buildAndSendJSONFiles() {
       throw new Error("File JSON tidak valid atau rusak.");
     }
 
-    // Validate JSON structure
-    if (
-      !jsonData.success ||
-      !jsonData.data ||
-      !jsonData.data.candidate ||
-      !jsonData.data.reviewChecklists ||
-      !jsonData.data.reviewChecklists.interviews
-    ) {
+    // ✅ Validate JSON structure (lebih fleksibel)
+    if (!jsonData.success || !jsonData.data) {
       throw new Error(
-        "Struktur JSON tidak valid. Pastikan JSON mengandung data candidate dan interviews."
+        "Struktur JSON tidak valid. Field 'success' dan 'data' wajib ada."
       );
     }
 
-    const candidateName = jsonData.data.candidate.name;
-    const interviews = jsonData.data.reviewChecklists.interviews;
+    const data = jsonData.data;
 
-    if (!candidateName) {
-      throw new Error("Nama kandidat tidak ditemukan di JSON.");
+    // Validate candidate
+    if (!data.candidate || !data.candidate.name) {
+      throw new Error(
+        "Nama kandidat tidak ditemukan di JSON (data.candidate.name)."
+      );
     }
 
-    if (!interviews || !Array.isArray(interviews) || interviews.length === 0) {
-      throw new Error("Tidak ada data interview di JSON.");
+    // Validate interviews
+    if (
+      !data.reviewChecklists ||
+      !data.reviewChecklists.interviews ||
+      !Array.isArray(data.reviewChecklists.interviews)
+    ) {
+      throw new Error(
+        "Data interview tidak ditemukan di JSON (data.reviewChecklists.interviews)."
+      );
     }
 
-    console.log(`📋 Processing JSON for: ${candidateName}`);
-    console.log(`📹 Found ${interviews.length} interview videos`);
+    const candidateName = data.candidate.name;
+    const candidateEmail = data.candidate.email || "N/A";
+    const interviews = data.reviewChecklists.interviews;
+
+    if (interviews.length === 0) {
+      throw new Error(
+        "Tidak ada data interview di JSON. Array interviews kosong."
+      );
+    }
+
+    // ✅ Validate interviews have required fields
+    const invalidInterviews = [];
+    interviews.forEach((interview, idx) => {
+      if (!interview.question) {
+        invalidInterviews.push(`Video ${idx + 1}: Missing 'question' field`);
+      }
+      if (!interview.recordedVideoUrl) {
+        invalidInterviews.push(
+          `Video ${idx + 1}: Missing 'recordedVideoUrl' field`
+        );
+      }
+      if (interview.positionId === undefined || interview.positionId === null) {
+        invalidInterviews.push(`Video ${idx + 1}: Missing 'positionId' field`);
+      }
+    });
+
+    if (invalidInterviews.length > 0) {
+      throw new Error(
+        `Struktur interview tidak lengkap:\n\n${invalidInterviews.join("\n")}`
+      );
+    }
+
+    // ✅ Count videos with URLs
+    const videosWithUrl = interviews.filter(
+      (i) => i.isVideoExist && i.recordedVideoUrl
+    ).length;
+
+    console.log(`📋 Processing JSON for: ${candidateName} (${candidateEmail})`);
+    console.log(`📹 Found ${interviews.length} interview(s)`);
+    console.log(`🎥 Videos with URL: ${videosWithUrl}/${interviews.length}`);
+
+    // ✅ Show certification info if available
+    if (data.certification) {
+      console.log(
+        `📜 Certification: ${data.certification.abbreviatedType} (${data.certification.status})`
+      );
+    }
 
     // Show loading
     showLoading(
-      `Sending JSON data...\nCandidate: ${candidateName}\nVideos: ${interviews.length}\n\nPlease wait...`
+      `Sending JSON data...\n\nCandidate: ${candidateName}\nEmail: ${candidateEmail}\nVideos: ${videosWithUrl}/${interviews.length}\n\nPlease wait...`
     );
     resetStatus(statusAreaJSON, "Mengirim data ke server...");
 
-    // NEW: Add language to JSON data
+    // ✅ Add language to JSON data (root level)
     jsonData.language = language;
+
+    console.log(`📤 Sending JSON to: ${VIDEO_ENDPOINT}_json`);
+    console.log(`🌐 Language: ${language}`);
+    console.log(`📦 Payload size: ${(jsonText.length / 1024).toFixed(2)} KB`);
 
     // Send to server
     const response = await fetch(`${VIDEO_ENDPOINT}_json`, {
@@ -1089,6 +1141,7 @@ async function buildAndSendJSONFiles() {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        "ngrok-skip-browser-warning": "true", // ✅ Support ngrok
       },
       body: JSON.stringify(jsonData),
     });
@@ -1114,15 +1167,15 @@ async function buildAndSendJSONFiles() {
     const sessionData = {
       sessionId,
       candidateName,
-      videoCount: interviews.length,
+      videoCount: videosWithUrl, // ✅ Use actual video count with URLs
       startTime: Date.now(),
     };
     localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(sessionData));
     console.log("💾 Session saved to localStorage");
 
-    // Update loading message
+    // ✅ More informative loading message
     showLoading(
-      `JSON uploaded!\n\nDownloading and processing videos...\nCandidate: ${candidateName}\nVideos: ${interviews.length}\n\nThis page will auto-reload.\nProcessing will continue in background.`
+      `JSON uploaded successfully!\n\nDownloading videos from Google Drive...\nCandidate: ${candidateName}\nVideos: ${videosWithUrl}\n\nThis page will auto-reload.\nProcessing will continue in background.\n\n⏳ Download may take 1-5 minutes per video.`
     );
 
     // Clear JSON selection
@@ -1148,26 +1201,57 @@ async function buildAndSendJSONFiles() {
       statusAreaJSON.style.color = "#e74c3c";
     }
 
-    // Show user-friendly error message
-    let errorMessage = "Gagal mengirim JSON ke server.\n\n";
+    // ✅ Better error messages
+    let errorMessage = "❌ Gagal mengirim JSON ke server.\n\n";
 
-    if (err.message.includes("tidak valid")) {
-      errorMessage += `Penyebab: ${err.message}\n\n`;
-      errorMessage += "Solusi:\n";
-      errorMessage += "1. Pastikan file JSON memiliki struktur yang benar\n";
+    if (
+      err.message.includes("tidak valid") ||
+      err.message.includes("Missing")
+    ) {
+      errorMessage += `📋 Struktur JSON Error:\n${err.message}\n\n`;
+      errorMessage += "✅ Solusi:\n";
+      errorMessage += "1. Pastikan JSON memiliki field wajib:\n";
+      errorMessage += "   - success: true\n";
+      errorMessage += "   - data.candidate.name\n";
+      errorMessage += "   - data.candidate.email (optional)\n";
+      errorMessage += "   - data.reviewChecklists.interviews[]\n\n";
+      errorMessage += "2. Setiap interview harus punya:\n";
+      errorMessage += "   - positionId (number)\n";
+      errorMessage += "   - question (string)\n";
+      errorMessage += "   - recordedVideoUrl (Google Drive URL)\n";
+      errorMessage += "   - isVideoExist (boolean)\n\n";
+      errorMessage += "3. Validasi JSON di jsonlint.com\n";
+      errorMessage += "4. Pastikan format Google Drive URL:\n";
       errorMessage +=
-        "2. Cek field: candidate.name dan reviewChecklists.interviews\n";
-      errorMessage += "3. Validasi JSON di jsonlint.com";
+        "   https://drive.google.com/file/d/FILE_ID/view?usp=drive_link";
     } else if (err.message.includes("Server error")) {
-      errorMessage += `Penyebab: ${err.message}\n\n`;
-      errorMessage += "Solusi:\n";
-      errorMessage +=
-        "1. Pastikan server FastAPI berjalan di http://127.0.0.1:8888\n";
-      errorMessage += "2. Cek log server untuk detail error\n";
-      errorMessage += "3. Restart server jika perlu";
+      errorMessage += `🔌 Server Error:\n${err.message}\n\n`;
+      errorMessage += "✅ Solusi:\n";
+      errorMessage += "1. Pastikan server FastAPI berjalan\n";
+      errorMessage += `2. Cek endpoint: ${VIDEO_ENDPOINT}_json\n`;
+      errorMessage += "3. Lihat log server untuk detail error\n";
+      errorMessage += "4. Restart server jika perlu\n";
+      errorMessage += "5. Pastikan dependency 'gdown' terinstall di server";
+    } else if (err.message.includes("kosong")) {
+      errorMessage += `📹 Video Error:\n${err.message}\n\n`;
+      errorMessage += "✅ Solusi:\n";
+      errorMessage += "1. Pastikan ada minimal 1 interview di JSON\n";
+      errorMessage += "2. Cek array 'interviews' tidak kosong\n";
+      errorMessage += "3. Setiap interview harus punya video URL";
+    } else if (err.message.includes("tidak ditemukan")) {
+      errorMessage += `🔍 Field Not Found:\n${err.message}\n\n`;
+      errorMessage += "✅ Solusi:\n";
+      errorMessage += "1. Cek struktur JSON sesuai contoh\n";
+      errorMessage += "2. Pastikan nested object tidak null\n";
+      errorMessage += "3. Gunakan JSON validator untuk cek struktur";
     } else {
-      errorMessage += `Error: ${err.message}\n\n`;
-      errorMessage += "Silakan coba lagi atau hubungi administrator.";
+      errorMessage += `⚠️ Unexpected Error:\n${err.message}\n\n`;
+      errorMessage += "Silakan:\n";
+      errorMessage += "1. Cek console browser (F12) untuk detail\n";
+      errorMessage += "2. Cek koneksi internet\n";
+      errorMessage += "3. Pastikan file JSON tidak corrupt\n";
+      errorMessage += "4. Coba upload ulang\n";
+      errorMessage += "5. Hubungi administrator jika masalah berlanjut";
     }
 
     alert(errorMessage);
