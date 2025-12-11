@@ -3,9 +3,9 @@
 // =========================================================
 let interviewData = null;
 
-// const API_BASE_URL = "http://127.0.0.1:8888";
-const API_BASE_URL =
-  "https://allena-untransfigured-anomalistically.ngrok-free.dev";
+const API_BASE_URL = "http://127.0.0.1:8000";
+// const API_BASE_URL =
+//   "https://allena-untransfigured-anomalistically.ngrok-free.dev";
 
 // =========================================================
 // DATA LOADING
@@ -312,7 +312,7 @@ function updateCheatingConfidenceCard() {
     bgColor = "#d4edda";
     statusText = "High Confidence";
   } else {
-    confColor = "#155724"; // Dark Green
+    confColor = "#28a745"; // Dark Green
     bgColor = "#c3e6cb";
     statusText = "Very High Confidence";
   }
@@ -602,7 +602,7 @@ function updateTranscriptionConfidenceCard() {
     }
   });
 
-  const avgConf = count > 0 ? Math.round(totalConf / count) : 0;
+  const avgConf = count > 0 ? (totalConf / count) : 0;
 
   let confColor = "#28a745";
   let bgColor = "#d4edda";
@@ -944,7 +944,7 @@ function updateSummaryCards() {
   }
 
   // ✅ 1. Update Confidence Score LLM
-  const avgConfidence = llmResults.rata_rata_confidence_score || 0;
+  const avgConfidence = llmResults.avg_logprobs_confidence || 0;
   document.getElementById("highestScore").textContent = avgConfidence;
 
   // ✅ 2. Update Kesimpulan LLM

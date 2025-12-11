@@ -1,0 +1,20 @@
+Candidate: rarwa
+Position ID: 1
+Question: Can you share any specific challenges you faced while working on certification and how you overcame them?
+Video URL: http://127.0.0.1:8000/uploads/20251211104020_da35438d51354b2c8593cdce5c707504.webm
+Language: en
+Transcribed at: 2025-12-11T10:48:44.294360+00:00
+
+==================================================
+ENGLISH TRANSCRIPTION (Original):
+==================================================
+
+Can you share any specific challenges that you faced while working on certification and how did you overcome them? Okay, actually for the challenge there are some challenges when I took the certifications especially for the project submission that I already working with it. The first one is actually to meet specific accuracy or violation laws right? For evaluation matrix and yeah, Actually just need to take some trial and error with the different architecture for example like we can try add more layer, change neurons or even I also apply dropout layers so it really helps validation laws become more lower right? And yeah, I think that's one of the biggest challenges That i have while working on this certifications
+
+==================================================
+INDONESIAN TRANSLATION:
+==================================================
+
+Dapatkah Anda menceritakan tantangan spesifik yang Anda hadapi saat mengerjakan sertifikasi dan bagaimana Anda mengatasinya? Oke, sebenarnya untuk tantangan ada beberapa tantangan ketika saya mengambil sertifikasi terutama untuk pengajuan proyek yang sudah saya kerjakan. Yang pertama sebenarnya untuk memenuhi akurasi tertentu atau hukum pelanggaran kan? Untuk matriks evaluasi dan ya, sebenarnya hanya perlu melakukan beberapa trial and error dengan arsitektur yang berbeda misalnya seperti kita dapat mencoba menambahkan lebih banyak lapisan, mengubah neuron atau bahkan saya juga menerapkan lapisan putus sekolah sehingga sangat membantu hukum validasi menjadi lebih rendah, bukan? Dan ya, saya pikir itu adalah salah satu tantangan terbesar yang saya hadapi saat mengerjakan sertifikasi ini
+
+Transcription Confidence: 98.75%
