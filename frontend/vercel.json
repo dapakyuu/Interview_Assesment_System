@@ -4,12 +4,61 @@
     {
       "src": "*.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "Assest/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
+      "src": "/(.*)\\.css",
+      "dest": "/$1.css",
+      "headers": {
+        "Content-Type": "text/css"
+      }
+    },
+    {
+      "src": "/(.*)\\.js",
+      "dest": "/$1.js",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
+    },
+    {
+      "src": "/Assest/(.*)",
+      "dest": "/Assest/$1"
+    },
+    {
+      "src": "/Upload.html",
+      "dest": "/Upload.html"
+    },
+    {
+      "src": "/Halaman_dasboard.html",
+      "dest": "/Halaman_dasboard.html"
+    },
+    {
       "src": "/",
       "dest": "/Upload.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
+      ]
     }
   ]
 }
