@@ -1,0 +1,106 @@
+{
+  "success": true,
+  "name": "11",
+  "session": "97f668ea93c54bf8acaede863432f9bb",
+  "llm_results": {
+    "kesimpulan_llm": "Berikut adalah ringkasan hasil penilaian wawancara:\n\nKandidat menunjukkan kinerja yang cukup baik dalam wawancara, dengan skor rata-rata 73 dari 100. Namun, perlu diperhatikan bahwa skor ini masih jauh dari sempurna. Dalam Video 1, kandidat mencapai skor total 73, dengan kualitas 72, kohesi 78, dan relevansi 68. Ini menunjukkan bahwa kandidat memiliki kemampuan untuk berbicara dengan jelas dan relevan, tetapi masih perlu meningkatkan kualitas jawabannya.\n\nKandidat memiliki kekuatan dalam menyampaikan ide dan gagasan dengan jelas, serta memiliki kemampuan untuk berbicara dengan kohesi yang baik. Namun, masih perlu ditingkatkan dalam hal relevansi jawaban, sehingga jawaban yang diberikan lebih terkait dengan pertanyaan yang diajukan. Dengan demikian, kandidat dapat meningkatkan kinerja dan mencapai skor yang lebih baik dalam wawancara.\n\nUntuk meningkatkan kinerja, kandidat dapat berlatih untuk meningkatkan kualitas jawaban dan relevansi jawaban. Selain itu, kandidat juga dapat berlatih untuk meningkatkan kemampuan berbicara dengan jelas dan kohesi yang baik. Dengan demikian, kandidat dapat meningkatkan kinerja dan mencapai skor yang lebih baik dalam wawancara.",
+    "rata_rata_confidence_score": 97,
+    "avg_total_llm": 73,
+    "final_score_llm": 91.9,
+    "avg_logprobs_confidence": 96.6
+  },
+  "content": [
+    {
+      "id": 1,
+      "question": "Can you tell us about the challenges you faced while working on your certification and how you overcame them",
+      "result": {
+        "penilaian": {
+          "confidence_score": 96.6,
+          "kualitas_jawaban": 72,
+          "relevansi": 68,
+          "koherensi": 78,
+          "analisis_llm": "The candidate's answer shows a good effort to address the question, but lacks specific examples and depth in understanding. The structure is mostly coherent, but there are some minor inconsistencies. The answer is partially relevant, as it touches on the topic but doesn't fully cover all aspects.",
+          "total": 73,
+          "logprobs_confidence": 96.6,
+          "logprobs_probability": 0.9660466590589645,
+          "logprobs_available": true
+        },
+        "cheating_detection": "Tidak",
+        "cheating_score": 15,
+        "cheating_confidence_score": 95.95,
+        "non_verbal_analysis": {
+          "speech_analysis": {
+            "total_duration_seconds": 42.8,
+            "speaking_time_seconds": 24.88,
+            "silence_time_seconds": 17.92,
+            "number_of_pauses": 17,
+            "speech_rate_wpm": 150.0,
+            "speaking_ratio": 0.58
+          },
+          "facial_expression_analysis": {
+            "average_smile_intensity": 0.0056,
+            "smile_variation": 0.0037,
+            "eyebrow_movement_range": 0.0202,
+            "baseline_smile_intensity": 0.0825,
+            "baseline_eyebrow_position": 0.4829,
+            "total_frames_analyzed": 709,
+            "face_detected_percentage": 99.44,
+            "calibration_applied": true
+          },
+          "eye_movement_analysis": {
+            "total_blinks": 9,
+            "blink_rate_per_minute": 22.85,
+            "eye_contact_percentage": 96.19,
+            "gaze_stability": 0.0212
+          }
+        },
+        "non_verbal_confidence_score": 82.7,
+        "transkripsi_en": "Can you tell me the challenges you faced when working on certification and how to overcome them One of the biggest challenges when ordering certification is the consistency of learning in the midst of a fairly busy work schedule to overcome it I made a realistic daily study schedule reading the material into small parts and applying active learning methods such as taking notes and practicing questions In addition, I looked for communities about the certification so that I could discuss when I found difficult material with that approach I could stay focused and provide certification in a timely manner.",
+        "transkripsi_id": "Bisakah Anda ceritakan tantangan yang anda hadapi saat mengerjakan sertifikasi dan bagaimana mengatasinya salah satu Tantang terbesar ketika memerintahkan Sertifikasi adalah konsistensi belajar di tengah jadwal pekerjaan yang cukup padat untuk mengatasnya saya membuat Jadwal Belajar harianya realistis membacakan materi menjadi Bagian kecil dan Menerapkan metode belajar aktif seperti buat catatan dan latihan soal Selain itu Saya mencari komunitas mengenai sertifikasi tersebut sehingga bisa berdiskusi ketika menemukan materi yang sulit dengan pendekatan itu saya bisa tetap fokus dan menyediakan Sertifikasi secara tepat waktu",
+        "transkripsi_confidence": 98.66,
+        "transkripsi_min_confidence": 98.54,
+        "transkripsi_max_confidence": 98.97,
+        "metadata": {
+          "word_count": 100,
+          "processed_at": "2025-12-12T09:08:39.880526+00:00",
+          "logprobs_enabled": true,
+          "source_language": "Indonesian"
+        }
+      }
+    }
+  ],
+  "aggregate_cheating_analysis": {
+    "overall_cheating_status": "Tidak",
+    "overall_cheating_score": 15.0,
+    "average_confidence_score": 95.95,
+    "overall_confidence_level": "Very High",
+    "max_cheating_score": 15,
+    "total_videos": 1,
+    "videos_flagged": 0,
+    "flagged_percentage": 0.0,
+    "confidence_level": "High",
+    "risk_level": "LOW RISK",
+    "recommendation": "LULUS - No significant cheating indicators",
+    "summary": "All 1 video(s) passed cheating detection without significant concerns.",
+    "pattern_analysis": {
+      "indicators_summary": {},
+      "score_distribution": {
+        "min": 15,
+        "max": 15,
+        "avg": 15.0
+      }
+    }
+  },
+  "aggregate_non_verbal_analysis": {
+    "overall_performance_status": "Very High",
+    "overall_confidence_score": 82.7,
+    "summary": "speaking ratio 0.58 (fairly active), pauses 17.0 (fluent), speech rate 150.0 wpm (ideal) smile intensity = 0.01 (neutral), eyebrow movement = 0.020 (natural) eye contact = 96.19% (very good), blink rate = 22.85 (normal)"
+  },
+  "metadata": {
+    "total_videos": 1,
+    "successful_videos": 1,
+    "processed_at": "2025-12-12T09:08:46.062438+00:00",
+    "model": "faster-whisper large-v3",
+    "llm_model": "meta-llama/Llama-3.1-8B-Instruct"
+  }
+}

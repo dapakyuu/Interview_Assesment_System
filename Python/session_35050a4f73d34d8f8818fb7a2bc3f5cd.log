@@ -1,0 +1,77 @@
+
+======================================================================
+🎙️  SESSION: 35050a4f73d34d8f8818fb7a2bc3f5cd
+👤 CANDIDATE: 123
+🌐 LANGUAGE: Indonesian
+📹 VIDEOS: 1
+📝 LOG FILE: session_35050a4f73d34d8f8818fb7a2bc3f5cd.log
+======================================================================
+
+
+──────────────────────────────────────────────────────────────────────
+Processing video 1/1
+──────────────────────────────────────────────────────────────────────
+
+┌─ Video 1/1 ───────────────────────────────────────────────────┐
+│ ❓ Question: Can you tell us about the challenges you faced while working...
+│ 📁 Local file: D:\ASAH\FINAL_PYTHON\Python_2\uploads\20251212095449_61e2426518e445faadd150be722f3f57.mp4
+│ 📏 File exists: True
+│ 📊 File size: 41.7 MB
+│ 1️⃣  TRANSCRIPTION (41.7 MB)
+│    ✅ Transcription completed
+│    🎯 Transcription Confidence: 98.66%
+│    📝 Text length: 630 chars
+│ 2️⃣  TRANSLATION
+│    🌐 Direction: Indonesian → English
+│    ✅ Translation completed in 1.8s
+│    📝 EN length: 608 chars
+│    📝 ID length: 630 chars
+│ 2️⃣½ CHEATING DETECTION
+│    ✅ Cheating detection completed in 43.4s
+│ 2️⃣¾ NON-VERBAL ANALYSIS
+│    ✅ Non-verbal analysis completed in 29.8s
+│    📊 Non-Verbal Confidence: 82.7%
+│ 3️⃣  AI ASSESSMENT
+│    ✅ LLM evaluation completed in 2.1s
+│    📊 Total Score: 73/100
+│ 4️⃣  SAVING FILES
+│    ✅ Transcription file saved: transcription_pos1_20251212095907_6db958077a574d449207d592e35f1383.txt
+│    ✅ Assessment added to results (total: 1)
+│ 🗑️  Video deleted (41.7 MB freed)
+│ ⏱️  Total: 258.6s
+└─────────────────────────────────────────────────────────────────────┘
+
+======================================================================
+📊 STARTING AGGREGATE ANALYSIS
+======================================================================
+Assessment Results Count: 1
+
+👀 Calculating aggregate non-verbal...
+✅ Aggregate cheating completed
+
+👀 Calculating aggregate non-verbal...
+✅ Aggregate non-verbal completed
+
+🤖 Generating LLM summary...
+✅ LLM summary completed
+
+======================================================================
+✅ ALL AGGREGATE ANALYSIS COMPLETED
+======================================================================
+
+💾 SAVING JSON RESULTS...
+📂 Results path: D:\ASAH\FINAL_PYTHON\Python_2\results\35050a4f73d34d8f8818fb7a2bc3f5cd.json
+📊 JSON size: 5498 chars
+✅ Results directory ensured: D:\ASAH\FINAL_PYTHON\Python_2\results
+✅ JSON written to file
+✅✅✅ JSON FILE SAVED SUCCESSFULLY! ✅✅✅
+   Path: D:\ASAH\FINAL_PYTHON\Python_2\results\35050a4f73d34d8f8818fb7a2bc3f5cd.json
+   Size: 6797 bytes
+🌐 Results URL: http://127.0.0.1:8000/results/35050a4f73d34d8f8818fb7a2bc3f5cd.json
+
+======================================================================
+✅ SESSION COMPLETED
+   Success: 1/1 videos
+   Log file: session_35050a4f73d34d8f8818fb7a2bc3f5cd.log
+======================================================================
+

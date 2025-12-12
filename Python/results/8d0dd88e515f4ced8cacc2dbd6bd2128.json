@@ -1,0 +1,106 @@
+{
+  "success": true,
+  "name": "rarwa",
+  "session": "8d0dd88e515f4ced8cacc2dbd6bd2128",
+  "llm_results": {
+    "kesimpulan_llm": "Based on the assessment results, the candidate's overall performance across all videos is mediocre, scoring an average total of 56 out of 100. This suggests that the candidate has some areas of strength, but also faces significant challenges in terms of delivering a high-quality, coherent, and relevant response.\n\nOne of the candidate's main strengths is their ability to communicate effectively, as evidenced by a relatively high quality score of 62. However, this is somewhat offset by lower scores in coherence and relevance, which suggests that the candidate may struggle to organize their thoughts and stay on topic. To improve, the candidate should focus on developing their ability to structure their responses in a clear and logical manner, and to ensure that their answers remain relevant to the questions being asked.\n\nOverall, the candidate's performance suggests that they have potential, but require significant development in terms of their communication skills and ability to stay focused. With targeted practice and feedback, the candidate may be able to improve their performance and become a more effective communicator.",
+    "rata_rata_confidence_score": 96,
+    "avg_total_llm": 56,
+    "final_score_llm": 86.8,
+    "avg_logprobs_confidence": 95.67
+  },
+  "content": [
+    {
+      "id": 1,
+      "question": "Can you share any specific challenges you faced while working on certification and how you overcame them?",
+      "result": {
+        "penilaian": {
+          "confidence_score": 95.67,
+          "kualitas_jawaban": 62,
+          "relevansi": 48,
+          "koherensi": 58,
+          "analisis_llm": "The candidate's answer lacks depth and provides vague examples, resulting in a low quality of answer. The coherence is also affected by the candidate's tendency to jump between topics and provide contradictory statements. The answer is mostly off-topic, addressing the question but not providing relevant information about the candidate's experience with certification challenges.",
+          "total": 56,
+          "logprobs_confidence": 95.67,
+          "logprobs_probability": 0.9566602427294997,
+          "logprobs_available": true
+        },
+        "cheating_detection": "Tidak",
+        "cheating_score": 15,
+        "cheating_confidence_score": 90.55,
+        "non_verbal_analysis": {
+          "speech_analysis": {
+            "total_duration_seconds": 93.0,
+            "speaking_time_seconds": 60.56,
+            "silence_time_seconds": 32.44,
+            "number_of_pauses": 35,
+            "speech_rate_wpm": 150.0,
+            "speaking_ratio": 0.65
+          },
+          "facial_expression_analysis": {
+            "average_smile_intensity": 0.0021,
+            "smile_variation": 0.0016,
+            "eyebrow_movement_range": 0.0052,
+            "baseline_smile_intensity": 0.0694,
+            "baseline_eyebrow_position": 0.562,
+            "total_frames_analyzed": 1500,
+            "face_detected_percentage": 100.0,
+            "calibration_applied": true
+          },
+          "eye_movement_analysis": {
+            "total_blinks": 77,
+            "blink_rate_per_minute": 89.77,
+            "eye_contact_percentage": 100.0,
+            "gaze_stability": 0.0068
+          }
+        },
+        "non_verbal_confidence_score": 74.62,
+        "transkripsi_en": "Can you share any specific challenges that you faced while working on certification and how did you overcome them? Okay, actually for the challenge there are some challenges when I took the certifications especially for the project submission that I already working with it. The first one is actually to meet specific accuracy or violation laws right? For evaluation matrix and yeah, Actually just need to take some trial and error with the different architecture for example like we can try add more layer, change neurons or even I also apply dropout layers so it really helps validation laws become more lower right? And yeah, I think that's one of the biggest challenges That i have while working on this certifications",
+        "transkripsi_id": "Dapatkah Anda menceritakan tantangan spesifik yang Anda hadapi saat mengerjakan sertifikasi dan bagaimana Anda mengatasinya? Oke, sebenarnya untuk tantangan ada beberapa tantangan ketika saya mengambil sertifikasi terutama untuk pengajuan proyek yang sudah saya kerjakan. Yang pertama sebenarnya untuk memenuhi akurasi tertentu atau hukum pelanggaran kan? Untuk matriks evaluasi dan ya, sebenarnya hanya perlu melakukan beberapa trial and error dengan arsitektur yang berbeda misalnya seperti kita dapat mencoba menambahkan lebih banyak lapisan, mengubah neuron atau bahkan saya juga menerapkan lapisan putus sekolah sehingga sangat membantu hukum validasi menjadi lebih rendah, bukan? Dan ya, saya pikir itu adalah salah satu tantangan terbesar yang saya hadapi saat mengerjakan sertifikasi ini",
+        "transkripsi_confidence": 98.75,
+        "transkripsi_min_confidence": 98.02,
+        "transkripsi_max_confidence": 98.94,
+        "metadata": {
+          "word_count": 121,
+          "processed_at": "2025-12-11T10:48:44.294850+00:00",
+          "logprobs_enabled": true,
+          "source_language": "English"
+        }
+      }
+    }
+  ],
+  "aggregate_cheating_analysis": {
+    "overall_cheating_status": "Tidak",
+    "overall_cheating_score": 15.0,
+    "average_confidence_score": 90.55,
+    "overall_confidence_level": "Very High",
+    "max_cheating_score": 15,
+    "total_videos": 1,
+    "videos_flagged": 0,
+    "flagged_percentage": 0.0,
+    "confidence_level": "High",
+    "risk_level": "LOW RISK",
+    "recommendation": "LULUS - No significant cheating indicators",
+    "summary": "All 1 video(s) passed cheating detection without significant concerns.",
+    "pattern_analysis": {
+      "indicators_summary": {},
+      "score_distribution": {
+        "min": 15,
+        "max": 15,
+        "avg": 15.0
+      }
+    }
+  },
+  "aggregate_non_verbal_analysis": {
+    "overall_performance_status": "Good",
+    "overall_confidence_score": 74.62,
+    "summary": "speaking ratio 0.65 (fairly active), pauses 35.0 (normal), speech rate 150.0 wpm (ideal) smile intensity = 0.00 (neutral), eyebrow movement = 0.005 (controlled) eye contact = 100.0% (very good), blink rate = 89.77 (high)"
+  },
+  "metadata": {
+    "total_videos": 1,
+    "successful_videos": 1,
+    "processed_at": "2025-12-11T10:48:48.584244+00:00",
+    "model": "faster-whisper large-v3",
+    "llm_model": "meta-llama/Llama-3.1-8B-Instruct"
+  }
+}

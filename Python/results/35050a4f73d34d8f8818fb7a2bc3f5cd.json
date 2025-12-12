@@ -1,0 +1,144 @@
+{
+  "success": true,
+  "name": "123",
+  "session": "35050a4f73d34d8f8818fb7a2bc3f5cd",
+  "llm_results": {
+    "kesimpulan_llm": "Assessment Summary: The candidate's answer shows a good effort to address the question, but lacks depth and specific examples. The structure is mostly coherent, but there are some minor inconsistencies. The answer is mostly relevant, but deviates from the topic slightly.",
+    "rata_rata_confidence_score": 96,
+    "avg_total_llm": 73,
+    "final_score_llm": 91.9,
+    "avg_logprobs_confidence": 96.01,
+    "reused_single_analysis": true
+  },
+  "aggregate_cheating_detection": {
+    "avg_cheating_score": 9.31,
+    "avg_visual_confidence": 90.79,
+    "avg_audio_confidence": 90.0,
+    "avg_overall_confidence": 90.4,
+    "total_suspicious_frames": 66,
+    "avg_silhouette_score": -1.0,
+    "verdict_distribution": {
+      "Safe": 0,
+      "Medium Risk": 1,
+      "High Risk": 0
+    },
+    "final_aggregate_verdict": "High Risk",
+    "risk_level": "Critical",
+    "overall_performance_status": "Very High",
+    "questions_with_issues": [
+      {
+        "question_id": 1,
+        "question": "Can you tell us about the challenges you faced while working on your certification and how you overcame them",
+        "verdict": "Medium Risk",
+        "cheating_score": 9.31,
+        "visual_confidence": 90.79,
+        "audio_confidence": 90.0,
+        "num_speakers": 1,
+        "indicators": [
+          "Medium suspicious activity (9.3%)"
+        ]
+      }
+    ],
+    "all_indicators": [
+      {
+        "question_id": 1,
+        "question": "Can you tell us about the challenges you faced while working on your certification and how you overcame them",
+        "indicator": "Medium suspicious activity (9.3%)"
+      }
+    ],
+    "summary": "Analyzed 1 question(s) for cheating detection. Average cheating score: 9.31%. Overall confidence: 90.4%. ⚠️ 1 question(s) flagged as MEDIUM RISK. Total of 1 cheating indicator(s) detected."
+  },
+  "aggregate_non_verbal_analysis": {
+    "overall_performance_status": "Very High",
+    "overall_confidence_score": 82.7,
+    "summary": "speaking ratio 0.58 (fairly active), pauses 17.0 (fluent), speech rate 150.0 wpm (ideal) smile intensity = 0.01 (neutral), eyebrow movement = 0.020 (natural) eye contact = 96.19% (very good), blink rate = 22.85 (normal)"
+  },
+  "content": [
+    {
+      "id": 1,
+      "question": "Can you tell us about the challenges you faced while working on your certification and how you overcame them",
+      "result": {
+        "penilaian": {
+          "confidence_score": 96.01,
+          "kualitas_jawaban": 72,
+          "relevansi": 68,
+          "koherensi": 78,
+          "analisis_llm": "The candidate's answer shows a good effort to address the question, but lacks depth and specific examples. The structure is mostly coherent, but there are some minor inconsistencies. The answer is mostly relevant, but deviates from the topic slightly.",
+          "total": 73,
+          "logprobs_confidence": 96.01,
+          "logprobs_probability": 0.9600941151337564,
+          "logprobs_available": true
+        },
+        "non_verbal_analysis": {
+          "speech_analysis": {
+            "total_duration_seconds": 42.8,
+            "speaking_time_seconds": 24.88,
+            "silence_time_seconds": 17.92,
+            "number_of_pauses": 17,
+            "speech_rate_wpm": 150.0,
+            "speaking_ratio": 0.58
+          },
+          "facial_expression_analysis": {
+            "average_smile_intensity": 0.0056,
+            "smile_variation": 0.0037,
+            "eyebrow_movement_range": 0.0202,
+            "baseline_smile_intensity": 0.0825,
+            "baseline_eyebrow_position": 0.4829,
+            "total_frames_analyzed": 709,
+            "face_detected_percentage": 99.44,
+            "calibration_applied": true
+          },
+          "eye_movement_analysis": {
+            "total_blinks": 9,
+            "blink_rate_per_minute": 22.85,
+            "eye_contact_percentage": 96.19,
+            "gaze_stability": 0.0212
+          }
+        },
+        "non_verbal_confidence_score": 82.7,
+        "transkripsi_en": "Can you tell me the challenges you faced when working on certification and how to overcome them One of the biggest challenges when ordering certification is the consistency of learning in the midst of a fairly busy work schedule to overcome it I made a realistic daily study schedule reading the material into small parts and applying active learning methods such as taking notes and practicing questions In addition, I looked for communities about the certification so that I could discuss when I found difficult material with that approach I could stay focused and provide certification in a timely manner.",
+        "transkripsi_id": "Bisakah Anda ceritakan tantangan yang anda hadapi saat mengerjakan sertifikasi dan bagaimana mengatasinya salah satu Tantang terbesar ketika memerintahkan Sertifikasi adalah konsistensi belajar di tengah jadwal pekerjaan yang cukup padat untuk mengatasnya saya membuat Jadwal Belajar harianya realistis membacakan materi menjadi Bagian kecil dan Menerapkan metode belajar aktif seperti buat catatan dan latihan soal Selain itu Saya mencari komunitas mengenai sertifikasi tersebut sehingga bisa berdiskusi ketika menemukan materi yang sulit dengan pendekatan itu saya bisa tetap fokus dan menyediakan Sertifikasi secara tepat waktu",
+        "transkripsi_confidence": 98.66,
+        "transkripsi_min_confidence": 98.54,
+        "transkripsi_max_confidence": 98.97,
+        "cheating_detection": {
+          "visual": {
+            "cheating_score": 9.31,
+            "suspicious_frames": 66,
+            "cheating_reasons": [
+              "Medium suspicious activity (9.3%)"
+            ],
+            "confidence": {
+              "average": 90.79,
+              "min": 71.93,
+              "max": 97.44
+            }
+          },
+          "audio": {
+            "num_speakers": 1,
+            "confidence": 90.0,
+            "silhouette_score": -1
+          },
+          "final_verdict": "Medium Risk",
+          "final_avg_confidence": 90.4,
+          "all_indicators": [
+            "Medium suspicious activity (9.3%)"
+          ]
+        },
+        "metadata": {
+          "word_count": 100,
+          "processed_at": "2025-12-12T09:59:07.886163+00:00",
+          "logprobs_enabled": true,
+          "source_language": "Indonesian"
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "total_videos": 1,
+    "successful_videos": 1,
+    "processed_at": "2025-12-12T09:59:08.123015+00:00",
+    "model": "faster-whisper large-v3",
+    "llm_model": "meta-llama/Llama-3.1-8B-Instruct"
+  }
+}

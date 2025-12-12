@@ -1,2 +1,16 @@
 .venv/
 bin/
+
+# ENV Files
+*.env
+.env
+*/.env
+**/.env
+
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
