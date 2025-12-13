@@ -16,14 +16,15 @@ graph TB
     E --> F["Stage 1: Audio Extraction FFmpeg"]
     F --> G["Stage 2: Transcription faster-whisper"]
     G --> H["Stage 3: Translation DeepL API"]
-    H --> I["Stage 4: LLM Assessment Llama 3.1"]
 
-    I --> J["Stage 5: Cheating Detection"]
-    J --> K1["MediaPipe Face Mesh & Detection"]
-    J --> K2["Resemblyzer Speaker"]
 
-    K1 --> L["Stage 6: Non-Verbal Analysis"]
-    K2 --> L["Stage 6: Non-Verbal Analysis"]
+    H --> I["Stage 4: Cheating Detection"]
+    I --> J1["MediaPipe Face Mesh & Detection"]
+    I --> J2["Resemblyzer Speaker"]
+
+    J1 --> K["Stage 5: Non-Verbal Analysis"]
+    J2 --> K["Stage 5: Non-Verbal Analysis"]
+    K --> L["Stage 6: LLM Assessment Llama 3.1"]
 
     L --> M["Stage 7: Save Results"]
 

@@ -1950,36 +1950,36 @@ Explore detailed guides:
 
 <div class="grid cards" markdown>
 
-- :material-book-open-variant:{ .lg .middle } **Getting Started**
+-   :material-book-open-variant:{ .lg .middle } **Getting Started**
 
-  ---
+    ---
 
-  Installation and quickstart tutorials.
+    Installation and quickstart tutorials.
 
-  [:octicons-arrow-right-24: Get Started](../getting-started/introduction.md)
+    [:octicons-arrow-right-24: Get Started](../getting-started/introduction.md)
 
-- :material-api:{ .lg .middle } **API Reference**
+-   :material-api:{ .lg .middle } **API Reference**
 
-  ---
+    ---
 
-  Complete endpoint documentation.
+    Complete endpoint documentation.
 
-  [:octicons-arrow-right-24: API Docs](../api/endpoints.md)
+    [:octicons-arrow-right-24: API Docs](../api/endpoints.md)
 
-- :material-cog:{ .lg .middle } **Configuration**
+-   :material-cog:{ .lg .middle } **Configuration**
 
-  ---
+    ---
 
-  Customize models, thresholds, and settings.
+    Customize models, thresholds, and settings.
 
-  [:octicons-arrow-right-24: Configure](../configuration/models.md)
+    [:octicons-arrow-right-24: Configure](../configuration/models.md)
 
-- :material-bug:{ .lg .middle } **Troubleshooting**
+-   :material-bug:{ .lg .middle } **Troubleshooting**
 
-  ---
+    ---
 
-  Fix common issues and optimize performance.
+    Fix common issues and optimize performance.
 
-  [:octicons-arrow-right-24: Troubleshoot](../troubleshooting/common-issues.md)
+    [:octicons-arrow-right-24: Troubleshoot](../troubleshooting/common-issues.md)
 
 </div>

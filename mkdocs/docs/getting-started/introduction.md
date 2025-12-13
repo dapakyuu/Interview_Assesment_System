@@ -559,37 +559,37 @@ Interview_Assesment_System/
 
 <div class="grid cards" markdown>
 
-- :material-book-open-variant:{ .lg .middle } **Documentation**
+-   :material-book-open-variant:{ .lg .middle } **Documentation**
 
-  ---
+    ---
 
-  Browse comprehensive guides, tutorials, dan API reference.
+    Browse comprehensive guides, tutorials, dan API reference.
 
-  [:octicons-arrow-right-24: View Documentation](installation.md)
+    [:octicons-arrow-right-24: View Documentation](installation.md)
 
-- :material-frequently-asked-questions:{ .lg .middle } **FAQ**
+-   :material-frequently-asked-questions:{ .lg .middle } **FAQ**
 
-  ---
+    ---
 
-  Common questions dan troubleshooting solutions.
+    Common questions dan troubleshooting solutions.
 
-  [:octicons-arrow-right-24: View FAQ](../troubleshooting/faq.md)
+    [:octicons-arrow-right-24: View FAQ](../troubleshooting/faq.md)
 
-- :material-github:{ .lg .middle } **GitHub Issues**
+-   :material-github:{ .lg .middle } **GitHub Issues**
 
-  ---
+    ---
 
-  Report bugs, request features, atau diskusi technical issues.
+    Report bugs, request features, atau diskusi technical issues.
 
-  [:octicons-arrow-right-24: Open Issue](https://github.com/dapakyuu/Interview_Assesment_System/issues)
+    [:octicons-arrow-right-24: Open Issue](https://github.com/dapakyuu/Interview_Assesment_System/issues)
 
-- :material-chat:{ .lg .middle } **Community**
+-   :material-chat:{ .lg .middle } **Community**
 
-  ---
+    ---
 
-  Join discussions dengan other users dan developers.
+    Join discussions dengan other users dan developers.
 
-  [:octicons-arrow-right-24: Discussions](https://github.com/dapakyuu/Interview_Assesment_System/discussions)
+    [:octicons-arrow-right-24: Discussions](https://github.com/dapakyuu/Interview_Assesment_System/discussions)
 
 </div>
 
