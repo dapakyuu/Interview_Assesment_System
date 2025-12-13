@@ -1123,26 +1123,26 @@ SyntaxError: invalid syntax (Python 3.9 required)
 
 ```mermaid
 graph TD
-    A[Problem?] --> B{Installation?}
-    A --> C{Processing?}
-    A --> D{API Error?}
+    A[\"Problem?\"] --> B{\"Installation?\"}
+    A --> C{\"Processing?\"}
+    A --> D{\"API Error?\"}
 
-    B --> B1[FFmpeg not found]
-    B --> B2[Module not found]
-    B --> B3[GPU issues]
+    B --> B1[\"FFmpeg not found\"]
+    B --> B2[\"Module not found\"]
+    B --> B3[\"GPU issues\"]
 
-    C --> C1[Slow processing]
-    C --> C2[Poor transcription]
-    C --> C3[Session not found]
+    C --> C1[\"Slow processing\"]
+    C --> C2[\"Poor transcription\"]
+    C --> C3[\"Session not found\"]
 
-    D --> D1[HF_TOKEN invalid]
-    D --> D2[DeepL quota exceeded]
-    D --> D3[CUDA OOM]
+    D --> D1[\"HF_TOKEN invalid\"]
+    D --> D2[\"DeepL quota exceeded\"]
+    D --> D3[\"CUDA OOM\"]
 
-    B1 --> |Install| E[winget install FFmpeg]
-    B2 --> |Install| F[pip install -r requirements.txt]
-    D1 --> |Fix| G[Regenerate at huggingface.co/settings/tokens]
-    D2 --> |Fix| H[Check quota: translator.get_usage]
+    B1 --> |\"Install\"| E[\"winget install FFmpeg\"]
+    B2 --> |\"Install\"| F[\"pip install requirements.txt\"]
+    D1 --> |\"Fix\"| G[\"Regenerate at huggingface.co\"]
+    D2 --> |\"Fix\"| H[\"Check quota translator.get_usage\"]
 ```
 
 ---

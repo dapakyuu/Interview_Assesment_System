@@ -144,16 +144,16 @@
 
 ```mermaid
 graph TD
-    A[Frontend Upload] --> B{Backend FastAPI}
-    B --> C[Google Drive Download]
-    B --> D[Whisper Transcription large-v3]
-    D --> E[DeepL Translation EN↔ID]
-    E --> F[LLM Assessment Llama 3.1-8B]
-    F --> G[Cheating Detection Visual+Audio]
-    G --> H[Non-Verbal Analysis]
-    H --> I[Aggregate Reporting]
-    I --> J[Results JSON + Cleanup]
-    J --> K[Dashboard Display]
+    A["Frontend Upload"] --> B{"Backend FastAPI"}
+    B --> C["Google Drive Download"]
+    B --> D["Whisper Transcription large-v3"]
+    D --> E["DeepL Translation EN-ID"]
+    E --> F["LLM Assessment Llama 3.1-8B"]
+    F --> G["Cheating Detection Visual+Audio"]
+    G --> H["Non-Verbal Analysis"]
+    H --> I["Aggregate Reporting"]
+    I --> J["Results JSON + Cleanup"]
+    J --> K["Dashboard Display"]
 
     C --> D
 

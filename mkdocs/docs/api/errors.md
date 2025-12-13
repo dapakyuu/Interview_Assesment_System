@@ -742,12 +742,12 @@ if results:
 
 ```mermaid
 graph TD
-    A[Upload Video] -->|400| B{Check Error}
-    B -->|No videos uploaded| C[Include video files]
-    B -->|Question count mismatch| D[Match questions to videos]
-    B -->|Invalid language| E[Use en or id]
-    B -->|Google Drive URL invalid| F[Fix Drive URL format]
-    C --> G[Retry Upload]
+    A["Upload Video"] -->|"400"| B{"Check Error"}
+    B -->|"No videos uploaded"| C["Include video files"]
+    B -->|"Question count mismatch"| D["Match questions to videos"]
+    B -->|"Invalid language"| E["Use en or id"]
+    B -->|"Google Drive URL invalid"| F["Fix Drive URL format"]
+    C --> G["Retry Upload"]
     D --> G
     E --> G
     F --> G
@@ -757,13 +757,13 @@ graph TD
 
 ```mermaid
 graph TD
-    A[Check /status] -->|500| B{Error Type}
-    B -->|FFmpeg not found| C[Install FFmpeg]
-    B -->|DeepL API error| D[Check API key]
-    B -->|HF API error| E[Check HF token]
-    B -->|CUDA out of memory| F[Use CPU mode]
-    B -->|Audio extraction failed| G[Check video has audio]
-    C --> H[Restart & Retry]
+    A["Check /status"] -->|"500"| B{"Error Type"}
+    B -->|"FFmpeg not found"| C["Install FFmpeg"]
+    B -->|"DeepL API error"| D["Check API key"]
+    B -->|"HF API error"| E["Check HF token"]
+    B -->|"CUDA out of memory"| F["Use CPU mode"]
+    B -->|"Audio extraction failed"| G["Check video has audio"]
+    C --> H["Restart Retry"]
     D --> H
     E --> H
     F --> H
@@ -774,11 +774,11 @@ graph TD
 
 ```mermaid
 graph TD
-    A[GET /results] -->|404| B{Check Session}
-    B -->|Wrong session ID| C[Verify from upload response]
-    B -->|Processing not done| D[Check /status first]
-    B -->|File deleted| E[Process again]
-    C --> F[Retry with correct ID]
+    A["GET /results"] -->|"404"| B{"Check Session"}
+    B -->|"Wrong session ID"| C["Verify from upload response"]
+    B -->|"Processing not done"| D["Check /status first"]
+    B -->|"File deleted"| E["Process again"]
+    C --> F["Retry with correct ID"]
     D --> F
     E --> F
 ```
@@ -945,7 +945,6 @@ Jika error masih berlanjut setelah troubleshooting:
 
 - 📖 [Troubleshooting Guide](../troubleshooting/common-issues.md) - 8 common issues dengan solutions
 - ⚙️ [Configuration Guide](../configuration/api-keys.md) - DeepL & HF setup
-- 📚 [README.md](../../README.md) - Complete system documentation
 
 ### 2. Review Server Logs
 

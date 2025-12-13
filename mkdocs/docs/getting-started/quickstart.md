@@ -187,13 +187,13 @@ Setiap video melalui **7 tahapan processing**:
 
 ```mermaid
 graph LR
-A[1. Upload/Download] --> B[2. Audio Extraction]
-B --> C[3. Transcription]
-C --> D[4. Translation]
-D --> E[5. LLM Assessment]
-E --> F[6. Cheating Detection]
-F --> G[7. Non-Verbal Analysis]
-G --> H[Save & Cleanup]
+A["1. Upload/Download"] --> B["2. Audio Extraction"]
+B --> C["3. Transcription"]
+C --> D["4. Translation"]
+D --> E["5. LLM Assessment"]
+E --> F["6. Cheating Detection"]
+F --> G["7. Non-Verbal Analysis"]
+G --> H["Save & Cleanup"]
 
     style A fill:#e3f2fd
     style C fill:#e8f5e9

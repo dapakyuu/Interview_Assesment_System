@@ -201,7 +201,7 @@ sequenceDiagram
         Backend->>Backend: Extract audio (FFmpeg)
         Backend->>Whisper: Transcribe audio
         Whisper-->>Backend: Text + confidence + segments
-        Backend->>DeepL: Translate EN↔ID
+        Backend->>DeepL: Translate EN-ID
         DeepL-->>Backend: Translated text
         Backend->>LLM: Evaluate answer quality
         LLM-->>Backend: Scores + logprobs + analysis

@@ -9,7 +9,7 @@ repo_url: https://github.com/dapakyuu/Interview_Assesment_System-main
 edit_uri: edit/main/docs/
 
 # Copyright
-copyright: Copyright &copy; 2025 Your Organization
+copyright: Copyright &copy; 2025 Tim Cohort Asah A25-CS352
 
 # Theme Configuration
 theme:
@@ -107,9 +107,9 @@ plugins:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/yourusername
+      link: https://github.com/dapakyuu
     - icon: fontawesome/brands/linkedin
-      link: https://linkedin.com/in/yourprofile
+      link: https://linkedin.com/in/daffa-al-fathir-ismail
   version:
     provider: mike
   analytics:

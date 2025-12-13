@@ -8,29 +8,29 @@ Arsitektur dan design sistem Interview Assessment.
 
 ```mermaid
 graph TB
-    A[User/Client] -->|Upload Video| B[Web Interface/API]
-    B --> C[FastAPI Server :7860]
-    C --> D[Session Manager]
-    D --> E[Processing Pipeline]
+    A["User/Client"] -->|"Upload Video"| B["Web Interface/API"]
+    B --> C["FastAPI Server :7860"]
+    C --> D["Session Manager"]
+    D --> E["Processing Pipeline"]
 
-    E --> F1[Stage 1: Audio Extraction - FFmpeg]
-    F1 --> F2[Stage 2: Transcription - faster-whisper]
-    F2 --> F3[Stage 3: Translation - DeepL API]
-    F3 --> F4[Stage 4: LLM Assessment - Llama 3.1]
+    E --> F1["Stage 1: Audio Extraction FFmpeg"]
+    F1 --> F2["Stage 2: Transcription faster-whisper"]
+    F2 --> F3["Stage 3: Translation DeepL API"]
+    F3 --> F4["Stage 4: LLM Assessment Llama 3.1"]
 
-    E --> G1[Stage 5: Cheating Detection]
-    G1 --> G2[MediaPipe Face Mesh]
-    G1 --> G3[Resemblyzer Speaker]
+    E --> G1["Stage 5: Cheating Detection"]
+    G1 --> G2["MediaPipe Face Mesh"]
+    G1 --> G3["Resemblyzer Speaker"]
 
-    E --> H[Stage 6: Non-Verbal Analysis]
-    H --> I[MediaPipe Landmarks]
+    E --> H["Stage 6: Non-Verbal Analysis"]
+    H --> I["MediaPipe Landmarks"]
 
-    F4 --> J[Stage 7: Save Results]
+    F4 --> J["Stage 7: Save Results"]
     G3 --> J
     I --> J
 
-    J --> K[results/*.json]
-    K --> L[Dashboard/Response]
+    J --> K["results json"]
+    K --> L["Dashboard/Response"]
     L --> A
 
     style C fill:#f9f,stroke:#333
@@ -134,30 +134,30 @@ sequenceDiagram
     participant M as ML Models
     participant F as File Storage
 
-    U->>W: Upload video file(s)
+    U->>W: Upload video files
     W->>A: POST /upload (multipart/form-data)
     A->>S: Generate session_id (UUID)
-    A->>F: Save to uploads/{session_id}/
-    A-->>W: Return {"session_id": "..."}
+    A->>F: Save to uploads/session_id/
+    A-->>W: Return session_id
 
-    W->>A: GET /status/{session_id}
+    W->>A: GET /status/session_id
     A->>S: Check processing status
-    A-->>W: {"status": "processing"}
+    A-->>W: status processing
 
     Note over P: Stage 1: Audio Extraction
     P->>P: FFmpeg extract audio to WAV
 
     Note over P: Stage 2: Transcription
     P->>M: faster-whisper.transcribe()
-    M-->>P: Segments + timestamps
+    M-->>P: Segments timestamps
 
     Note over P: Stage 3: Translation
-    P->>M: DeepL API (EN↔ID)
+    P->>M: DeepL API EN-ID
     M-->>P: Translated text
 
     Note over P: Stage 4: LLM Assessment
     P->>M: HF Inference API (Llama 3.1)
-    M-->>P: Kesimpulan + skor
+    M-->>P: Kesimpulan skor
 
     Note over P: Stage 5: Cheating Detection
     P->>M: MediaPipe Face Mesh
@@ -166,7 +166,7 @@ sequenceDiagram
 
     Note over P: Stage 6: Non-Verbal Analysis
     P->>M: MediaPipe landmarks
-    M-->>P: Facial expressions, gaze
+    M-->>P: Facial expressions gaze
 
     Note over P: Stage 7: Save Results
     P->>F: Save results/{session_id}.json
@@ -586,39 +586,39 @@ class SpeakerDiarization:
 
 ```mermaid
 graph LR
-    A[Video Upload] --> B[uploads/{session_id}/video.mp4]
+    A["Video Upload"] --> B["uploads/session_id/video.mp4"]
 
-    B --> C1[Stage 1: FFmpeg]
-    C1 --> D[temp/{session_id}/audio.wav]
+    B --> C1["Stage 1: FFmpeg"]
+    C1 --> D["temp/session_id/audio.wav"]
 
-    D --> E1[Stage 2: faster-whisper]
-    E1 --> F[Transcription EN + Timestamps]
+    D --> E1["Stage 2: faster-whisper"]
+    E1 --> F["Transcription EN Timestamps"]
 
-    F --> G1[Stage 3: DeepL API]
-    G1 --> H[Transcription ID]
+    F --> G1["Stage 3: DeepL API"]
+    G1 --> H["Transcription ID"]
 
-    H --> I1[Stage 4: Llama 3.1 API]
-    I1 --> J[Kesimpulan + Skor per Question]
+    H --> I1["Stage 4: Llama 3.1 API"]
+    I1 --> J["Kesimpulan Skor per Question"]
 
-    B --> K1[Stage 5a: MediaPipe]
-    K1 --> L[Face Detection + Gaze]
+    B --> K1["Stage 5a: MediaPipe"]
+    K1 --> L["Face Detection Gaze"]
 
-    D --> M1[Stage 5b: Resemblyzer]
-    M1 --> N[Speaker Count + Embeddings]
+    D --> M1["Stage 5b: Resemblyzer"]
+    M1 --> N["Speaker Count Embeddings"]
 
-    L --> O[Cheating Indicators]
+    L --> O["Cheating Indicators"]
     N --> O
 
-    B --> P1[Stage 6: MediaPipe Landmarks]
-    P1 --> Q[Facial Expressions + Head Pose]
+    B --> P1["Stage 6: MediaPipe Landmarks"]
+    P1 --> Q["Facial Expressions Head Pose"]
 
-    J --> R[Stage 7: JSON Builder]
+    J --> R["Stage 7: JSON Builder"]
     O --> R
     Q --> R
 
-    R --> S[results/{session_id}.json]
+    R --> S["results/session_id.json"]
 
-    S --> T[Frontend Dashboard]
+    S --> T["Frontend Dashboard"]
 
     style B fill:#fdd,stroke:#333
     style D fill:#dfd,stroke:#333
@@ -1192,19 +1192,19 @@ def handle_processing_error(session_id: str, stage: str, error: Exception):
 
 ```mermaid
 graph TB
-    A[Load Balancer - Nginx] --> B[API Server 1]
-    A --> C[API Server 2]
-    A --> D[API Server 3]
+    A["Load Balancer Nginx"] --> B["API Server 1"]
+    A --> C["API Server 2"]
+    A --> D["API Server 3"]
 
-    B --> E[Redis Queue]
+    B --> E["Redis Queue"]
     C --> E
     D --> E
 
-    E --> F[GPU Worker 1]
-    E --> G[GPU Worker 2]
-    E --> H[GPU Worker 3]
+    E --> F["GPU Worker 1"]
+    E --> G["GPU Worker 2"]
+    E --> H["GPU Worker 3"]
 
-    F --> I[Shared Storage - NFS/S3]
+    F --> I["Shared Storage NFS/S3"]
     G --> I
     H --> I
 

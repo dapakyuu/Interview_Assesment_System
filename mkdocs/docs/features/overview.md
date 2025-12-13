@@ -1621,32 +1621,32 @@ async def upload_json(data: dict):
 
 ```mermaid
 flowchart TB
-    START[Video Upload] --> QUEUE{Processing Queue}
+    START["Video Upload"] --> QUEUE{"Processing Queue"}
 
-    QUEUE --> DL[Google Drive Download<br/>5-30s]
-    QUEUE --> AUDIO[Audio Extraction FFmpeg<br/>5-15s]
+    QUEUE --> DL["Google Drive Download<br/>5-30s"]
+    QUEUE --> AUDIO["Audio Extraction FFmpeg<br/>5-15s"]
 
     DL --> AUDIO
 
-    AUDIO --> TRANS[Whisper Transcription<br/>CPU: 45-90s | GPU: 15-30s]
+    AUDIO --> TRANS["Whisper Transcription<br/>CPU: 45-90s GPU: 15-30s"]
 
-    TRANS --> TRANSL[DeepL Translation<br/>2-5s]
+    TRANS --> TRANSL["DeepL Translation<br/>2-5s"]
 
-    TRANSL --> LLM[LLM Assessment<br/>Llama 3.1-8B<br/>10-30s]
+    TRANSL --> LLM["LLM Assessment<br/>Llama 3.1-8B<br/>10-30s"]
 
-    LLM --> CHEAT_V[Visual Cheating<br/>MediaPipe<br/>CPU: 30-120s | GPU: 15-60s]
+    LLM --> CHEAT_V["Visual Cheating<br/>MediaPipe<br/>CPU: 30-120s GPU: 15-60s"]
 
-    CHEAT_V --> CHEAT_A[Audio Diarization<br/>Resemblyzer<br/>20-60s]
+    CHEAT_V --> CHEAT_A["Audio Diarization<br/>Resemblyzer<br/>20-60s"]
 
-    CHEAT_A --> NONVERB[Non-Verbal Analysis<br/>Facial + Eye + Speech<br/>30-90s]
+    CHEAT_A --> NONVERB["Non-Verbal Analysis<br/>Facial Eye Speech<br/>30-90s"]
 
-    NONVERB --> AGG[Aggregate Reports<br/>LLM Summary<br/>Cheating Verdict<br/>Performance Status]
+    NONVERB --> AGG["Aggregate Reports<br/>LLM Summary<br/>Cheating Verdict<br/>Performance Status"]
 
-    AGG --> SAVE[Save JSON Results<br/>1-2s]
+    AGG --> SAVE["Save JSON Results<br/>1-2s"]
 
-    SAVE --> CLEANUP[Cleanup Temp Files<br/>Delete video & audio<br/>99%+ storage saved]
+    SAVE --> CLEANUP["Cleanup Temp Files<br/>Delete video audio<br/>99% storage saved"]
 
-    CLEANUP --> END[Processing Complete]
+    CLEANUP --> END["Processing Complete"]
 
     style START fill:#e3f2fd
     style TRANS fill:#e8f5e9
