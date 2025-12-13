@@ -3,9 +3,9 @@
 // =========================================================
 let interviewData = null;
 
- const API_BASE_URL = "https://zhephyr-be-interview-assesment-system.hf.space";
+  const API_BASE_URL = "https://zhephyr-be-interview-assesment-system.hf.space";
 // const API_BASE_URL =
-//   "https://e46ed84b123d.ngrok-free.app";
+//   "https://allena-untransfigured-anomalistically.ngrok-free.dev";
 
 // =========================================================
 // DATA LOADING
@@ -249,6 +249,28 @@ if (agg.final_aggregate_verdict === "High Risk") {
   statusColor = "#2e7d32"; 
 }
 
+const issues = interviewData?.aggregate_cheating_detection?.questions_with_issues ?? [];
+
+let cheatingHTML = "";
+
+if (issues.length > 0) {
+  const q = issues[0]; // hanya satu video cheating
+  cheatingHTML = `
+    <div>
+      🚨 <strong>Cheating Detected</strong><br/>
+      🎥 Video ${q.question_id} - 
+      Cheating Score: ${q.cheating_score}%
+    </div>
+  `;
+} else {
+  cheatingHTML = `
+    <div>
+      ✅ <strong>All videos are safe</strong>
+    </div>
+  `;
+}
+
+
 // Render HTML
 cheatingElement.innerHTML = `
   <div class="content-text" style="background: ${bgColor}; padding: 15px; border-radius: 8px; border: 2px solid ${statusColor};">
@@ -258,15 +280,12 @@ cheatingElement.innerHTML = `
     <div style="font-size: 13px; color: #666; margin-bottom: 5px;">
       <strong>Risk Level:</strong> <span style="color: ${statusColor}; font-weight: 600;">${agg.final_aggregate_verdict}</span>
     </div>
-    <div style="font-size: 13px; color: #666; margin-bottom: 5px;">
-      <strong>Confidence:</strong> ${agg.avg_overall_confidence}%
-    </div>
-    <div style="font-size: 13px; color: #666; margin-bottom: 5px;">
-      <strong>Performance:</strong> ${agg.overall_performance_status}
-    </div>
     <div style="font-size: 12px; color: ${statusColor}; margin-top: 8px; padding: 8px; background: white; border-radius: 4px;">
+      
+      ${cheatingHTML}
       <strong>📊 Summary:</strong><br/>
       ${agg.summary}
+      
     </div>
   </div>
 `;
@@ -797,13 +816,21 @@ function updateFinalDecision() {
 
   // Tampilkan hasil
   decisionElement.innerHTML = `
-    <div class="content-text">
-      Total Score: <b>${totalScore.toFixed(1)}</b> (${scoreLabel})
-    </div>
+    <div style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+    ">
+      <div class="content-text">
+        Total Score: <b>${totalScore.toFixed(1)}</b>
+      </div>
 
-    <div class="note-text" style="font-size: 12px; color: #888; margin-top: 6px;">
-      Note : project score = 100<br>
-      Weight project and interview: 70 : 30
+      <div class="note-text" style="font-size: 12px; color: #888;">
+        Note : project score = 100<br>
+        Weight project and interview: 70 : 30
+      </div>
     </div>
   `;
 }

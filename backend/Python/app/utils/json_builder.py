@@ -416,6 +416,3 @@ def process_transcriptions_sync(session_id: str, candidate_name: str, uploaded_v
                 'error': str(e),
                 'error_detail': traceback.format_exc()
             }
-
-    finally:
-        log_handle.close()
