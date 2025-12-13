@@ -3,7 +3,7 @@
 // =========================================================
 let interviewData = null;
 
-  const API_BASE_URL = "https://zhephyr-be-interview-assesment-system.hf.space";
+const API_BASE_URL = "https://zhephyr-be-interview-assesment-system.hf.space";
 // const API_BASE_URL =
 //   "https://allena-untransfigured-anomalistically.ngrok-free.dev";
 
@@ -137,9 +137,8 @@ function updateCandidateName(name) {
   const headerLeft = document.querySelector(".header-left");
   if (headerLeft && name) {
     const nameTag = document.createElement("p");
-    nameTag.style.cssText =
-      "color: #667eea; font-weight: 600; margin-top: 5px;";
-    nameTag.innerHTML = `<i class="fas fa-user"></i> ${name}`;
+    nameTag.style.cssText = "color: white; font-weight: 600; margin-top: 5px;";
+    nameTag.innerHTML = `<i class="fas fa-user" style="margin-right: 5px;"></i> ${name}`;
     headerLeft.appendChild(nameTag);
   }
 }
@@ -224,7 +223,7 @@ function updateCheatingDisplay() {
   // Tentukan warna berdasarkan risk level
   let statusColor = "#28a745"; // Green (LOW RISK)
   let bgColor = "#d4edda";
-  let displayStatus
+  let displayStatus;
 
   if (agg.risk_level === "HIGH RISK") {
     statusColor = "#dc3545"; // Red
@@ -235,44 +234,50 @@ function updateCheatingDisplay() {
   }
 
   // Build HTML berdasarkan status
-if (agg.final_aggregate_verdict === "High Risk") {
-  displayStatus = "CHEATING DETECTED";
-  bgColor = "#ffebee"; // Light red
-  statusColor = "#c62828"; // Dark red
-} else if (agg.final_aggregate_verdict === "Medium Risk") {
-  displayStatus = "SUSPICIOUS ACTIVITY";
-  bgColor = "#fff8e1"; 
-  statusColor = "#f57c00"; // Orange
-} else {
-  displayStatus = "NO CHEATING DETECTED";
-  bgColor = "#e8f5e9"; 
-  statusColor = "#2e7d32"; 
-}
+  if (agg.final_aggregate_verdict === "High Risk") {
+    displayStatus = "CHEATING DETECTED";
+    bgColor = "#ffebee"; // Light red
+    statusColor = "#c62828"; // Dark red
+  } else if (agg.final_aggregate_verdict === "Medium Risk") {
+    displayStatus = "SUSPICIOUS ACTIVITY";
+    bgColor = "#fff8e1";
+    statusColor = "#f57c00"; // Orange
+  } else {
+    displayStatus = "NO CHEATING DETECTED";
+    bgColor = "#e8f5e9";
+    statusColor = "#2e7d32";
+  }
 
-const issues = interviewData?.aggregate_cheating_detection?.questions_with_issues ?? [];
+  const issues =
+    interviewData?.aggregate_cheating_detection?.questions_with_issues ?? [];
 
-let cheatingHTML = "";
+  let cheatingHTML = "";
 
-if (issues.length > 0) {
-  const q = issues[0]; // hanya satu video cheating
-  cheatingHTML = `
-    <div>
+  if (issues.length > 0) {
+    // ✅ Loop semua video yang terdeteksi cheating
+    cheatingHTML = issues
+      .map(
+        (q, index) => `
+    <div style="margin-bottom: ${
+      index < issues.length - 1 ? "10px" : "0"
+    }; padding: 8px; background: rgba(220, 53, 69, 0.1); border-left: 3px solid #dc3545; border-radius: 4px;">
       🚨 <strong>Cheating Detected</strong><br/>
       🎥 Video ${q.question_id} - 
       Cheating Score: ${q.cheating_score}%
     </div>
-  `;
-} else {
-  cheatingHTML = `
+  `
+      )
+      .join("");
+  } else {
+    cheatingHTML = `
     <div>
       ✅ <strong>All videos are safe</strong>
     </div>
   `;
-}
+  }
 
-
-// Render HTML
-cheatingElement.innerHTML = `
+  // Render HTML
+  cheatingElement.innerHTML = `
   <div class="content-text" style="background: ${bgColor}; padding: 15px; border-radius: 8px; border: 2px solid ${statusColor};">
     <div style="font-size: 18px; font-weight: bold; color: ${statusColor}; margin-bottom: 8px;">
       ${displayStatus}
@@ -379,7 +384,8 @@ function getConfidenceBreakdown(agg) {
     let html = '<div style="display: flex; flex-direction: column; gap: 8px;">';
 
     interviewData.content.forEach((item, index) => {
-      const videoConf = item.result?.cheating_detection.final_avg_confidence || 0;
+      const videoConf =
+        item.result?.cheating_detection.final_avg_confidence || 0;
 
       let barColor = "#28a745";
       if (videoConf < 60) barColor = "#ffc107";
@@ -558,10 +564,8 @@ function updateTranscriptionConfidenceCard() {
     }
   });
 
-
-  const avgConfRaw = count > 0 ? (totalConf / count) : 0;
+  const avgConfRaw = count > 0 ? totalConf / count : 0;
   const avgConf = Number(avgConfRaw.toFixed(2));
-
 
   let confColor = "#28a745";
   let bgColor = "#d4edda";
@@ -828,8 +832,8 @@ function updateFinalDecision() {
       </div>
 
       <div class="note-text" style="font-size: 12px; color: #888;">
-        Note : project score = 100<br>
-        Weight project and interview: 70 : 30
+        Note : Asumsi Project Score = 100 | Bobot Project and Interview = 70 : 30
+        
       </div>
     </div>
   `;
@@ -912,7 +916,7 @@ function updateSummaryCards() {
 
   // ✅ 1. Update Confidence Score LLM
   const avgConfidence = llmResults.avg_logprobs_confidence || 0;
-  document.getElementById("highestScore").textContent = avgConfidence;
+  document.getElementById("highestScore").textContent = avgConfidence + "%";
 
   // ✅ 2. Update Kesimpulan LLM
   const kesimpulanLLM =
@@ -1125,7 +1129,8 @@ async function downloadPDF() {
 
   // Import jsPDF
   const script = document.createElement("script");
-  script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+  script.src =
+    "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
   document.head.appendChild(script);
 
   script.onload = function () {
@@ -1139,13 +1144,13 @@ async function downloadPDF() {
     // 📐 Layout
     const tableX = 20;
     const tableWidth = 170;
-    
+
     // ✅ Akses data dari struktur baru
     const llmResults = interviewData.llm_results;
     const cheating = interviewData.aggregate_cheating_detection;
     const nonverbal = interviewData.aggregate_non_verbal_analysis;
     const content = interviewData.content;
-    
+
     let yPos = 10;
 
     // ===== HEADER =====
@@ -1153,11 +1158,11 @@ async function downloadPDF() {
     doc.setTextColor(...blue);
     doc.text("LAPORAN ANALISIS INTERVIEW", 105, yPos, { align: "center" });
     yPos += 10;
-    
+
     doc.setFontSize(12);
     doc.text(`Kandidat: ${interviewData.name}`, 105, yPos, { align: "center" });
     yPos += 5;
-    
+
     doc.setDrawColor(...blue);
     doc.line(20, yPos, 190, yPos);
     yPos += 10;
@@ -1198,17 +1203,43 @@ async function downloadPDF() {
     yPos += conclusionLines.length * 5 + 5;
 
     // ===== SKOR PER ASPEK =====
-    yPos = drawTableHeader(doc, "Skor Per Aspek Kompetensi", yPos + 5, tableX, blue);
-    
+    yPos = drawTableHeader(
+      doc,
+      "Skor Per Aspek Kompetensi",
+      yPos + 5,
+      tableX,
+      blue
+    );
+
     // Hitung rata-rata dari semua pertanyaan
-    const avgKualitas = content.reduce((sum, item) => sum + item.result.penilaian.kualitas_jawaban, 0) / content.length;
-    const avgRelevansi = content.reduce((sum, item) => sum + item.result.penilaian.relevansi, 0) / content.length;
-    const avgKoherensi = content.reduce((sum, item) => sum + item.result.penilaian.koherensi, 0) / content.length;
-    
+    const avgKualitas =
+      content.reduce(
+        (sum, item) => sum + item.result.penilaian.kualitas_jawaban,
+        0
+      ) / content.length;
+    const avgRelevansi =
+      content.reduce((sum, item) => sum + item.result.penilaian.relevansi, 0) /
+      content.length;
+    const avgKoherensi =
+      content.reduce((sum, item) => sum + item.result.penilaian.koherensi, 0) /
+      content.length;
+
     const aspects = [
-      ["Kualitas Jawaban", avgKualitas.toFixed(1), getScoreCategoryText(avgKualitas)],
-      ["Relevansi", avgRelevansi.toFixed(1), getScoreCategoryText(avgRelevansi)],
-      ["Koherensi", avgKoherensi.toFixed(1), getScoreCategoryText(avgKoherensi)],
+      [
+        "Kualitas Jawaban",
+        avgKualitas.toFixed(1),
+        getScoreCategoryText(avgKualitas),
+      ],
+      [
+        "Relevansi",
+        avgRelevansi.toFixed(1),
+        getScoreCategoryText(avgRelevansi),
+      ],
+      [
+        "Koherensi",
+        avgKoherensi.toFixed(1),
+        getScoreCategoryText(avgKoherensi),
+      ],
     ];
     yPos = drawTable(
       doc,
@@ -1264,7 +1295,7 @@ async function downloadPDF() {
       blue,
       cream
     );
-    
+
     // ===== DETAIL PERTANYAAN =====
     yPos += 10;
     if (yPos > 240) {
@@ -1311,14 +1342,17 @@ async function downloadPDF() {
         blue,
         cream
       );
-      
+
       // Analisis LLM
       yPos += 5;
       doc.setFontSize(9);
       doc.setTextColor(80, 80, 80);
       doc.text("Analisis:", 20, yPos);
       yPos += 4;
-      const analysisLines = doc.splitTextToSize(item.result.penilaian.analisis_llm, 170);
+      const analysisLines = doc.splitTextToSize(
+        item.result.penilaian.analisis_llm,
+        170
+      );
       doc.text(analysisLines, 20, yPos);
       yPos += analysisLines.length * 5 + 8;
     });
@@ -1342,7 +1376,9 @@ async function downloadPDF() {
     }
 
     // ===== DOWNLOAD =====
-    const filename = `interview_report_${interviewData.name}_${new Date().getTime()}.pdf`;
+    const filename = `interview_report_${
+      interviewData.name
+    }_${new Date().getTime()}.pdf`;
     doc.save(filename);
   };
 }
@@ -1377,7 +1413,7 @@ function drawTable(doc, data, headers, yPos, tableX, tableWidth, blue, cream) {
   doc.rect(tableX, yPos, tableWidth, rowHeight, "F");
   doc.setFontSize(9);
   doc.setTextColor(...blue);
-  
+
   headers.forEach((header, i) => {
     doc.text(header, tableX + i * colWidth + 2, yPos + 5);
   });
@@ -1406,7 +1442,12 @@ function drawTable(doc, data, headers, yPos, tableX, tableWidth, blue, cream) {
   });
 
   doc.setDrawColor(...blue);
-  doc.rect(tableX, yPos - data.length * rowHeight - rowHeight, tableWidth, (data.length + 1) * rowHeight);
+  doc.rect(
+    tableX,
+    yPos - data.length * rowHeight - rowHeight,
+    tableWidth,
+    (data.length + 1) * rowHeight
+  );
 
   return yPos;
 }

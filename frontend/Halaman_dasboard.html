@@ -19,7 +19,9 @@
       <!-- Header -->
       <div class="header">
         <div class="header-left">
-          <h1><i class="fas fa-chart-line"></i> Dashboard Analisis Interview</h1>
+          <h1>
+            <i class="fas fa-chart-line"></i> Dashboard Analisis Interview
+          </h1>
           <p>Platform AI Interview Assessment System</p>
         </div>
 
@@ -49,17 +51,17 @@
                 <i class="fas fa-chart-radar"></i>
                 Skor per Aspek Kompetensi
               </div>
-              <p style="color:#718096; font-size:14px; margin-top:5px">
+              <p style="color: #718096; font-size: 14px; margin-top: 5px">
                 Evaluasi mendalam terhadap berbagai aspek penilaian
               </p>
             </div>
 
             <div class="average-score-badge">
-              <div style="font-size:12px; color:#667eea; margin-bottom:5px">
+              <div style="font-size: 12px; color: #667eea; margin-bottom: 5px">
                 Rata-rata Skor
               </div>
               <div
-                style="font-size:32px; font-weight:bold; color:#667eea"
+                style="font-size: 32px; font-weight: bold; color: #667eea"
                 id="averageScore"
               >
                 -
@@ -69,7 +71,7 @@
 
           <div class="aspects-container">
             <div class="radar-section">
-              <div class="chart-container" style="height:300px">
+              <div class="chart-container" style="height: 300px">
                 <canvas id="radarChart"></canvas>
               </div>
             </div>
@@ -77,12 +79,12 @@
             <div class="details-section">
               <div
                 style="
-                  display:flex;
-                  align-items:center;
-                  gap:8px;
-                  margin-bottom:20px;
-                  color:#667eea;
-                  font-weight:600;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-bottom: 20px;
+                  color: #667eea;
+                  font-weight: 600;
                 "
               >
                 <i class="fas fa-arrow-trend-up"></i>
@@ -126,10 +128,9 @@
           </div>
           <div class="card-content" id="final-score">
             <img id="scoreImage" src="" alt="Score Icon" class="score-image" />
+            <div id="final-decision"></div>
           </div>
-          <div class="card-content" id="final-decision"></div>
         </div>
-        
       </div>
 
       <div class="dashboard-grid">
@@ -149,12 +150,12 @@
         <div class="card">
           <div class="card-title">
             <i class="fas fa-shield-alt"></i>
-            Confidence score dari Cheating Detection
+            Confidence Score Cheating Detection
           </div>
           <div class="card-content" id="cheating-confidence-card">
-            <div style="text-align:center; padding:40px; color:#999">
-              <i class="fas fa-spinner fa-spin" style="font-size:32px"></i>
-              <p style="margin-top:10px">Loading...</p>
+            <div style="text-align: center; padding: 40px; color: #999">
+              <i class="fas fa-spinner fa-spin" style="font-size: 32px"></i>
+              <p style="margin-top: 10px">Loading...</p>
             </div>
           </div>
         </div>
@@ -163,12 +164,12 @@
         <div class="card">
           <div class="card-title">
             <i class="fas fa-user-check"></i>
-            Confidence score dari analisis non verbal
+            Confidence Score Analisis Non Verbal
           </div>
           <div class="card-content" id="nonverbal-confidence-card">
-            <div style="text-align:center; padding:40px; color:#999">
-              <i class="fas fa-spinner fa-spin" style="font-size:32px"></i>
-              <p style="margin-top:10px">Loading...</p>
+            <div style="text-align: center; padding: 40px; color: #999">
+              <i class="fas fa-spinner fa-spin" style="font-size: 32px"></i>
+              <p style="margin-top: 10px">Loading...</p>
             </div>
           </div>
         </div>
@@ -177,12 +178,12 @@
         <div class="card">
           <div class="card-title">
             <i class="fas fa-language"></i>
-            Confidence score dari transkripsi video
+            Confidence Score Transkripsi Video
           </div>
           <div class="card-content" id="transcription-confidence-card">
-            <div style="text-align:center; padding:40px; color:#999">
-              <i class="fas fa-spinner fa-spin" style="font-size:32px"></i>
-              <p style="margin-top:10px">Loading...</p>
+            <div style="text-align: center; padding: 40px; color: #999">
+              <i class="fas fa-spinner fa-spin" style="font-size: 32px"></i>
+              <p style="margin-top: 10px">Loading...</p>
             </div>
           </div>
         </div>
@@ -193,6 +194,5 @@
     </div>
 
     <script src="Halaman_dasboard.js"></script>
-
   </body>
 </html>

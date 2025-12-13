@@ -79,13 +79,13 @@ MkDocs uses standard Markdown with extensions:
 
 ```markdown
 !!! note
-    This is a note.
+This is a note.
 
 !!! warning
-    This is a warning.
+This is a warning.
 
 !!! tip
-    This is a tip.
+This is a tip.
 ```
 
 #### Code Blocks
@@ -101,10 +101,10 @@ def hello_world():
 
 ```markdown
 === "Tab 1"
-    Content for tab 1
+Content for tab 1
 
 === "Tab 2"
-    Content for tab 2
+Content for tab 2
 ```
 
 #### Mermaid Diagrams
@@ -131,13 +131,14 @@ graph LR
 ### GitHub Pages
 
 1. Build the documentation:
+
    ```bash
    mkdocs gh-deploy
    ```
 
 2. Documentation will be available at:
    ```
-   https://yourusername.github.io/Interview_Assesment_System-ngrok-raifal/
+   https://yourusername.github.io/Interview_Assesment_System-main/
    ```
 
 ### Custom Domain
@@ -238,6 +239,7 @@ mkdocs build --verbose
 ## Support
 
 For documentation issues:
+
 - Open an issue on GitHub
 - Contact the documentation team
 - Check the MkDocs community forum

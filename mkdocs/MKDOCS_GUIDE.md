@@ -51,6 +51,7 @@ pip install -r docs-requirements.txt
 ```
 
 Packages yang diinstall:
+
 - mkdocs (core)
 - mkdocs-material (theme)
 - mkdocs-minify-plugin
@@ -65,6 +66,7 @@ mkdocs serve
 Buka browser di: `http://127.0.0.1:8000`
 
 **Features:**
+
 - Live reload saat edit file
 - Search functionality
 - Dark/light mode toggle
@@ -86,13 +88,15 @@ mkdocs gh-deploy
 ```
 
 Dokumentasi akan tersedia di:
+
 ```
-https://yourusername.github.io/Interview_Assesment_System-ngrok-raifal/
+https://yourusername.github.io/Interview_Assesment_System-main/
 ```
 
 ## ✨ Fitur Material Theme
 
 ### 🎨 Visual Features
+
 - **Navigation Tabs** - Top-level section tabs
 - **Search** - Built-in instant search
 - **Dark Mode** - Auto dark/light theme
@@ -104,6 +108,7 @@ https://yourusername.github.io/Interview_Assesment_System-ngrok-raifal/
 - **Grid Cards** - Responsive card layouts
 
 ### 🔧 Interactive Features
+
 - **Copy Code Buttons** - One-click code copying
 - **Keyboard Shortcuts** - Ctrl+K untuk search
 - **Anchor Links** - Deep linking ke sections
@@ -115,6 +120,7 @@ https://yourusername.github.io/Interview_Assesment_System-ngrok-raifal/
 Dokumentasi support:
 
 ### Code Blocks
+
 ````markdown
 ```python
 def hello():
@@ -123,27 +129,30 @@ def hello():
 ````
 
 ### Admonitions
+
 ```markdown
 !!! note "Catatan Penting"
-    Ini adalah catatan.
+Ini adalah catatan.
 
 !!! warning "Peringatan"
-    Ini adalah peringatan.
+Ini adalah peringatan.
 
 !!! tip "Tips"
-    Ini adalah tips.
+Ini adalah tips.
 ```
 
 ### Tabbed Content
+
 ```markdown
 === "Tab 1"
-    Content tab 1
+Content tab 1
 
 === "Tab 2"
-    Content tab 2
+Content tab 2
 ```
 
 ### Mermaid Diagrams
+
 ````markdown
 ```mermaid
 graph LR
@@ -153,16 +162,17 @@ graph LR
 ````
 
 ### Custom Cards
+
 ```markdown
 <div class="grid cards" markdown>
 
--   :material-icon:{ .lg .middle } __Title__
+- :material-icon:{ .lg .middle } **Title**
 
-    ---
+  ***
 
-    Description text
+  Description text
 
-    [:octicons-arrow-right-24: Link](page.md)
+  [:octicons-arrow-right-24: Link](page.md)
 
 </div>
 ```
@@ -170,16 +180,20 @@ graph LR
 ## 🎯 Customization
 
 ### Theme Colors
+
 Edit `mkdocs.yml`:
+
 ```yaml
 theme:
   palette:
-    primary: indigo  # Ganti warna utama
-    accent: blue     # Ganti warna aksen
+    primary: indigo # Ganti warna utama
+    accent: blue # Ganti warna aksen
 ```
 
 ### Logo & Favicon
+
 Tambahkan file di `docs/assets/`:
+
 ```yaml
 theme:
   logo: assets/logo.png
@@ -187,14 +201,18 @@ theme:
 ```
 
 ### Custom CSS/JS
+
 File sudah tersedia:
+
 - `docs/stylesheets/extra.css` - Custom styles
 - `docs/javascripts/extra.js` - Custom scripts
 
 ## 📦 File Penting
 
 ### `mkdocs.yml`
+
 Konfigurasi utama:
+
 - Site metadata
 - Theme settings
 - Navigation structure
@@ -202,7 +220,9 @@ Konfigurasi utama:
 - Custom CSS/JS
 
 ### `docs-requirements.txt`
+
 Dependencies untuk MkDocs:
+
 ```
 mkdocs>=1.5.3
 mkdocs-material>=9.5.0
@@ -211,7 +231,9 @@ pymdown-extensions>=10.5
 ```
 
 ### `docs/README.md`
+
 Panduan lengkap untuk:
+
 - Writing documentation
 - Markdown syntax
 - Deployment options
@@ -220,21 +242,25 @@ Panduan lengkap untuk:
 ## 🌐 Deployment Options
 
 ### GitHub Pages (Recommended)
+
 ```bash
 mkdocs gh-deploy
 ```
 
 ### Netlify
+
 1. Connect repository
 2. Build command: `mkdocs build`
 3. Publish directory: `site`
 
 ### Vercel
+
 1. Import project
 2. Build command: `mkdocs build`
 3. Output directory: `site`
 
 ### Custom Server
+
 ```bash
 mkdocs build
 # Upload folder site/ ke web server
@@ -243,6 +269,7 @@ mkdocs build
 ## 📊 Analytics
 
 Untuk enable analytics, edit `mkdocs.yml`:
+
 ```yaml
 extra:
   analytics:
@@ -253,6 +280,7 @@ extra:
 ## 🔍 Search Configuration
 
 Search sudah dikonfigurasi untuk:
+
 - English & Indonesian
 - Smart separators
 - Real-time suggestions
@@ -261,16 +289,19 @@ Search sudah dikonfigurasi untuk:
 ## 🛠️ Maintenance
 
 ### Update Dependencies
+
 ```bash
 pip install --upgrade -r docs-requirements.txt
 ```
 
 ### Check for Issues
+
 ```bash
 mkdocs build --strict
 ```
 
 ### Validate Links
+
 ```bash
 mkdocs build --verbose
 ```
@@ -278,16 +309,19 @@ mkdocs build --verbose
 ## 📖 Dokumentasi yang Sudah Dibuat
 
 ✅ **Getting Started**
+
 - Introduction dengan overview sistem
 - Installation guide lengkap (Windows/Mac/Linux)
 - Quick start tutorial step-by-step
 
 ✅ **Features**
+
 - Overview semua fitur dengan matrix
 - Performance characteristics
 - Feature configuration examples
 
 ✅ **Core Files**
+
 - index.md (homepage dengan badges & cards)
 - Custom CSS untuk styling
 - Custom JS untuk interactivity
@@ -298,6 +332,7 @@ mkdocs build --verbose
 Untuk melengkapi dokumentasi:
 
 1. **Tambahkan konten untuk file yang belum dibuat:**
+
    - `features/transcription.md`
    - `features/llm-assessment.md`
    - `features/cheating-detection.md`
@@ -306,11 +341,13 @@ Untuk melengkapi dokumentasi:
    - dll.
 
 2. **Tambahkan screenshot/images:**
+
    - Buat folder `docs/assets/`
    - Tambahkan screenshot UI
    - Update references di markdown
 
 3. **Customize branding:**
+
    - Ganti logo di theme settings
    - Update repository URL
    - Customize colors
@@ -330,6 +367,7 @@ Untuk melengkapi dokumentasi:
 ## 📞 Support
 
 Jika ada pertanyaan tentang dokumentasi:
+
 1. Check `docs/README.md` untuk panduan lengkap
 2. Visit MkDocs documentation
 3. Check Material for MkDocs docs

@@ -5,7 +5,7 @@ site_url: https://your-domain.com
 
 # Repository
 repo_name: Interview Assessment System
-repo_url: https://github.com/yourusername/Interview_Assesment_System-ngrok-raifal
+repo_url: https://github.com/dapakyuu/Interview_Assesment_System-main
 edit_uri: edit/main/docs/
 
 # Copyright
@@ -96,7 +96,7 @@ markdown_extensions:
 # Plugins
 plugins:
   - search:
-      lang: 
+      lang:
         - en
         - id
       separator: '[\s\-,:!=\[\]()"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'

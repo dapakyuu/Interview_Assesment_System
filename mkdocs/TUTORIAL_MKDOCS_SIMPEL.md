@@ -2,9 +2,10 @@
 
 ## Apa itu MkDocs?
 
-MkDocs itu tools untuk bikin website dokumentasi dari file Markdown (.md). 
+MkDocs itu tools untuk bikin website dokumentasi dari file Markdown (.md).
 
-**Analoginya:** 
+**Analoginya:**
+
 - Kamu punya file Word (.docx) → Diconvert jadi website yang cantik
 - File Markdown (.md) → Jadi website dokumentasi dengan menu, search, dll
 
@@ -21,7 +22,7 @@ Buka **PowerShell** atau **Command Prompt** sebagai **Administrator**, jalankan:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 # Masuk ke folder project
-cd d:\Interview_Assesment_System-ngrok-raifal
+cd d:\Interview_Assesment_System-main
 
 # Activate virtual environment
 .venv\Scripts\activate
@@ -39,6 +40,7 @@ python -m mkdocs serve
 ```
 
 **Output yang muncul:**
+
 ```
 INFO    -  Building documentation...
 INFO    -  Cleaning site directory
@@ -75,6 +77,7 @@ docs/
 ```
 
 **Cara edit:**
+
 1. Buka file `.md` pakai VS Code / text editor
 2. Edit isinya (pakai Markdown syntax)
 3. Save
@@ -86,18 +89,20 @@ docs/
 
 1. Buat file baru: `docs/tips-tricks.md`
 2. Isi dengan konten:
+
    ```markdown
    # Tips & Tricks
-   
+
    ## Tip 1: Gunakan GPU
-   
+
    Untuk processing lebih cepat, gunakan GPU...
    ```
+
 3. Daftarkan di `mkdocs.yml` bagian `nav`:
    ```yaml
    nav:
      - Home: index.md
-     - Tips & Tricks: tips-tricks.md  # ← Tambahkan ini
+     - Tips & Tricks: tips-tricks.md # ← Tambahkan ini
    ```
 
 ### 3. Tambah Gambar
@@ -140,32 +145,35 @@ python -m mkdocs gh-deploy
 ```
 
 Dokumentasi akan online di:
+
 ```
-https://username.github.io/Interview_Assesment_System-ngrok-raifal/
+https://username.github.io/Interview_Assesment_System-main/
 ```
 
 ---
 
 ## 🛠️ Command Penting
 
-| Command                      | Fungsi                                    |
-| ---------------------------- | ----------------------------------------- |
-| `python -m mkdocs serve`     | Jalankan server lokal (preview)           |
-| `python -m mkdocs build`     | Build static website ke folder `site/`    |
-| `python -m mkdocs gh-deploy` | Deploy ke GitHub Pages                    |
-| `python -m mkdocs --help`    | Lihat semua command available             |
+| Command                      | Fungsi                                 |
+| ---------------------------- | -------------------------------------- |
+| `python -m mkdocs serve`     | Jalankan server lokal (preview)        |
+| `python -m mkdocs build`     | Build static website ke folder `site/` |
+| `python -m mkdocs gh-deploy` | Deploy ke GitHub Pages                 |
+| `python -m mkdocs --help`    | Lihat semua command available          |
 
 ---
 
 ## 📝 Markdown Syntax Cheat Sheet
 
-```markdown
+````markdown
 # Heading 1
+
 ## Heading 2
+
 ### Heading 3
 
 **Bold text**
-*Italic text*
+_Italic text_
 
 [Link text](https://example.com)
 
@@ -184,6 +192,8 @@ https://username.github.io/Interview_Assesment_System-ngrok-raifal/
 def hello():
     print("Hello!")
 ```
+````
+
 ```
 
 ---
@@ -196,7 +206,7 @@ def hello():
 
 ### Error: "Port 8000 already in use"
 
-**Solusi:** 
+**Solusi:**
 1. Tutup terminal yang menjalankan mkdocs sebelumnya
 2. Atau gunakan port lain: `python -m mkdocs serve --dev-addr=127.0.0.1:8001`
 
@@ -206,7 +216,7 @@ def hello():
 
 ### Gambar tidak muncul
 
-**Solusi:** 
+**Solusi:**
 1. Check path gambar (case-sensitive!)
 2. Pastikan gambar ada di folder `docs/assets/`
 
@@ -233,3 +243,4 @@ def hello():
 **Selamat mencoba!** 🚀
 
 Kalau masih bingung, tanya aja! 😊
+```
