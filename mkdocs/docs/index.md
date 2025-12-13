@@ -17,7 +17,7 @@
 
   ***
 
-  Faster-Whisper large-v3 dengan weighted confidence + logprobs untuk hasil transcription berkualitas tinggi pada audio yang jernih.
+  Faster-Whisper large-v3 dengan confidence dari logprobs untuk hasil transcription berkualitas tinggi pada audio yang jernih.
 
   [:octicons-arrow-right-24: Learn more](getting-started/introduction.md)
 
