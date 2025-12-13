@@ -5,6 +5,7 @@
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 [![Whisper](https://img.shields.io/badge/Whisper-large--v3-orange.svg)](https://github.com/openai/whisper)
+[![Llama 3.1-8B](https://img.shields.io/badge/Llama_3.1--8B-Instruct-red.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-MkDocs-blue.svg)](https://interview-assesment-system-docs.vercel.app/)
 
@@ -29,6 +30,78 @@
 - ☁️ **Google Drive Support** - Direct video download from Drive URLs
 
 ## 🎬 Quick Demo
+
+### Melalui Website Kami
+
+1. Kunjungi website kami di https://interview-assesment-system.vercel.app/
+
+2. Siapkan input berupa video atau JSON.
+
+   - **Jika input berupa video:**
+
+     a. Masukkan nama kandidat.
+
+     b. Pilih bahasa yang digunakan di video antara Bahasa Inggris atau Bahasa Indonesia.
+
+     c. Pilih atau drag and drop file video ke container area.
+
+     d. Masukkan pertanyaan sesuai dengan video.
+
+     e. Jika ingin menghapus file video yang telah di-drop, tekan tombol hapus semua untuk menghapus semua video atau tekan tombol hapus pada masing-masing card preview video untuk menghapus secara spesifik.
+
+   - **Jika input berupa JSON:**
+
+     a. Pastikan struktur input json seperti ini:
+
+     ```json
+     {
+       "data": {
+         "candidate": {
+           "name": "xxx"
+         },
+         "reviewChecklists": {
+           "interviews": [
+             {
+               "positionId": 1,
+               "question": "Question for video 1",
+               "isVideoExist": true,
+               "recordedVideoUrl": "your video 1 URL"
+             },
+             {
+               "positionId": 2,
+               "question": "Question for video 2",
+               "isVideoExist": true,
+               "recordedVideoUrl": "your video 2 URL"
+             },
+             {
+               "positionId": 3,
+               "question": "Question for video 3",
+               "isVideoExist": true,
+               "recordedVideoUrl": "your video 3 URL"
+             }
+           ]
+         }
+       }
+     }
+     ```
+
+     b. Pilih bahasa yang digunakan di video antara Bahasa Inggris atau Bahasa Indonesia.
+
+     c. Pilih atau drag and drop file JSON ke container area.
+
+     d. Jika ingin menghapus file JSON yang telah dipilih atau di-drop, tekan tombol hapus.
+
+3. Klik tombol kirim untuk mengirim file yang akan diproses oleh backend.
+
+4. Tunggu proses hingga selesai sekitar 1-3 menit per video (Jika pakai GPU akan lebih cepat).
+
+5. Setelah selesai, halaman akan otomatis pindah ke halaman dashboard yang menampilkan semua hasil analisis mulai dari transkripsi, LLM assessment, cheating detection, dan analisis non verbal yang masing-masing dilengkapi dengan confidence score.
+
+6. Kamu juga bisa export JSON dan laporan PDF hasilnya (opsional).
+
+---
+
+### Instalasi Sendiri via Lokal
 
 ```bash
 # 1. Clone & setup
