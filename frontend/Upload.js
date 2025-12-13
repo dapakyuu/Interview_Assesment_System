@@ -452,7 +452,7 @@ async function verifyAndResumeSession(sessionId, candidateName, videoCount) {
       console.log("Session already completed, redirecting...");
       localStorage.removeItem(SESSION_STORAGE_KEY);
       hideLoading();
-      window.location.href = `halaman_dasboard.html?session=${sessionId}`;
+      window.location.href = `Halaman_dasboard.html?session=${sessionId}`; //ubah typo
       return;
     }
 
@@ -537,7 +537,7 @@ async function resumePolling(sessionId, candidateName) {
         await new Promise((r) => setTimeout(r, 1500));
         hideLoading();
         isSubmittingVideo = false;
-        window.location.href = `halaman_dasboard.html?session=${sessionId}`;
+        window.location.href = `Halaman_dasboard.html?session=${sessionId}`;
         return true;
       } else if (statusData.status === "error") {
         // ERROR DETECTED - Hide overlay and show error
