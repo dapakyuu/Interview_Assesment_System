@@ -15,7 +15,7 @@
 
 - :material-microphone:{ .lg .middle } **98% Accurate Transcription**
 
-  ***
+  ---
 
   Faster-Whisper large-v3 dengan confidence dari logprobs untuk hasil transcription berkualitas tinggi pada audio yang jernih.
 
@@ -23,7 +23,7 @@
 
 - :material-robot:{ .lg .middle } **LLM Assessment**
 
-  ***
+  ---
 
   Hugging Face Llama 3.1-8B-Instruct untuk semantic answer evaluation dengan confidence scoring dan logprobs analysis.
 
@@ -31,7 +31,7 @@
 
 - :material-shield-check:{ .lg .middle } **Cheating Detection**
 
-  ***
+  ---
 
   Multi-modal detection: Visual (MediaPipe face mesh 468 landmarks, eye/head tracking) + Audio (Resemblyzer speaker diarization).
 
@@ -39,7 +39,7 @@
 
 - :material-account-eye:{ .lg .middle } **Non-Verbal Analysis**
 
-  ***
+  ---
 
   Scientific scoring untuk facial expressions, eye contact, blink rate, speech patterns dengan weighted confidence calculation.
 
@@ -47,7 +47,7 @@
 
 - :material-translate:{ .lg .middle } **Bilingual Support**
 
-  ***
+  ---
 
   English ↔ Indonesian translation via DeepL API dengan 98%+ accuracy (500k chars/month free tier).
 
@@ -55,7 +55,7 @@
 
 - :material-chart-line:{ .lg .middle } **Dashboard Analytics**
 
-  ***
+  ---
 
   Interactive charts (Chart.js), aggregate reporting, comprehensive JSON results, dan PDF export capability.
 
@@ -63,7 +63,7 @@
 
 - :material-google-drive:{ .lg .middle } **Google Drive Support**
 
-  ***
+  ---
 
   Direct video download dari Google Drive URLs dengan auto file ID extraction menggunakan gdown library.
 
@@ -71,7 +71,7 @@
 
 - :material-lightning-bolt:{ .lg .middle } **Fast Processing**
 
-  ***
+  ---
 
   Background async processing: 1-3 min/video (GPU) atau 3-8 min/video (CPU) dengan auto-cleanup untuk hemat storage 99%+.
 
@@ -205,7 +205,7 @@ graph TD
 
 - :material-download:{ .lg .middle } **Installation**
 
-  ***
+  ---
 
   Complete step-by-step installation guide including FFmpeg setup dan virtual environment.
 
@@ -213,7 +213,7 @@ graph TD
 
 - :material-book-open-variant:{ .lg .middle } **Features**
 
-  ***
+  ---
 
   Deep dive into semua fitur: transcription, cheating detection, non-verbal analysis, dan LLM assessment.
 
@@ -221,7 +221,7 @@ graph TD
 
 - :material-api:{ .lg .middle } **API Documentation**
 
-  ***
+  ---
 
   Complete API reference dengan request/response examples dan error handling.
 
@@ -229,7 +229,7 @@ graph TD
 
 - :material-wrench:{ .lg .middle } **Configuration**
 
-  ***
+  ---
 
   Customize models, thresholds, API keys, dan advanced settings.
 
@@ -245,7 +245,7 @@ graph TD
 
 - :material-github:{ .lg .middle } **GitHub Issues**
 
-  ***
+  ---
 
   Report bugs atau request features.
 
@@ -253,7 +253,7 @@ graph TD
 
 - :material-book-open:{ .lg .middle } **Documentation**
 
-  ***
+  ---
 
   Browse comprehensive guides dan tutorials.
 
@@ -261,7 +261,7 @@ graph TD
 
 - :material-frequently-asked-questions:{ .lg .middle } **FAQ**
 
-  ***
+  ---
 
   Common questions dan troubleshooting.
 

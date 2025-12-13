@@ -561,7 +561,7 @@ Interview_Assesment_System/
 
 - :material-book-open-variant:{ .lg .middle } **Documentation**
 
-  ***
+  ---
 
   Browse comprehensive guides, tutorials, dan API reference.
 
@@ -569,7 +569,7 @@ Interview_Assesment_System/
 
 - :material-frequently-asked-questions:{ .lg .middle } **FAQ**
 
-  ***
+  ---
 
   Common questions dan troubleshooting solutions.
 
@@ -577,7 +577,7 @@ Interview_Assesment_System/
 
 - :material-github:{ .lg .middle } **GitHub Issues**
 
-  ***
+  ---
 
   Report bugs, request features, atau diskusi technical issues.
 
@@ -585,7 +585,7 @@ Interview_Assesment_System/
 
 - :material-chat:{ .lg .middle } **Community**
 
-  ***
+  ---
 
   Join discussions dengan other users dan developers.
 

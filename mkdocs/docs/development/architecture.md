@@ -13,31 +13,29 @@ graph TB
     C --> D["Session Manager"]
     D --> E["Processing Pipeline"]
 
-    E --> F1["Stage 1: Audio Extraction FFmpeg"]
-    F1 --> F2["Stage 2: Transcription faster-whisper"]
-    F2 --> F3["Stage 3: Translation DeepL API"]
-    F3 --> F4["Stage 4: LLM Assessment Llama 3.1"]
+    E --> F["Stage 1: Audio Extraction FFmpeg"]
+    F --> G["Stage 2: Transcription faster-whisper"]
+    G --> H["Stage 3: Translation DeepL API"]
+    H --> I["Stage 4: LLM Assessment Llama 3.1"]
 
-    E --> G1["Stage 5: Cheating Detection"]
-    G1 --> G2["MediaPipe Face Mesh"]
-    G1 --> G3["Resemblyzer Speaker"]
+    I --> J["Stage 5: Cheating Detection"]
+    J --> K1["MediaPipe Face Mesh & Detection"]
+    J --> K2["Resemblyzer Speaker"]
 
-    E --> H["Stage 6: Non-Verbal Analysis"]
-    H --> I["MediaPipe Landmarks"]
+    K1 --> L["Stage 6: Non-Verbal Analysis"]
+    K2 --> L["Stage 6: Non-Verbal Analysis"]
 
-    F4 --> J["Stage 7: Save Results"]
-    G3 --> J
-    I --> J
+    L --> M["Stage 7: Save Results"]
 
-    J --> K["results json"]
-    K --> L["Dashboard/Response"]
-    L --> A
+    M --> N["results json"]
+    N --> O["Dashboard/Response"]
+    O --> A
 
     style C fill:#f9f,stroke:#333
     style E fill:#bbf,stroke:#333
-    style K fill:#bfb,stroke:#333
-    style F2 fill:#ffd,stroke:#333
-    style F4 fill:#fdd,stroke:#333
+    style G fill:#bfb,stroke:#333
+    style I fill:#ffd,stroke:#333
+    style L fill:#fdd,stroke:#333
 ```
 
 **Key Points:**

@@ -1952,7 +1952,7 @@ Explore detailed guides:
 
 - :material-book-open-variant:{ .lg .middle } **Getting Started**
 
-  ***
+  ---
 
   Installation and quickstart tutorials.
 
@@ -1960,7 +1960,7 @@ Explore detailed guides:
 
 - :material-api:{ .lg .middle } **API Reference**
 
-  ***
+  ---
 
   Complete endpoint documentation.
 
@@ -1968,7 +1968,7 @@ Explore detailed guides:
 
 - :material-cog:{ .lg .middle } **Configuration**
 
-  ***
+  ---
 
   Customize models, thresholds, and settings.
 
@@ -1976,7 +1976,7 @@ Explore detailed guides:
 
 - :material-bug:{ .lg .middle } **Troubleshooting**
 
-  ***
+  ---
 
   Fix common issues and optimize performance.
 
