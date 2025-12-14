@@ -112,7 +112,7 @@
 # 1. Clone & setup
 git clone <repo>
 cd Interview_Assesment_System/backend/Python
-python -m venv .venv && .venv/Scripts/activate
+python -m venv .venv && .venv\Scripts\activate
 
 # 2. Buka jupyter notebook dan masukkan tokenmu di cell yang berisi
 # DEEPL_API_KEY = "YOUR_API_KEY_HERE:fx"
@@ -136,7 +136,7 @@ jupyter notebook interview_assessment_system.ipynb
 # 1. Clone & setup
 git clone <repo>
 cd Interview_Assesment_System/backend/Python
-python -m venv .venv && .venv/Scripts/activate
+python -m venv .venv && .venv\Scripts\activate
 
 # 2. Install (one command)
 pip install -r requirements.txt  # atau run Cell 1 di notebook
@@ -233,9 +233,9 @@ python -m venv .venv
 
 # Activate
 # Windows:
-.venv/Scripts/activate
+.venv\Scripts\activate
 # macOS/Linux:
-source .venv/bin/activate
+source .venv\bin\activate
 
 # Install dependencies (atau jalankan cell 1 di notebook)
 pip -r requirements.txt
