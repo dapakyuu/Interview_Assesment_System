@@ -267,19 +267,21 @@ pip -r requirements.txt
    - Logprobs support untuk confidence scoring
 5. **Fallback:** Jika API gagal/limit, system auto-fallback ke rule-based scoring
 
-### 5. FFmpeg Setup (Audio Processing)
+### 5. FFmpeg,ffplay,ffprobe  Setup (Audio Processing)
 
 **Critical untuk audio extraction dan speaker diarization**
 
 **Windows:**
 
 ```bash
-# Download: https://github.com/GyanD/codexffmpeg/releases
-# Extract ke C:\ffmpeg
-# Add C:\ffmpeg\bin to System PATH
+# Download: https://github.com/GyanD/codexffmpeg/releases/download/2025-11-27-git-61b034a47c/ffmpeg-2025-11-27-git-61b034a47c-full_build.zip
+# Extract
+# Setelah extract ambil folder bin dan masukan pada /backend/
 
 # Verify:
 ffmpeg -version
+ffprobe -version
+ffplay -version
 ```
 
 **macOS:**
@@ -1418,6 +1420,7 @@ MIT License - Feel free to modify and use for commercial/personal projects.
 ---
 
 **Built with ❤️ using FastAPI, Whisper, DeepL, and modern web technologies.**
+
 
 
 
