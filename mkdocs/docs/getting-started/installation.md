@@ -6,16 +6,19 @@ Panduan lengkap instalasi dan setup AI Interview Assessment System.
 
 Sebelum memulai, pastikan Anda memiliki:
 
+### Required
+
 - [x] **Python 3.11.9** installed
 - [x] **pip** (Python package manager)
 - [x] **Git** (untuk cloning repository)
-- [x] **10GB+ free disk space** (untuk models)
-- [x] **Stable internet connection** (download models & dependencies)
+- [x] **10GB+ free disk space** (untuk models & processing)
+- [x] **Stable internet connection** (download models ~3GB & dependencies)
 
 ### Optional but Recommended
 
 - **NVIDIA GPU** dengan CUDA support (untuk processing 5-10x lebih cepat)
-- **Virtual environment** tool (venv, conda)
+- **Virtual environment** tool (venv/conda)
+- **SSD storage** (untuk I/O performance lebih baik)
 
 ---
 
@@ -23,11 +26,16 @@ Sebelum memulai, pastikan Anda memiliki:
 
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/yourusername/Interview_Assesment_System.git
 
 # Navigate to backend Python directory
-cd Interview_Assesment_System-main/backend/Python
+cd Interview_Assesment_System/backend/Python
 ```
+
+!!! tip "Repository Structure"
+    Pastikan Anda berada di folder `backend/Python` sebelum melanjutkan instalasi dependencies.
+    
+    Jika download sebagai ZIP, extract terlebih dahulu kemudian masuk ke folder tersebut.
 
 ---
 
@@ -64,7 +72,20 @@ Selalu gunakan virtual environment untuk menghindari konflik dependencies dengan
 
 ## Step 3: Install Dependencies
 
-### Option A: Via Jupyter Notebook (Recommended)
+### Option A: Via requirements.txt (Recommended untuk Production)
+
+```bash
+# Install all dependencies at once
+pip install -r requirements.txt
+
+# Install resemblyzer manually jika terjadi error (Windows only, untuk menghindari dependency conflicts)
+pip install resemblyzer --no-deps
+```
+
+!!! warning "Resemblyzer Installation"
+    Pada Windows, resemblyzer kadang conflict dengan dependencies lain. Install manual dengan `--no-deps` jika mengalami error.
+
+### Option B: Via Jupyter Notebook (Recommended untuk Development)
 
 ```bash
 # Install Jupyter first
@@ -91,15 +112,11 @@ jupyter notebook interview_assessment_system.ipynb
 !pip install --quiet faster-whisper
 ```
 
-### Option B: Via requirements.txt
-
-```bash
-# Install all dependencies at once
-pip install -r requirements.txt
-```
-
 !!! warning "Compatibility"
-**WAJIB install numpy==1.26.4** untuk menghindari konflik dengan faster-whisper dan torch.
+    **WAJIB install numpy==1.26.4** untuk menghindari konflik dengan faster-whisper dan torch.
+    
+!!! info "Resemblyzer on Windows"
+    Untuk Windows, install resemblyzer dengan flag `--no-deps` untuk menghindari konflik dependency.
 
 ---
 
@@ -114,30 +131,31 @@ FFmpeg **REQUIRED** untuk audio extraction dan processing.
     1. **Download:** [FFmpeg Full Build](https://github.com/GyanD/codexffmpeg/releases/download/2025-11-27-git-61b034a47c/ffmpeg-2025-11-27-git-61b034a47c-full_build.zip)
     2. **Extract** file ZIP
     3. **Copy folder `bin`** dari hasil extract
-    4. **Paste** folder `bin` ke `Interview_Assesment_System-main/backend/`
+    4. **Paste** folder `bin` ke `Interview_Assesment_System/backend/`
 
     Struktur akhir:
     ```
-    Interview_Assesment_System-main/
+    Interview_Assesment_System/
     └── backend/
         ├── bin/           ← FFmpeg binaries (NEW)
         │   ├── ffmpeg.exe
         │   ├── ffprobe.exe
         │   └── ffplay.exe
         └── Python/
-            └── ...
+            ├── main.py
+            └── requirements.txt
     ```
 
     **Verify Installation:**
 
     ```powershell
     # Navigate to backend/bin
-    cd backend/bin
+    cd ../bin
 
     # Test all binaries
-    ffmpeg -version
-    ffprobe -version
-    ffplay -version
+    .\ffmpeg.exe -version
+    .\ffprobe.exe -version
+    .\ffplay.exe -version
     ```
 
     !!! success "No PATH Setup Required"
@@ -151,6 +169,8 @@ FFmpeg **REQUIRED** untuk audio extraction dan processing.
 
     # Verify installation
     ffmpeg -version
+    ffprobe -version
+    ffplay -version
     ```
 
 === "Linux (Ubuntu/Debian)"
@@ -164,53 +184,47 @@ FFmpeg **REQUIRED** untuk audio extraction dan processing.
 
     # Verify installation
     ffmpeg -version
+    ffprobe -version
+    ffplay -version
     ```
+
+!!! warning "Critical Component"
+    Tanpa FFmpeg, audio extraction akan gagal dan proses analisis tidak bisa berjalan.
 
 ---
 
 ## Step 5: Configure API Keys
 
-### DeepL API (Translation EN↔ID)
+Sistem memerlukan 2 API keys (keduanya FREE):
+
+### DeepL API (Translation Service)
 
 **1. Sign up FREE:**
 
 - Visit: [https://www.deepl.com/pro-api](https://www.deepl.com/pro-api)
-- Pilih "Sign up for free"
+- Click "Sign up for free"
+- Fill registration form
 - Verify email
 
 **2. Get API Key:**
 
 - Login → Account → API Keys
-- Copy API key (format: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx:fx`)
+- Copy API key (looks like: `abc123de-f456-78gh-90ij-klmn12345678:fx`)
 
 **3. Configure di project:**
 
-=== "Via .env File (Recommended)"
+Buat file `.env` di folder `backend/Python/` (copy dari `env.example`):
 
-    ```bash
-    # Rename env.example menjadi .env
-    cp env.example .env
+```bash
+# File: backend/Python/.env
+DEEPL_API_KEY=your_deepl_api_key_here:fx
+HF_TOKEN=your_hf_token_here
+```
 
-    # Edit .env file:
-    DEEPL_API_KEY=your_api_key_here:fx
-    ```
-
-=== "Via Notebook (Alternative)"
-
-    Edit **Cell 6** di ```interview_assessment_system.ipynb```:
-
-    ```python
-    # DeepL Configuration
-    DEEPL_API_KEY = "YOUR_API_KEY_HERE:fx"
-    translator = deepl.Translator(DEEPL_API_KEY)
-    ```
-
-**Free Tier Benefits:**
-
-- 500,000 characters/month
-- 98%+ translation quality
-- EN ↔ ID bidirectional
-- Automatic fallback jika quota habis
+!!! success "Free Tier Limits"
+    - **500,000 characters/month** (gratis selamanya)
+    - Cukup untuk ~200 video interview per bulan
+    - Tidak perlu credit card
 
 ---
 
@@ -232,30 +246,19 @@ FFmpeg **REQUIRED** untuk audio extraction dan processing.
 
 **3. Configure di project:**
 
-=== "Via .env File (Recommended)"
+Tambahkan ke file `.env` yang sama:
 
-    ```bash
-    # Edit .env file:
-    HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxx
-    ```
+```bash
+# File: backend/Python/.env
+DEEPL_API_KEY=your_deepl_api_key_here:fx
+HF_TOKEN=hf_xxxxxxxxxxxxxxxxxxxx
+```
 
-=== "Via Notebook (Alternative)"
-
-    Edit **Cell 7** di ```interview_assessment_system.ipynb```:
-
-    ```python
-    # Hugging Face Configuration
-    HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxx"
-    client = InferenceClient(api_key=HF_TOKEN)
-    ```
-
-**Free Tier Benefits:**
-
-- Model: `meta-llama/Llama-3.1-8B-Instruct`
-- Unlimited requests (rate-limited ~30 req/min)
-- No credit card required
-- Logprobs support untuk confidence scoring
-- Automatic fallback ke rule-based jika API gagal
+!!! success "Free Tier Benefits"
+    - Model: `meta-llama/Llama-3.1-8B-Instruct`
+    - Unlimited requests (rate-limited ~30 req/min)
+    - No credit card required
+    - Automatic fallback ke rule-based jika API gagal
 
 ---
 
@@ -285,20 +288,23 @@ jupyter notebook interview_assessment_system.ipynb
 
 **Server akan running di:**
 
-- `http://localhost:8888` (local)
-- Atau `https://xxxx.ngrok.io` (jika ngrok enabled)
+- Local: `http://localhost:8888` 
+- Ngrok (optional): `https://xxxx.ngrok.io`
 
 !!! success "Server Ready"
-Jika melihat:
-`    INFO:     Uvicorn running on http://0.0.0.0:8888
+    Jika melihat:
+    ```
+    INFO:     Uvicorn running on http://0.0.0.0:8888
     INFO:     Application startup complete.
-   `
-
+    ```
     Server sudah siap menerima requests!
 
-### Option B: Via Python Script
+### Option B: Via Python Script (main.py)
 
 ```bash
+# Pastikan .env file sudah dikonfigurasi
+# DEEPL_API_KEY dan HF_TOKEN harus ada di .env
+
 # Start server directly
 python main.py
 
@@ -306,8 +312,10 @@ python main.py
 ```
 
 !!! note "Port Differences" 
-    - Jupyter Notebook: Port **8888** 
-    - Python Script: Port **7860**
+    - **Jupyter Notebook**: Port `8888`
+    - **Python Script (main.py)**: Port `7860`
+    
+    Pastikan `API_BASE_URL` di frontend sesuai dengan port yang digunakan!
 
 ---
 
@@ -315,53 +323,51 @@ python main.py
 
 **PENTING:** Sebelum start frontend, ubah `API_BASE_URL` sesuai dengan backend server Anda.
 
-### Update Upload.js
+### Update File JavaScript Frontend
 
-Navigate ke `frontend/Upload.js` dan ubah `API_BASE_URL`:
+Navigate ke folder `frontend/` dan ubah 2 file berikut:
+
+#### 1. Upload.js
+
+Edit baris 1-5 di [frontend/Upload.js](../../../frontend/Upload.js):
 
 === "Jupyter Notebook (Port 8888)"
 
     ```javascript
-    // Line ~1-5 in Upload.js
     const API_BASE_URL = "http://localhost:8888";
     ```
 
 === "Python Script (Port 7860)"
 
     ```javascript
-    // Line ~1-5 in Upload.js
     const API_BASE_URL = "http://localhost:7860";
     ```
 
 === "Production/Vercel"
 
     ```javascript
-    // Line ~1-5 in Upload.js
     const API_BASE_URL = "https://your-backend-url.vercel.app";
     ```
 
-### Update Halaman_dasboard.js
+#### 2. Halaman_dasboard.js
 
-Navigate ke `frontend/Halaman_dasboard.js` dan ubah `BASE_URL`:
+Edit baris 1-5 di [frontend/Halaman_dasboard.js](../../../frontend/Halaman_dasboard.js):
 
 === "Jupyter Notebook (Port 8888)"
 
     ```javascript
-    // Line ~1-5 in Halaman_dasboard.js
     const API_BASE_URL = "http://localhost:8888";
     ```
 
 === "Python Script (Port 7860)"
 
     ```javascript
-    // Line ~1-5 in Halaman_dasboard.js
     const API_BASE_URL = "http://localhost:7860";
     ```
 
 === "Production/Vercel"
 
     ```javascript
-    // Line ~1-5 in Halaman_dasboard.js
     const API_BASE_URL = "https://your-backend-url.vercel.app";
     ```
 
@@ -400,11 +406,13 @@ Navigate ke `frontend/Halaman_dasboard.js` dan ubah `BASE_URL`:
 
 ## Verification
 
+Setelah instalasi, lakukan verification berikut untuk memastikan semua komponen berfungsi:
+
 ### 1. Test Backend API
 
-Visit `http://localhost:8888/docs` untuk melihat **FastAPI interactive documentation**.
+Buka browser dan visit `http://localhost:8888/docs` untuk melihat **FastAPI interactive documentation**.
 
-Atau test dengan curl:
+Atau test dengan curl di terminal:
 
 ```bash
 # Test health check
@@ -414,17 +422,20 @@ curl http://localhost:8888/
 # {"status":"ok","message":"FastAPI server is running"}
 ```
 
+!!! success "API Ready"
+    Jika melihat Swagger UI di `/docs`, backend API sudah siap digunakan!
+
 ### 2. Test Frontend
 
-1. Open `http://localhost:5500/Upload.html`
-2. Input candidate name: "Test User"
+1. Open `http://localhost:5500/Upload.html` di browser
+2. Input candidate name: `"Test User"`
 3. Upload test video atau gunakan Google Drive URL
-4. Monitor processing di Jupyter terminal
-5. Check dashboard results
+4. Monitor processing di Jupyter terminal atau console
+5. Setelah selesai, check dashboard results di [Halaman_dasboard.html](http://localhost:5500/Halaman_dasboard.html)
 
 ### 3. Verify Models Loaded
 
-Di Jupyter Notebook, check output dari Cell 4-7:
+Di Jupyter Notebook, check output dari Cell 4-7. Anda harus melihat:
 
 ```
 ✅ Whisper Model loaded: large-v3 (cuda/cpu)
@@ -433,50 +444,72 @@ Di Jupyter Notebook, check output dari Cell 4-7:
 ✅ Hugging Face Client ready (Llama-3.1-8B-Instruct)
 ```
 
+!!! tip "GPU Acceleration"
+    Jika ada NVIDIA GPU, pastikan melihat `cuda` di output Cell 4, bukan `cpu`.
+
 ---
 
 ## GPU Setup (Optional)
 
-Untuk processing **5-10x lebih cepat** dengan NVIDIA GPU:
+Untuk processing **5-10x lebih cepat** dengan NVIDIA GPU, ikuti langkah berikut:
 
 ### Check GPU Availability
+
+Jalankan di Python/Jupyter untuk cek GPU:
 
 ```python
 import torch
 print(f"CUDA available: {torch.cuda.is_available()}")
-print(f"GPU name: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'N/A'}")
+if torch.cuda.is_available():
+    print(f"GPU name: {torch.cuda.get_device_name(0)}")
+    print(f"CUDA version: {torch.version.cuda}")
 ```
 
 ### Install CUDA Toolkit (Jika belum ada)
 
-**Windows:**
+=== "Windows"
 
-1. Download [CUDA Toolkit 11.8](https://developer.nvidia.com/cuda-11-8-0-download-archive)
-2. Install dengan wizard (pilih Express installation)
-3. Restart computer
-4. Verify:
+    1. Download [CUDA Toolkit 11.8](https://developer.nvidia.com/cuda-11-8-0-download-archive)
+    2. Install dengan wizard (pilih Express installation)
+    3. Restart computer
+    4. Verify installation:
+    
+    ```powershell
+    nvcc --version
+    ```
 
-```bash
-nvcc --version
-```
+=== "Linux (Ubuntu/Debian)"
 
-**Linux:**
-
-```bash
-# Ubuntu/Debian
-wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
-sudo sh cuda_11.8.0_520.61.05_linux.run
-```
+    ```bash
+    # Download CUDA installer
+    wget https://developer.download.nvidia.com/compute/cuda/11.8.0/local_installers/cuda_11.8.0_520.61.05_linux.run
+    
+    # Install CUDA
+    sudo sh cuda_11.8.0_520.61.05_linux.run
+    
+    # Add to PATH
+    echo 'export PATH=/usr/local/cuda-11.8/bin:$PATH' >> ~/.bashrc
+    source ~/.bashrc
+    
+    # Verify
+    nvcc --version
+    ```
 
 ### Install PyTorch with CUDA
 
 ```bash
-# Uninstall CPU version
+# Uninstall CPU version first
 pip uninstall torch torchaudio
 
-# Install GPU version (CUDA 11.8)
+# Install GPU-enabled version (CUDA 11.8)
 pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu118
 ```
+
+!!! success "Verification"
+    Setelah install, re-run Cell 4 di notebook. Anda harus melihat:
+    ```
+    ✅ Whisper Model loaded: large-v3 (cuda)  # ← Bukan 'cpu'
+    ```
 
 ### Performance Comparison
 
@@ -485,6 +518,9 @@ pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu118
 | **CPU** (Intel i7) | 3-8 min/video    | 4-8 GB RAM   |
 | **GPU** (RTX 3060) | 1-3 min/video    | 6-8 GB VRAM  |
 | **GPU** (RTX 4090) | 30-90 sec/video  | 8-10 GB VRAM |
+
+!!! tip "Recommended GPU"
+    Minimum **6GB VRAM** (RTX 3060 atau lebih tinggi) untuk Whisper large-v3 dengan batch processing.
 
 ---
 
