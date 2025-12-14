@@ -11,6 +11,7 @@ Pastikan sudah menyelesaikan setup:
 - [x] Frontend server running (port 5500)
 - [x] API keys configured (DeepL + Hugging Face)
 - [x] FFmpeg installed dan di PATH
+- [x] Change API_BASE_URL in Upload.js and Halaman_dasboard.js
 
 ---
 
@@ -101,21 +102,28 @@ Ada dua metode upload:
     curl -X POST http://localhost:8888/upload_json \
       -H "Content-Type: application/json" \
       -d '{
-        "candidate_name": "John Doe",
-        "interviews": [
-          {
-            "positionId": 1,
-            "question": "Tell me about yourself",
-            "isVideoExist": true,
-            "recordedVideoUrl": "https://drive.google.com/file/d/FILE_ID/view"
+        "success": true,
+        "data": {
+          "candidate": {
+            "name": "John Doe"
           },
-          {
-            "positionId": 2,
-            "question": "Why this position?",
-            "isVideoExist": true,
-            "recordedVideoUrl": "https://drive.google.com/file/d/FILE_ID2/view"
+          "reviewChecklists": {
+            "interviews": [
+              {
+                "positionId": 1,
+                "question": "Tell me about yourself",
+                "isVideoExist": true,
+                "recordedVideoUrl": "https://drive.google.com/file/d/FILE_ID/view"
+              },
+              {
+                "positionId": 2,
+                "question": "Why this position?",
+                "isVideoExist": true,
+                "recordedVideoUrl": "https://drive.google.com/file/d/FILE_ID2/view"
+              }
+            ]
           }
-        ],
+        },
         "language": "en"
       }'
     ```
@@ -500,7 +508,7 @@ blink rate 22/min (normal)
 
 **JSON Structure Preview:**
 
-`json
+```json
 {
   "success": true,
   "name": "John Doe",
@@ -530,7 +538,7 @@ blink rate 22/min (normal)
     "llm_model": "meta-llama/Llama-3.1-8B-Instruct"
   }
 }
-`
+```
 
 ---
 

@@ -18,13 +18,6 @@ http://localhost:8888
 http://localhost:7860
 ```
 
-**Interactive Documentation:**
-
-```http
-http://localhost:8888/docs  # Swagger UI
-http://localhost:8888/redoc # ReDoc
-```
-
 ---
 
 ## 📤 Upload & Processing
@@ -46,8 +39,8 @@ Content-Type: multipart/form-data
 | ---------------- | -------- | -------- | ------------------------------- |
 | `candidate_name` | String   | ✅       | Nama kandidat                   |
 | `videos`         | File[]   | ✅       | 1-5 video files                 |
-| `question`       | String[] | ✅       | Question per video (same order) |
-| `language`       | String   | ✅       | `"en"` atau `"id"`              |
+| `questions`      | String[] | ✅       | Question per video (same order) |
+| `language`       | String   | ✅       | `"en"` atau `"id"` (default: `"en"`) |
 
 **Supported Video Formats:**
 
@@ -69,9 +62,9 @@ curl -X POST http://localhost:8888/upload \
   -F "videos=@video1.mp4" \
   -F "videos=@video2.mp4" \
   -F "videos=@video3.mp4" \
-  -F "question=Tell me about yourself" \
-  -F "question=Why this position?" \
-  -F "question=Your biggest achievement?" \
+  -F "questions=Tell me about yourself" \
+  -F "questions=Why this position?" \
+  -F "questions=Your biggest achievement?" \
   -F "language=en"
 ```
 
@@ -90,7 +83,7 @@ files = [
 
 data = {
 "candidate_name": "John Doe",
-"question": [
+"questions": [
 "Tell me about yourself",
 "Why this position?",
 "Your biggest achievement?"
@@ -117,7 +110,7 @@ for (let i = 0; i < videoFiles.length; i++) {
 
 // Add questions
 const questions = ["Q1", "Q2", "Q3"];
-questions.forEach((q) => formData.append("question", q));
+questions.forEach((q) => formData.append("questions", q));
 
 fetch("http://localhost:8888/upload", {
   method: "POST",
@@ -133,9 +126,7 @@ fetch("http://localhost:8888/upload", {
 {
   "success": true,
   "session_id": "abc123def456...",
-  "uploaded_videos": 3,
-  "message": "Videos uploaded successfully. Processing started in background.",
-  "status_url": "/status/abc123def456..."
+  "uploaded_videos": 3
 }
 ```
 
@@ -143,13 +134,8 @@ fetch("http://localhost:8888/upload", {
 
 ```json
 {
-  "detail": "No videos uploaded"
-}
-```
-
-```json
-{
-  "detail": "Number of questions (2) does not match number of videos (3)"
+  "success": false,
+  "error": "Questions count (2) must match videos count (3)"
 }
 ```
 
@@ -157,7 +143,8 @@ fetch("http://localhost:8888/upload", {
 
 ```json
 {
-  "detail": "Error processing videos: [error message]"
+  "success": false,
+  "error": "[error message]"
 }
 ```
 
@@ -176,15 +163,19 @@ Content-Type: application/json
 
 **JSON Body:**
 
-| Field                           | Type    | Required | Description                |
-| ------------------------------- | ------- | -------- | -------------------------- |
-| `candidate_name`                | String  | ✅       | Nama kandidat              |
-| `interviews`                    | Array   | ✅       | Array of interview objects |
-| `interviews[].positionId`       | Integer | ✅       | Question ID/position       |
-| `interviews[].question`         | String  | ✅       | Interview question text    |
-| `interviews[].isVideoExist`     | Boolean | ✅       | `true` if video available  |
-| `interviews[].recordedVideoUrl` | String  | ✅       | Google Drive share URL     |
-| `language`                      | String  | ✅       | `"en"` atau `"id"`         |
+| Field                                         | Type    | Required | Description                |
+| --------------------------------------------- | ------- | -------- | -------------------------- |
+| `success`                                     | Boolean | ✅       | Must be `true`             |
+| `data`                                        | Object  | ✅       | Data wrapper object        |
+| `data.candidate`                              | Object  | ✅       | Candidate information      |
+| `data.candidate.name`                         | String  | ✅       | Nama kandidat              |
+| `data.reviewChecklists`                       | Object  | ✅       | Review checklists wrapper  |
+| `data.reviewChecklists.interviews`            | Array   | ✅       | Array of interview objects |
+| `data.reviewChecklists.interviews[].positionId`       | Integer | ✅       | Question ID/position       |
+| `data.reviewChecklists.interviews[].question`         | String  | ✅       | Interview question text    |
+| `data.reviewChecklists.interviews[].isVideoExist`     | Boolean | ✅       | `true` if video available  |
+| `data.reviewChecklists.interviews[].recordedVideoUrl` | String  | ✅       | Google Drive share URL     |
+| `language`                                    | String  | ✅       | `"en"` atau `"id"`         |
 
 **Supported Google Drive URL Formats:**
 
@@ -208,21 +199,28 @@ FILE_ID (33+ characters)
 curl -X POST http://localhost:8888/upload_json \
   -H "Content-Type: application/json" \
   -d '{
-    "candidate_name": "Jane Smith",
-    "interviews": [
-      {
-        "positionId": 1,
-        "question": "Tell me about your Python experience",
-        "isVideoExist": true,
-        "recordedVideoUrl": "https://drive.google.com/file/d/1ABC123XYZ456/view"
+    "success": true,
+    "data": {
+      "candidate": {
+        "name": "Jane Smith"
       },
-      {
-        "positionId": 2,
-        "question": "Explain async programming",
-        "isVideoExist": true,
-        "recordedVideoUrl": "https://drive.google.com/file/d/2DEF789UVW012/view"
+      "reviewChecklists": {
+        "interviews": [
+          {
+            "positionId": 1,
+            "question": "Tell me about your Python experience",
+            "isVideoExist": true,
+            "recordedVideoUrl": "https://drive.google.com/file/d/1ABC123XYZ456/view"
+          },
+          {
+            "positionId": 2,
+            "question": "Explain async programming",
+            "isVideoExist": true,
+            "recordedVideoUrl": "https://drive.google.com/file/d/2DEF789UVW012/view"
+          }
+        ]
       }
-    ],
+    },
     "language": "en"
   }'
 ```
@@ -236,7 +234,12 @@ import json
 url = "http://localhost:8888/upload_json"
 
 payload = {
-"candidate_name": "Jane Smith",
+"success": True,
+"data": {
+"candidate": {
+"name": "Jane Smith"
+},
+"reviewChecklists": {
 "interviews": [
 {
 "positionId": 1,
@@ -250,7 +253,9 @@ payload = {
 "isVideoExist": True,
 "recordedVideoUrl": "https://drive.google.com/file/d/2DEF789UVW012/view"
 }
-],
+]
+}
+},
 "language": "en"
 }
 
@@ -263,21 +268,28 @@ print(response.json())
 
 ```javascript
 const payload = {
-  candidate_name: "Jane Smith",
-  interviews: [
-    {
-      positionId: 1,
-      question: "Tell me about your Python experience",
-      isVideoExist: true,
-      recordedVideoUrl: "https://drive.google.com/file/d/1ABC123XYZ456/view",
+  success: true,
+  data: {
+    candidate: {
+      name: "Jane Smith"
     },
-    {
-      positionId: 2,
-      question: "Explain async programming",
-      isVideoExist: true,
-      recordedVideoUrl: "https://drive.google.com/file/d/2DEF789UVW012/view",
-    },
-  ],
+    reviewChecklists: {
+      interviews: [
+        {
+          positionId: 1,
+          question: "Tell me about your Python experience",
+          isVideoExist: true,
+          recordedVideoUrl: "https://drive.google.com/file/d/1ABC123XYZ456/view",
+        },
+        {
+          positionId: 2,
+          question: "Explain async programming",
+          isVideoExist: true,
+          recordedVideoUrl: "https://drive.google.com/file/d/2DEF789UVW012/view",
+        },
+      ]
+    }
+  },
   language: "en",
 };
 
@@ -296,9 +308,8 @@ fetch("http://localhost:8888/upload_json", {
 {
   "success": true,
   "session_id": "xyz789abc123...",
-  "uploaded_videos": 2,
-  "message": "Videos are being downloaded from Google Drive and processed in background",
-  "status_url": "/status/xyz789abc123..."
+  "message": "JSON received. Downloading videos from Google Drive...",
+  "video_count": 2
 }
 ```
 
@@ -306,13 +317,36 @@ fetch("http://localhost:8888/upload_json", {
 
 ```json
 {
-  "detail": "No interviews provided"
+  "success": false,
+  "error": "Invalid JSON: missing success or data"
 }
 ```
 
 ```json
 {
-  "detail": "Failed to extract file ID from URL: [url]"
+  "success": false,
+  "error": "Missing candidate name"
+}
+```
+
+```json
+{
+  "success": false,
+  "error": "Missing interviews data"
+}
+```
+
+```json
+{
+  "success": false,
+  "error": "Interviews array is empty"
+}
+```
+
+```json
+{
+  "success": false,
+  "error": "Invalid language: [language]"
 }
 ```
 
@@ -320,7 +354,8 @@ fetch("http://localhost:8888/upload_json", {
 
 ```json
 {
-  "detail": "Google Drive download failed: [error message]"
+  "success": false,
+  "error": "[error message]"
 }
 ```
 
@@ -453,7 +488,8 @@ pollStatus();
 
 ```json
 {
-  "detail": "Session not found"
+  "status": "not_found",
+  "message": "Session not found"
 }
 ```
 
@@ -841,7 +877,17 @@ print(f"Non-Verbal Score: {nonverbal_score}")
 
 ```json
 {
-  "detail": "Results not found for session: abc123def456..."
+  "success": false,
+  "message": "Results not found"
+}
+```
+
+**Response (500 Internal Server Error):**
+
+```json
+{
+  "success": false,
+  "message": "[error message]"
 }
 ```
 
@@ -867,15 +913,13 @@ curl http://localhost:8888/
 
 ```json
 {
-  "status": "ok",
-  "message": "FastAPI server is running",
-  "version": "1.0.0",
-  "endpoints": [
-    "POST /upload",
-    "POST /upload_json",
-    "GET /status/{session_id}",
-    "GET /results/{session_id}"
-  ]
+  "message": "AI Interview Assessment System",
+  "model": "faster-whisper large-v3",
+  "endpoints": {
+    "upload": "POST /upload",
+    "status": "GET /status/{session_id}",
+    "results": "GET /results/{session_id}"
+  }
 }
 ```
 
@@ -896,7 +940,12 @@ import json
 
 url = "http://localhost:8888/upload_json"
 payload = {
-"candidate_name": "Jane Smith",
+"success": True,
+"data": {
+"candidate": {
+"name": "Jane Smith"
+},
+"reviewChecklists": {
 "interviews": [
 {
 "positionId": 1,
@@ -916,7 +965,9 @@ payload = {
 "isVideoExist": True,
 "recordedVideoUrl": "https://drive.google.com/file/d/FILE_ID_3/view"
 }
-],
+]
+}
+},
 "language": "en"
 }
 
@@ -1275,51 +1326,6 @@ async def status(...):
 Server automatically compresses responses > 1KB using gzip.
 
 ---
-
-## 🔧 Development Tools
-
-### Interactive API Documentation
-
-**Swagger UI:**
-
-```http
-http://localhost:8888/docs
-```
-
-**Features:**
-
-- Try endpoints directly in browser
-- See request/response schemas
-- Test authentication
-- Download OpenAPI spec
-
-**ReDoc:**
-
-```http
-http://localhost:8888/redoc
-```
-
-**Features:**
-
-- Clean documentation interface
-- Search functionality
-- Code samples
-- API reference
-
-### OpenAPI Schema
-
-Download OpenAPI 3.0 schema:
-
-```bash
-curl http://localhost:8888/openapi.json > openapi.json
-```
-
-Use for:
-
-- Generate client SDKs
-- Import into Postman
-- API testing tools
-- Documentation generators
 
 ---
 

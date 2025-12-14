@@ -6,6 +6,10 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 [![Whisper](https://img.shields.io/badge/Whisper-large--v3-orange.svg)](https://github.com/openai/whisper)
 [![Llama 3.1-8B](https://img.shields.io/badge/Llama_3.1--8B-Instruct-red.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
+[![MediaPipe](https://img.shields.io/badge/MediaPipe-Face_Mesh-00C8FF.svg)](https://google.github.io/mediapipe/)
+[![Resemblyzer](https://img.shields.io/badge/Resemblyzer-Speaker_Diarization-9C27B0.svg)](https://github.com/resemble-ai/Resemblyzer)
+[![PyDub](https://img.shields.io/badge/PyDub-Audio_Processing-brightgreen.svg)](https://github.com/jiaaro/pydub)
+[![DeepL](https://img.shields.io/badge/DeepL-Translation_API-0F2B46.svg)](https://www.deepl.com/docs-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-MkDocs-blue.svg)](https://interview-assesment-system-docs.vercel.app/)
 
@@ -118,8 +122,8 @@ python -m venv .venv && .venv\Scripts\activate
 jupyter notebook interview_assessment_system.ipynb
 # Run all cells → Server starts on http://localhost:8888
 
-# 4. Ubah di Upload.js dan Halaman_dasboard.js
-# BASE_URL = http://localhost:8888
+# 4. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
+# API_BASE_URL = http://localhost:8888
 
 # 5. Open frontend
 # http://localhost:5500/Upload.html (via Live Server)
@@ -144,8 +148,8 @@ pip install -r requirements.txt  # atau run Cell 1 di notebook
 python main.py
 # Server starts on http://localhost:7860
 
-# 5. Ubah di Upload.js dan Halaman_dasboard.js
-# BASE_URL = http://localhost:7860
+# 5. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
+# API_BASE_URL = http://localhost:7860
 
 # 6. Open frontend
 # http://localhost:5500/Upload.html (via Live Server)

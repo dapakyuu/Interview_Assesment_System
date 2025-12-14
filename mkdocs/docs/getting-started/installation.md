@@ -298,11 +298,72 @@ python main.py
 # Server starts on http://localhost:7860
 ```
 
-!!! note "Port Differences" - Jupyter Notebook: Port **8888** - Python Script: Port **7860**
+!!! note "Port Differences" 
+    - Jupyter Notebook: Port **8888** 
+    - Python Script: Port **7860**
 
 ---
 
-## Step 7: Start Frontend
+## Step 7: Configure Frontend API_BASE_URL
+
+**PENTING:** Sebelum start frontend, ubah `API_BASE_URL` sesuai dengan backend server Anda.
+
+### Update Upload.js
+
+Navigate ke `frontend/Upload.js` dan ubah `API_BASE_URL`:
+
+=== "Jupyter Notebook (Port 8888)"
+
+    ```javascript
+    // Line ~1-5 in Upload.js
+    const API_BASE_URL = "http://localhost:8888";
+    ```
+
+=== "Python Script (Port 7860)"
+
+    ```javascript
+    // Line ~1-5 in Upload.js
+    const API_BASE_URL = "http://localhost:7860";
+    ```
+
+=== "Production/Vercel"
+
+    ```javascript
+    // Line ~1-5 in Upload.js
+    const API_BASE_URL = "https://your-backend-url.vercel.app";
+    ```
+
+### Update Halaman_dasboard.js
+
+Navigate ke `frontend/Halaman_dasboard.js` dan ubah `BASE_URL`:
+
+=== "Jupyter Notebook (Port 8888)"
+
+    ```javascript
+    // Line ~1-5 in Halaman_dasboard.js
+    const API_BASE_URL = "http://localhost:8888";
+    ```
+
+=== "Python Script (Port 7860)"
+
+    ```javascript
+    // Line ~1-5 in Halaman_dasboard.js
+    const API_BASE_URL = "http://localhost:7860";
+    ```
+
+=== "Production/Vercel"
+
+    ```javascript
+    // Line ~1-5 in Halaman_dasboard.js
+    const API_BASE_URL = "https://your-backend-url.vercel.app";
+    ```
+
+!!! warning "Pastikan API_BASE_URL Match"
+    `API_BASE_URL` di kedua file **HARUS sama** dengan port backend server yang Anda gunakan!
+
+---
+
+## Step 8: Start Frontend
 
 === "VS Code Live Server (Recommended)"
 

@@ -6,6 +6,10 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 [![Whisper](https://img.shields.io/badge/Whisper-large--v3-orange.svg)](https://github.com/openai/whisper)
 [![Llama 3.1-8B](https://img.shields.io/badge/Llama_3.1--8B-Instruct-red.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
+[![MediaPipe](https://img.shields.io/badge/MediaPipe-Face_Mesh-00C8FF.svg)](https://google.github.io/mediapipe/)
+[![Resemblyzer](https://img.shields.io/badge/Resemblyzer-Speaker_Diarization-9C27B0.svg)](https://github.com/resemble-ai/Resemblyzer)
+[![PyDub](https://img.shields.io/badge/PyDub-Audio_Processing-brightgreen.svg)](https://github.com/jiaaro/pydub)
+[![DeepL](https://img.shields.io/badge/DeepL-Translation_API-0F2B46.svg)](https://www.deepl.com/docs-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
@@ -84,40 +88,110 @@
 
 ## :material-rocket-launch: Quick Start
 
+=== "Melalui Website Kami"
+
+    **1. Kunjungi website kami di [https://interview-assesment-system.vercel.app/](https://interview-assesment-system.vercel.app/)**
+
+    **2. Siapkan input berupa video atau JSON:**
+
+    **Jika input berupa video:**
+
+    - Masukkan nama kandidat
+    - Pilih bahasa yang digunakan di video (Bahasa Inggris atau Bahasa Indonesia)
+    - Pilih atau drag and drop file video ke container area
+    - Masukkan pertanyaan sesuai dengan video
+    - Jika ingin menghapus file video yang telah di-drop, tekan tombol hapus semua untuk menghapus semua video atau tekan tombol hapus pada masing-masing card preview video untuk menghapus secara spesifik
+
+    **Jika input berupa JSON:**
+
+    - Pastikan struktur input json seperti ini:
+
+    ```json
+    {
+      "success": true,
+      "data": {
+        "candidate": {
+          "name": "xxx"
+        },
+        "reviewChecklists": {
+          "interviews": [
+            {
+              "positionId": 1,
+              "question": "Question for video 1",
+              "isVideoExist": true,
+              "recordedVideoUrl": "your video 1 URL"
+            },
+            {
+              "positionId": 2,
+              "question": "Question for video 2",
+              "isVideoExist": true,
+              "recordedVideoUrl": "your video 2 URL"
+            }
+          ]
+        }
+      }
+    }
+    ```
+
+    - Pilih bahasa yang digunakan di video (Bahasa Inggris atau Bahasa Indonesia)
+    - Pilih atau drag and drop file JSON ke container area
+    - Jika ingin menghapus file JSON yang telah dipilih atau di-drop, tekan tombol hapus
+
+    **3. Klik tombol kirim** untuk mengirim file yang akan diproses oleh backend
+
+    **4. Tunggu proses** hingga selesai sekitar 1-3 menit per video (Jika pakai GPU akan lebih cepat)
+
+    **5. Setelah selesai**, halaman akan otomatis pindah ke halaman dashboard yang menampilkan semua hasil analisis mulai dari transkripsi, LLM assessment, cheating detection, dan analisis non verbal yang masing-masing dilengkapi dengan confidence score
+
+    **6. Export hasil** (opsional): Download JSON atau laporan PDF
+
 === "Via Jupyter Notebook (Recommended)"
 
     ```bash
     # 1. Clone & setup
     git clone <repo>
-    cd Interview_Assesment_System/backend/Python
+    cd Interview_Assesment_System-main/backend/Python
     python -m venv .venv && .venv\Scripts\activate
 
-    # 2. Install dependencies
-    pip install jupyter
+    # 2. Buka jupyter notebook dan masukkan tokenmu di cell yang berisi:
+    # DEEPL_API_KEY = "YOUR_API_KEY_HERE:fx"
+    # HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxx"
+
+    # 3. Start server via jupyter notebook
     jupyter notebook interview_assessment_system.ipynb
+    # Run all cells → Server starts on http://localhost:8888
 
-    # 3. Execute cells in order dan configure API keys
-    # See Installation Guide for details
+    # 4. Ubah di Upload.js dan Halaman_dasboard.js
+    # API_BASE_URL = http://localhost:8888
 
-    # 4. Open frontend
+    # 5. Open frontend
     # http://localhost:5500/Upload.html (via Live Server)
     ```
 
 === "Via Python Script"
 
     ```bash
-    # 1. Setup
-    cd Interview_Assesment_System/backend/Python
-    python -m venv .venv
-    .venv\Scripts\activate
+    # 1. Clone & setup
+    git clone <repo>
+    cd Interview_Assesment_System-main/backend/Python
+    python -m venv .venv && .venv\Scripts\activate
 
-    # 2. Install & configure
+    # 2. Install dependencies
     pip install -r requirements.txt
-    # Rename env.example to .env and add API keys
 
-    # 3. Start server
+    # 3. Ganti env.example menjadi .env dan masukkan tokenmu disana:
+    # DEEPL_API_KEY = "YOUR_API_KEY_HERE:fx"
+    # HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxx"
+
+    # 4. Start server
     python main.py
     # Server starts on http://localhost:7860
+
+    # 5. Ubah di Upload.js dan Halaman_dasboard.js
+    # API_BASE_URL = http://localhost:7860
+
+    # 6. Open frontend
+    # http://localhost:5500/Upload.html (via Live Server)
     ```
 
 [:octicons-arrow-right-24: Detailed Installation Guide](getting-started/installation.md){ .md-button .md-button--primary }

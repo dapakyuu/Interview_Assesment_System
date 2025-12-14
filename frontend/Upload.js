@@ -25,14 +25,14 @@ const DEFAULT_BASE_URL = "http://127.0.0.1:5500";
 const SUBMIT_DEBOUNCE_MS = 3000;
 const SESSION_STORAGE_KEY = "video_processing_session";
 
- const VIDEO_ENDPOINT = "https://zhephyr-be-interview-assesment-system.hf.space/upload";
- const API_BASE_URL = "https://zhephyr-be-interview-assesment-system.hf.space";
+const API_BASE_URL = "https://zhephyr-be-interview-assesment-system.hf.space";
+const VIDEO_ENDPOINT = `${API_BASE_URL}/upload`;
 
 // jika menggunakan ngrok, ganti dengan URL ngrok Anda
-// const VIDEO_ENDPOINT =
-//   "https://allena-untransfigured-anomalistically.ngrok-free.dev/upload";
 // const API_BASE_URL =
 //   "https://allena-untransfigured-anomalistically.ngrok-free.dev";
+// const VIDEO_ENDPOINT =
+//   `${API_BASE_URL}/upload`;
 
 /* ============================
    HELPERS
