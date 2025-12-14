@@ -11,6 +11,7 @@
 [![PyDub](https://img.shields.io/badge/PyDub-Audio_Processing-brightgreen.svg)](https://github.com/jiaaro/pydub)
 [![DeepL](https://img.shields.io/badge/DeepL-Translation_API-0F2B46.svg)](https://www.deepl.com/docs-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation](https://img.shields.io/badge/docs-MkDocs-blue.svg)](https://www.mkdocs.org/)
 
 ---
 
