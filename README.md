@@ -267,7 +267,7 @@ pip -r requirements.txt
    - Logprobs support untuk confidence scoring
 5. **Fallback:** Jika API gagal/limit, system auto-fallback ke rule-based scoring
 
-### 5. FFmpeg,ffplay,ffprobe  Setup (Audio Processing)
+### 5. FFMPEG, FFPLAY, FFPROBE  Setup (Audio Processing)
 
 **Critical untuk audio extraction dan speaker diarization**
 
