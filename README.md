@@ -324,7 +324,7 @@ uvicorn interview_assessment_system:app --host 0.0.0.0 --port 8888
 ### 7. Open Frontend
 
 ```bash
-# 4. Ubah BASE_URL di Upload.js dan Halaman_dasboard.js
+# Ubah BASE_URL di Upload.js dan Halaman_dasboard.js
 # BASE_URL = http://localhost:8888
 
 # Serve static files (Python simple server)
@@ -1414,5 +1414,6 @@ MIT License - Feel free to modify and use for commercial/personal projects.
 ---
 
 **Built with ❤️ using FastAPI, Whisper, DeepL, and modern web technologies.**
+
 
 
