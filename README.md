@@ -11,7 +11,7 @@
 [![PyDub](https://img.shields.io/badge/PyDub-Audio_Processing-brightgreen.svg)](https://github.com/jiaaro/pydub)
 [![DeepL](https://img.shields.io/badge/DeepL-Translation_API-0F2B46.svg)](https://www.deepl.com/docs-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Documentation](https://img.shields.io/badge/docs-MkDocs-blue.svg)](https://interview-assesment-system-docs.vercel.app/)
+[![Documentation](https://img.shields.io/badge/docs-MkDocs-blue.svg)](https://www.mkdocs.org/)
 
 > 📚 **[View Full Documentation](https://interview-assesment-system-docs.vercel.app/)** | [Quick Start](https://interview-assesment-system.vercel.app/) | [API Reference](https://interview-assesment-system-docs.vercel.app/api/endpoints/)
 
@@ -1429,6 +1429,7 @@ MIT License - Feel free to modify and use for commercial/personal projects.
 ---
 
 **Built with ❤️ using FastAPI, Whisper, DeepL, and modern web technologies.**
+
 
 
 
