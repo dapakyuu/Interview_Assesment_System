@@ -1,7 +1,7 @@
 site_name: AI Interview Assessment System
 site_description: Sistem AI untuk otomasi penilaian interview kandidat dengan speech-to-text, cheating detection, dan analisis non-verbal
-site_author: Your Team
-site_url: https://your-domain.com
+site_author: Tim Cohort Asah A25-CS352
+site_url: https://interview-assesment-system.vercel.app/
 
 # Repository
 repo_name: Interview Assessment System

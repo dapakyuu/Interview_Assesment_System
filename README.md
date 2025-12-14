@@ -5,7 +5,7 @@
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 [![Whisper](https://img.shields.io/badge/Whisper-large--v3-orange.svg)](https://github.com/openai/whisper)
-[![Llama 3.1-8B](https://img.shields.io/badge/Llama_3.1--8B-Instruct-red.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
+[![Llama 3.1-8B](https://img.shields.io/badge/Llama_3.1--8B-LLM_Inference_API-red.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
 [![MediaPipe](https://img.shields.io/badge/MediaPipe-Face_Mesh-00C8FF.svg)](https://google.github.io/mediapipe/)
 [![Resemblyzer](https://img.shields.io/badge/Resemblyzer-Speaker_Diarization-9C27B0.svg)](https://github.com/resemble-ai/Resemblyzer)
 [![PyDub](https://img.shields.io/badge/PyDub-Audio_Processing-brightgreen.svg)](https://github.com/jiaaro/pydub)
@@ -276,19 +276,21 @@ pip -r requirements.txt
    - Logprobs support untuk confidence scoring
 5. **Fallback:** Jika API gagal/limit, system auto-fallback ke rule-based scoring
 
-### 5. FFmpeg Setup (Audio Processing)
+### 5. FFMPEG, FFPLAY, FFPROBE  Setup (Audio Processing)
 
 **Critical untuk audio extraction dan speaker diarization**
 
 **Windows:**
 
 ```bash
-# Download: https://github.com/GyanD/codexffmpeg/releases
-# Extract ke C:\ffmpeg
-# Add C:\ffmpeg\bin to System PATH
+# Download: https://github.com/GyanD/codexffmpeg/releases/download/2025-11-27-git-61b034a47c/ffmpeg-2025-11-27-git-61b034a47c-full_build.zip
+# Extract
+# Setelah extract ambil folder bin dan masukan pada /backend/
 
 # Verify:
 ffmpeg -version
+ffprobe -version
+ffplay -version
 ```
 
 **macOS:**
@@ -1427,6 +1429,9 @@ MIT License - Feel free to modify and use for commercial/personal projects.
 ---
 
 **Built with ❤️ using FastAPI, Whisper, DeepL, and modern web technologies.**
+
+
+
 
 
 

@@ -111,30 +111,37 @@ FFmpeg **REQUIRED** untuk audio extraction dan processing.
 
     **Download & Install:**
 
-    1. Download dari [GitHub Releases](https://github.com/GyanD/codexffmpeg/releases/download/2025-11-27-git-61b034a47c/ffmpeg-2025-11-27-git-61b034a47c-full_build.zip)
-    2. Extract ke ```C:\ffmpeg```
-    3. **Add to System PATH:**
-        - Klik kanan "This PC" → Properties
-        - Advanced system settings → Environment Variables
-        - Edit variabel "Path" (System variables)
-        - Click "New" → Add ```C:\ffmpeg\bin```
-        - Click OK semua dialog
+    1. **Download:** [FFmpeg Full Build](https://github.com/GyanD/codexffmpeg/releases/download/2025-11-27-git-61b034a47c/ffmpeg-2025-11-27-git-61b034a47c-full_build.zip)
+    2. **Extract** file ZIP
+    3. **Copy folder `bin`** dari hasil extract
+    4. **Paste** folder `bin` ke `Interview_Assesment_System-main/backend/`
+
+    Struktur akhir:
+    ```
+    Interview_Assesment_System-main/
+    └── backend/
+        ├── bin/           ← FFmpeg binaries (NEW)
+        │   ├── ffmpeg.exe
+        │   ├── ffprobe.exe
+        │   └── ffplay.exe
+        └── Python/
+            └── ...
+    ```
 
     **Verify Installation:**
 
     ```powershell
-    # Buka terminal baru (RESTART terminal setelah add PATH!)
+    # Navigate to backend/bin
+    cd backend/bin
+
+    # Test all binaries
     ffmpeg -version
+    ffprobe -version
+    ffplay -version
     ```
 
-    **Alternative (Jika PATH tidak terdeteksi):**
-
-    Tambahkan di **Cell 2** notebook:
-
-    ```python
-    import os
-    os.environ["PATH"] += os.pathsep + r"C:\ffmpeg\bin"
-    ```
+    !!! success "No PATH Setup Required"
+        Dengan menaruh `bin` di folder `backend/`, tidak perlu setup System PATH!
 
 === "macOS"
 
@@ -544,19 +551,34 @@ RuntimeError: No audio backend is available
 
 **Solutions:**
 
-**Quick Fix (Notebook):**
+**1. Check folder bin exists:**
 
-```python
-# Add to Cell 2
-import os
-os.environ["PATH"] += os.pathsep + r"C:\ffmpeg\bin"
+```powershell
+# Navigate to backend
+cd Interview_Assesment_System-main/backend
+
+# Check bin folder
+dir bin
+
+# Should show:
+# ffmpeg.exe, ffprobe.exe, ffplay.exe
 ```
 
-**Permanent Fix:**
+**2. If folder bin missing:**
 
-- Pastikan `C:\ffmpeg\bin` ada di System PATH
-- RESTART terminal setelah add PATH
-- Verify: `ffmpeg -version`
+- Download [FFmpeg](https://github.com/GyanD/codexffmpeg/releases/download/2025-11-27-git-61b034a47c/ffmpeg-2025-11-27-git-61b034a47c-full_build.zip)
+- Extract ZIP
+- Copy folder `bin` ke `Interview_Assesment_System-main/backend/`
+
+**3. Verify:**
+
+```powershell
+cd backend/bin
+ffmpeg -version
+ffprobe -version
+ffplay -version
+```
+
 
 ---
 
