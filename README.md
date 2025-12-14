@@ -225,14 +225,14 @@ pip --version
 
 ```bash
 # Navigate to project directory
-cd Interview_Assesment_System-main\backend\Python
+cd Interview_Assesment_System-main/backend/Python
 
 # Create virtual environment (Python 3.11)
 python -m venv .venv
 
 # Activate
 # Windows:
-.venv\Scripts\activate
+.venv/Scripts/activate
 # macOS/Linux:
 source .venv/bin/activate
 
