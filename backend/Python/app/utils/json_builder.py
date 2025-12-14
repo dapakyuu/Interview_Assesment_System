@@ -30,7 +30,7 @@ def process_transcriptions_sync(session_id: str, candidate_name: str, uploaded_v
     """Background transcription processing WITH COMPREHENSIVE LOGGING"""
 
     def log_print(msg):
-        """Print to both console and log file"""
+        """Print to console"""
         print(msg, flush=True)
 
     try:
@@ -152,7 +152,8 @@ def process_transcriptions_sync(session_id: str, candidate_name: str, uploaded_v
                     non_verbal_start = time.time()
                     non_verbal_result = analyze_interview_video_with_confidence(
                         video_path=local_file,
-                        audio_path=None
+                        audio_path=None,
+                        transcript=transcription_en  # ✅ Kirim transcript
                     )
                     non_verbal_time = time.time() - non_verbal_start
                     log_print(f'│    ✅ Non-verbal analysis completed in {non_verbal_time:.1f}s')
@@ -256,11 +257,11 @@ def process_transcriptions_sync(session_id: str, candidate_name: str, uploaded_v
 
         # 1. Aggregate Cheating
         try:
-            log_print(f'\n👀 Calculating aggregate non-verbal...')
+            log_print(f'\n🔍 Calculating aggregate cheating detection...')
             aggregate_cheating = aggregate_cheating_results(assessment_results)
             log_print(f'✅ Aggregate cheating completed')
         except Exception as e:
-            log_print(f'❌ ERROR in aggregate_non_verbal: {str(e)}')
+            log_print(f'❌ ERROR in aggregate_cheating: {str(e)}')
             log_print(f'   Traceback: {traceback.format_exc()}')
             aggregate_cheating = {"error": str(e)}
 
