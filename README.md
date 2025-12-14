@@ -6,14 +6,15 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 [![Whisper](https://img.shields.io/badge/Whisper-large--v3-orange.svg)](https://huggingface.co/Systran/faster-whisper-large-v3/tree/main)
 [![Llama 3.1-8B](https://img.shields.io/badge/Llama_3.1--8B-LLM_Inference_API-red.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
-[![MediaPipe](https://img.shields.io/badge/MediaPipe-Face_Mesh-00C8FF.svg)](https://google.github.io/mediapipe/)
-[![Resemblyzer](https://img.shields.io/badge/Resemblyzer-Speaker_Diarization-9C27B0.svg)](https://github.com/resemble-ai/Resemblyzer)
+[![MediaPipe](https://img.shields.io/badge/MediaPipe-Face_Mesh-00C8FF.svg)](https://pypi.org/project/mediapipe/)
+[![Resemblyzer](https://img.shields.io/badge/Resemblyzer-Speaker_Diarization-9C27B0.svg)](https://pypi.org/project/Resemblyzer/)
 [![PyDub](https://img.shields.io/badge/PyDub-Audio_Processing-brightgreen.svg)](https://github.com/jiaaro/pydub)
 [![DeepL](https://img.shields.io/badge/DeepL-Translation_API-0F2B46.svg)](https://www.deepl.com/docs-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/badge/docs-MkDocs-blue.svg)](https://www.mkdocs.org/)
 
 > 📚 **[View Full Documentation](https://interview-assesment-system-docs.vercel.app/)** | [Quick Start](https://interview-assesment-system.vercel.app/) | [API Reference](https://interview-assesment-system-docs.vercel.app/api/endpoints/)
+> 🤖 **Link GDrive Model AI :**  [![Whisper](https://img.shields.io/badge/Whisper-large--v3-orange.svg)](https://drive.google.com/drive/folders/1X5i_luIsmM97DjK94lY02UTW6aVgkX5g?usp=sharing) | [![Llama 3.1-8B](https://img.shields.io/badge/Llama_3.1--8B-LLM_Model-red.svg)](https://drive.google.com/drive/folders/1kYQiO5ahcC6zr_TzNol5CDEWkRjrcJ0j?usp=sharing) | [![MediaPipe](https://img.shields.io/badge/MediaPipe-Face_Mesh-00C8FF.svg)](https://drive.google.com/drive/folders/1t0Qijmsvq3gGNIJXB4mSTSr0Gys8KXp_?usp=sharing) | [![Resemblyzer](https://img.shields.io/badge/Resemblyzer-Speaker_Diarization-9C27B0.svg)](https://drive.google.com/drive/folders/1gUNAZKeu7P32avgoEJI15ifKYGXP0pjE?usp=sharing)
 
 ## ✨ Key Features
 
@@ -1432,6 +1433,7 @@ MIT License - Feel free to modify and use for commercial/personal projects.
 ---
 
 **Built with ❤️ using FastAPI, Whisper, DeepL, and modern web technologies.**
+
 
 
 
