@@ -120,7 +120,7 @@ python -m venv .venv && .venv/Scripts/activate
 
 # 3. Start server via jupyter notebook
 jupyter notebook interview_assessment_system.ipynb
-# jalankan cell sesuai OS yang kamu gunakan 
+# jalankan cell sesuai OS yang kamu gunakan
 # Run all cells → Server starts on http://localhost:8888
 
 # 4. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
@@ -148,16 +148,17 @@ pip install resemblyzer --no-deps
 # DEEPL_API_KEY = "YOUR_API_KEY_HERE:fx"
 # HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxx"
 
-# 4. Pastikan sudah terdapat folder bin pada folder python
+# 5. Pastikan sudah terdapat folder bin pada folder python
+python install_bin.py
 
-# 5. Start server
+# 6. Start server
 python main.py
 # Server starts on http://localhost:7860
 
-# 6. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
+# 7. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
 # API_BASE_URL = http://localhost:7860
 
-# 7. Open frontend
+# 8. Open frontend
 # http://localhost:5500/Upload.html (via Live Server)
 ```
 
@@ -243,6 +244,9 @@ pip -r requirements.txt
 # jika menggunakan windons perlu instal resemblyzer manual
  pip install resemblyzer --no-deps
 
+# Pastikan sudah terdapat folder bin pada folder python
+python install_bin.py
+
 # Ganti env.example menjadi .env dan masukkan tokenmu disana.
 ```
 
@@ -283,9 +287,8 @@ pip -r requirements.txt
 **Windows:**
 
 ```bash
-# Download: https://github.com/GyanD/codexffmpeg/releases/download/2025-11-27-git-61b034a47c/ffmpeg-2025-11-27-git-61b034a47c-full_build.zip
-# Extract
-# Setelah extract ambil folder bin dan masukan pada /backend/
+#jalankan file install_bin
+python install_bin.py
 
 # Verify:
 ffmpeg -version

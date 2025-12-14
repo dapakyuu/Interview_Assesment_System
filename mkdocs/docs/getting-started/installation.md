@@ -80,6 +80,9 @@ pip install -r requirements.txt
 
 # Install resemblyzer manually jika terjadi error (Windows only, untuk menghindari dependency conflicts)
 pip install resemblyzer --no-deps
+
+# Install_bin (jika mengunakan os Windows)
+python install_bin.py
 ```
 
 !!! warning "Resemblyzer Installation"
@@ -93,6 +96,8 @@ pip install jupyter
 
 # Launch notebook
 jupyter notebook interview_assessment_system.ipynb
+
+# sesuaikan berdasarkan sistem os kamu
 ```
 
 **Kemudian jalankan Cell 1 di notebook** yang berisi:
@@ -128,22 +133,23 @@ FFmpeg **REQUIRED** untuk audio extraction dan processing.
 
     **Download & Install:**
 
-    1. **Download:** [FFmpeg Full Build](https://github.com/GyanD/codexffmpeg/releases/download/2025-11-27-git-61b034a47c/ffmpeg-2025-11-27-git-61b034a47c-full_build.zip)
-    2. **Extract** file ZIP
-    3. **Copy folder `bin`** dari hasil extract
-    4. **Paste** folder `bin` ke `Interview_Assesment_System/backend/`
+    jalakan file Install_bin (jika mengunakan os Windows)
+    python install_bin.py
 
     Struktur akhir:
     ```
     Interview_Assesment_System/
     └── backend/
-        ├── bin/           ← FFmpeg binaries (NEW)
         │   ├── ffmpeg.exe
         │   ├── ffprobe.exe
         │   └── ffplay.exe
         └── Python/
             ├── main.py
             └── requirements.txt
+            └── bin/ 
+                ├── ffmpeg.exe
+                ├── ffprobe.exe
+                └── ffplay.exe
     ```
 
     **Verify Installation:**

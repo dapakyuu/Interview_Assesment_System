@@ -188,16 +188,17 @@
     # DEEPL_API_KEY = "YOUR_API_KEY_HERE:fx"
     # HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxx"
 
-    # 4. Pastikan sudah terdapat folder bin pada folder python
+    # 5. Pastikan sudah terdapat folder bin pada folder python
+    python install_bin.py
 
-    # 5. Start server
+    # 6. Start server
     python main.py
     # Server starts on http://localhost:7860
 
-    # 6. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
+    # 7. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
     # API_BASE_URL = http://localhost:7860
 
-    # 7. Open frontend
+    # 8. Open frontend
     # http://localhost:5500/Upload.html (via Live Server)
     ```
 
