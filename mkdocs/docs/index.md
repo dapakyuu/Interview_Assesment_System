@@ -5,7 +5,7 @@
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 [![Whisper](https://img.shields.io/badge/Whisper-large--v3-orange.svg)](https://github.com/openai/whisper)
-[![Llama 3.1-8B](https://img.shields.io/badge/LLM_Inference_API-Llama_3.1--8B-red.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
+[![Llama 3.1-8B](https://img.shields.io/badge/Llama_3.1--8B-LLM_Inference_API-red.svg)](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct)
 [![MediaPipe](https://img.shields.io/badge/MediaPipe-Face_Mesh-00C8FF.svg)](https://google.github.io/mediapipe/)
 [![Resemblyzer](https://img.shields.io/badge/Resemblyzer-Speaker_Diarization-9C27B0.svg)](https://github.com/resemble-ai/Resemblyzer)
 [![PyDub](https://img.shields.io/badge/PyDub-Audio_Processing-brightgreen.svg)](https://github.com/jiaaro/pydub)
