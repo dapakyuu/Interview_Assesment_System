@@ -146,52 +146,58 @@
 
     **6. Export hasil** (opsional): Download JSON atau laporan PDF
 
-=== "Via Jupyter Notebook (Recommended)"
+=== "Instalasi via Jupyter Notebook"
 
     ```bash
     # 1. Clone & setup
     git clone <repo>
-    cd Interview_Assesment_System-main/backend/Python
-    python -m venv .venv && .venv\Scripts\activate
+    cd Interview_Assesment_System/backend/Python
+    python -m venv .venv && .venv/Scripts/activate
 
-    # 2. Buka jupyter notebook dan masukkan tokenmu di cell yang berisi:
+    # 2. Buka jupyter notebook dan masukkan tokenmu di cell yang berisi
     # DEEPL_API_KEY = "YOUR_API_KEY_HERE:fx"
     # HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxx"
 
     # 3. Start server via jupyter notebook
     jupyter notebook interview_assessment_system.ipynb
+    # jalankan cell sesuai OS yang kamu gunakan 
     # Run all cells → Server starts on http://localhost:8888
 
-    # 4. Ubah di Upload.js dan Halaman_dasboard.js
+    # 4. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
     # API_BASE_URL = http://localhost:8888
 
     # 5. Open frontend
     # http://localhost:5500/Upload.html (via Live Server)
     ```
 
-=== "Via Python Script"
+=== "Instalasi via Python Script"
 
     ```bash
     # 1. Clone & setup
     git clone <repo>
-    cd Interview_Assesment_System-main/backend/Python
-    python -m venv .venv && .venv\Scripts\activate
+    cd Interview_Assesment_System/backend/Python
+    python -m venv .venv && .venv/Scripts/activate
 
-    # 2. Install dependencies
-    pip install -r requirements.txt
+    # 2. Install (one command)
+    pip install -r requirements.txt  # atau run Cell 1 di notebook
 
-    # 3. Ganti env.example menjadi .env dan masukkan tokenmu disana:
+    # 3 install resemblyzer secara manual.
+    pip install resemblyzer --no-deps
+
+    # 4. Ganti env.example menjadi .env dan masukkan tokenmu disana.
     # DEEPL_API_KEY = "YOUR_API_KEY_HERE:fx"
     # HF_TOKEN = "hf_xxxxxxxxxxxxxxxxxxxx"
 
-    # 4. Start server
+    # 4. Pastikan sudah terdapat folder bin pada folder python
+
+    # 5. Start server
     python main.py
     # Server starts on http://localhost:7860
 
-    # 5. Ubah di Upload.js dan Halaman_dasboard.js
+    # 6. Ubah API_BASE_URL di Upload.js dan Halaman_dasboard.js
     # API_BASE_URL = http://localhost:7860
 
-    # 6. Open frontend
+    # 7. Open frontend
     # http://localhost:5500/Upload.html (via Live Server)
     ```
 
