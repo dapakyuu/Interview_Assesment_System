@@ -202,7 +202,7 @@ body {
   padding: 15px 0;
   gap: 0;
   min-height: 200px; /* ✅ TAMBAHKAN INI - beri tinggi minimum untuk centering vertikal */
-  height: 70%; /* ✅ TAMBAHKAN INI - isi penuh tinggi card */
+  height: auto;
 }
 
 #scoreImage {
@@ -243,6 +243,14 @@ body {
   gap: 40px;
   margin-bottom: 30px;
   align-items: center;
+}
+
+.final-score-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
 }
 
 .radar-section {
