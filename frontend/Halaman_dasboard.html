@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
@@ -10,7 +10,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       rel="stylesheet"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <link rel="stylesheet" href="Halaman_dasboard.css" />
   </head>
 
@@ -49,49 +48,23 @@
             <div>
               <div class="card-title">
                 <i class="fas fa-chart-radar"></i>
-                Skor per Aspek Kompetensi
+                Skor Berdasarkan AI Assessment System
               </div>
               <p style="color: #718096; font-size: 14px; margin-top: 5px">
                 Evaluasi mendalam terhadap berbagai aspek penilaian
               </p>
             </div>
-
-            <div class="average-score-badge">
-              <div style="font-size: 12px; color: #667eea; margin-bottom: 5px">
-                Rata-rata Skor
-              </div>
-              <div
-                style="font-size: 32px; font-weight: bold; color: #667eea"
-                id="averageScore"
-              >
-                -
-              </div>
-            </div>
           </div>
 
-          <div class="aspects-container">
-            <div class="radar-section">
-              <div class="chart-container" style="height: 300px">
-                <canvas id="radarChart"></canvas>
-              </div>
-            </div>
-
-            <div class="details-section">
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                  margin-bottom: 20px;
-                  color: #667eea;
-                  font-weight: 600;
-                "
-              >
-                <i class="fas fa-arrow-trend-up"></i>
-                Detail Penilaian
-              </div>
-
-              <div id="aspectDetailsList"></div>
+          <div class="final-score-container">
+            <div class="card-content" id="final-score">
+              <img
+                id="scoreImage"
+                src=""
+                alt="Score Icon"
+                class="score-image"
+              />
+              <div id="final-decision"></div>
             </div>
           </div>
 
@@ -118,18 +91,6 @@
             Cheating Detection
           </div>
           <div class="card-content" id="cheating-detect"></div>
-        </div>
-
-        <!-- Penilaian Akhir -->
-        <div class="card">
-          <div class="card-title">
-            <i class="fas fa-star"></i>
-            Penilaian Akhir (1 - 5)
-          </div>
-          <div class="card-content" id="final-score">
-            <img id="scoreImage" src="" alt="Score Icon" class="score-image" />
-            <div id="final-decision"></div>
-          </div>
         </div>
       </div>
 
