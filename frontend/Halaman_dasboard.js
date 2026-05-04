@@ -805,7 +805,7 @@ function updateFinalDecision() {
 
   const projectScore = 100;
   const interviewScore = interviewData.llm_results.avg_total_llm;
-  const totalScore = projectScore * 0.3 + interviewScore * 0.3;
+  const totalScore = projectScore * 0.5 + interviewScore * 0.3;
   let scoreLabel = "";
   if (totalScore > 90) {
     scoreLabel = "Sangat Baik";
