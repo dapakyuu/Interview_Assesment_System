@@ -18,7 +18,7 @@ async function loadJSONData() {
 
     if (!sessionId) {
       throw new Error(
-        "Session ID tidak ditemukan di URL. Pastikan URL memiliki parameter ?session=xxx"
+        "Session ID tidak ditemukan di URL. Pastikan URL memiliki parameter ?session=xxx",
       );
     }
 
@@ -37,11 +37,11 @@ async function loadJSONData() {
     if (!response.ok) {
       if (response.status === 404) {
         throw new Error(
-          "Data hasil interview tidak ditemukan. Mungkin masih dalam proses atau session tidak valid."
+          "Data hasil interview tidak ditemukan. Mungkin masih dalam proses atau session tidak valid.",
         );
       }
       throw new Error(
-        `Failed to load data: ${response.status} ${response.statusText}`
+        `Failed to load data: ${response.status} ${response.statusText}`,
       );
     }
 
@@ -173,7 +173,7 @@ function calculateAggregateData() {
 
   // Hitung rata-rata
   aggregate.avgConfidence = Math.round(
-    aggregate.avgConfidence / totalQuestions
+    aggregate.avgConfidence / totalQuestions,
   );
   aggregate.avgKualitas = Math.round(aggregate.avgKualitas / totalQuestions);
   aggregate.avgRelevansi = Math.round(aggregate.avgRelevansi / totalQuestions);
@@ -192,21 +192,22 @@ function loadDashboardData() {
     return;
   }
 
-  updateAspectDetails();
   updateSummaryCards();
   updateCheatingDisplay();
   updateNonVerbalDisplay();
   updateFinalDecision();
   updateFinalRating();
   updateTranscriptDisplay();
-  createRadarChart();
 
   // ✅ TAMBAHKAN FUNGSI BARU
   updateCheatingConfidenceCard();
   updateNonVerbalConfidenceCard();
   updateTranscriptionConfidenceCard();
-  const rata_rata_skor = document.getElementById("averageScore");
-  rata_rata_skor.innerText = interviewData.llm_results.avg_total_llm || "N/A";
+
+  const rataRataSkor = document.getElementById("averageScore");
+  if (rataRataSkor) {
+    rataRataSkor.innerText = interviewData.llm_results.avg_total_llm || "N/A";
+  }
   console.log("✅ Dashboard berhasil dimuat");
 }
 
@@ -265,7 +266,7 @@ function updateCheatingDisplay() {
       🎥 Video ${q.question_id} - 
       Cheating Score: ${q.cheating_score}%
     </div>
-  `
+  `,
       )
       .join("");
   } else {
@@ -549,7 +550,7 @@ function getNonVerbalExplanation(score) {
 // ============================================================================
 function updateTranscriptionConfidenceCard() {
   const confidenceCard = document.getElementById(
-    "transcription-confidence-card"
+    "transcription-confidence-card",
   );
   if (!confidenceCard || !interviewData?.content) return;
 
@@ -752,11 +753,11 @@ function updateNonVerbalDisplay() {
             }</td>
             <td style="padding: 10px; text-align: center;">
               <span style="display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 500; ${getStatusStyle(
-                metric.status
+                metric.status,
               )}">${metric.status || "-"}</span>
             </td>
           </tr>
-        `
+        `,
           )
           .join("")}
       </tbody>
@@ -804,7 +805,7 @@ function updateFinalDecision() {
 
   const projectScore = 100;
   const interviewScore = interviewData.llm_results.avg_total_llm;
-  const totalScore = interviewScore;
+  const totalScore = projectScore * 0.7 + interviewScore * 0.3;
   let scoreLabel = "";
   if (totalScore > 90) {
     scoreLabel = "Sangat Baik";
@@ -889,7 +890,7 @@ function updateAspectDetails() {
             </div>
             <div class="aspect-score">${aspect.score}</div>
         </div>
-    `
+    `,
     )
     .join("");
 }
@@ -1032,57 +1033,6 @@ function updateTranscriptDisplay() {
 }
 
 // =========================================================
-// RADAR CHART
-// =========================================================
-function createRadarChart() {
-  const ctx = document.getElementById("radarChart");
-  if (!ctx) return;
-
-  const aggregate = calculateAggregateData();
-  const chartData = [
-    // aggregate.avgConfidence,
-    aggregate.avgKualitas,
-    aggregate.avgRelevansi,
-    aggregate.avgKoherensi,
-    // aggregate.avgTempo,
-  ];
-
-  new Chart(ctx, {
-    type: "radar",
-    data: {
-      labels: ["Kualitas", "Relevansi", "Koherensi"],
-      datasets: [
-        {
-          label: "Skor Kandidat",
-          data: chartData,
-          backgroundColor: "rgba(102, 126, 234, 0.2)",
-          borderColor: "#667eea",
-          borderWidth: 2,
-          pointBackgroundColor: "#667eea",
-          pointBorderColor: "#fff",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: "#667eea",
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        r: {
-          beginAtZero: true,
-          max: 100,
-          ticks: { stepSize: 20 },
-        },
-      },
-      plugins: {
-        legend: { position: "top" },
-      },
-    },
-  });
-}
-
-// =========================================================
 // UTILITY FUNCTIONS
 // =========================================================
 function downloadJSON() {
@@ -1178,7 +1128,7 @@ async function downloadPDF() {
       tableX,
       tableWidth,
       blue,
-      cream
+      cream,
     );
 
     // ===== KESIMPULAN LLM =====
@@ -1203,14 +1153,14 @@ async function downloadPDF() {
       "Skor Per Aspek Kompetensi",
       yPos + 5,
       tableX,
-      blue
+      blue,
     );
 
     // Hitung rata-rata dari semua pertanyaan
     const avgKualitas =
       content.reduce(
         (sum, item) => sum + item.result.penilaian.kualitas_jawaban,
-        0
+        0,
       ) / content.length;
     const avgRelevansi =
       content.reduce((sum, item) => sum + item.result.penilaian.relevansi, 0) /
@@ -1244,7 +1194,7 @@ async function downloadPDF() {
       tableX,
       tableWidth,
       blue,
-      cream
+      cream,
     );
 
     // ===== CHEATING DETECTION =====
@@ -1266,7 +1216,7 @@ async function downloadPDF() {
       tableX,
       tableWidth,
       blue,
-      cream
+      cream,
     );
 
     // ===== ANALISIS NON-VERBAL =====
@@ -1288,7 +1238,7 @@ async function downloadPDF() {
       tableX,
       tableWidth,
       blue,
-      cream
+      cream,
     );
 
     // ===== DETAIL PERTANYAAN =====
@@ -1335,7 +1285,7 @@ async function downloadPDF() {
         tableX,
         tableWidth,
         blue,
-        cream
+        cream,
       );
 
       // Analisis LLM
@@ -1346,7 +1296,7 @@ async function downloadPDF() {
       yPos += 4;
       const analysisLines = doc.splitTextToSize(
         item.result.penilaian.analisis_llm,
-        170
+        170,
       );
       doc.text(analysisLines, 20, yPos);
       yPos += analysisLines.length * 5 + 8;
@@ -1362,7 +1312,7 @@ async function downloadPDF() {
         "Laporan ini dibuat secara otomatis oleh AI Interview Platform",
         105,
         285,
-        { align: "center" }
+        { align: "center" },
       );
       doc.text(`Session: ${interviewData.session}`, 105, 290, {
         align: "center",
@@ -1441,7 +1391,7 @@ function drawTable(doc, data, headers, yPos, tableX, tableWidth, blue, cream) {
     tableX,
     yPos - data.length * rowHeight - rowHeight,
     tableWidth,
-    (data.length + 1) * rowHeight
+    (data.length + 1) * rowHeight,
   );
 
   return yPos;
@@ -1549,7 +1499,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!sessionId) {
     showErrorMessage(
-      "Session ID tidak ditemukan di URL. Akses dashboard melalui halaman upload setelah processing selesai."
+      "Session ID tidak ditemukan di URL. Akses dashboard melalui halaman upload setelah processing selesai.",
     );
     return;
   }
