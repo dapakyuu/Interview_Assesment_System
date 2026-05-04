@@ -804,7 +804,7 @@ function updateFinalDecision() {
 
   const projectScore = 100;
   const interviewScore = interviewData.llm_results.avg_total_llm;
-  const totalScore = projectScore * 0.7 + interviewScore * 0.3;
+  const totalScore = interviewScore;
   let scoreLabel = "";
   if (totalScore > 90) {
     scoreLabel = "Sangat Baik";
@@ -829,11 +829,6 @@ function updateFinalDecision() {
     ">
       <div class="content-text">
         Total Score: <b>${totalScore.toFixed(1)}</b>
-      </div>
-
-      <div class="note-text" style="font-size: 12px; color: #888;">
-        Note : Asumsi Project Score = 100 | Bobot Project and Interview = 70 : 30
-        
       </div>
     </div>
   `;
