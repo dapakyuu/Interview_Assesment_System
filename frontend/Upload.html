@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
   <head>
     <meta charset="utf-8" />
@@ -52,19 +52,6 @@
   </head>
   <body>
     <div class="container">
-      <div class="top-banner" aria-hidden="false">
-        <div class="banner-center">
-          <a href="https://www.dicoding.com" target="_blank" rel="noopener">
-            <img
-              src="Assest/dicoding_logo.png"
-              alt="Logo Dicoding"
-              class="banner-logo"
-              style="cursor: pointer"
-            />
-          </a>
-        </div>
-      </div>
-
       <div class="header">
         <div class="header-left">
           <h1>
@@ -75,13 +62,7 @@
             menggunakan AI.
           </p>
         </div>
-        <div class="header-actions">
-          <a href="https://www.dicoding.com" target="_blank" rel="noopener">
-            <button class="btn btn-outline">
-              <i class="fas fa-arrow-left"></i> Kembali ke Dicoding
-            </button>
-          </a>
-        </div>
+        <div class="header-actions"></div>
       </div>
 
       <div class="upload-grid">
@@ -128,6 +109,22 @@
               </div>
             </div>
           </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label"
+                >Pekerjaan / Posisi yang Dilamar<span class="required"
+                  >*</span
+                ></label
+              >
+              <input
+                id="jobPosition"
+                class="form-input"
+                type="text"
+                placeholder="Masukkan nama posisi yang dilamar"
+                autocomplete="off"
+              />
+            </div>
+          </div>
 
           <div
             class="upload-area"
@@ -157,7 +154,10 @@
               type="button"
               id="clearAllVideoBtn"
               class="btn btn-outline"
-              onclick="clearAllVideo(); return false;"
+              onclick="
+                clearAllVideo();
+                return false;
+              "
               style="display: none"
             >
               <i class="fas fa-trash"></i> Hapus Semua
@@ -173,81 +173,6 @@
             <div class="muted">Status:</div>
             <div id="statusAreaVideo" class="muted">
               Belum ada file dipilih.
-            </div>
-          </div>
-        </div>
-
-        <!-- CARD: Upload JSON -->
-        <div class="card upload-wrapper" id="jsonCard">
-          <div class="card-title">
-            <i class="fas fa-file-code"></i> Upload File JSON
-          </div>
-          <div class="form-grid" style="margin-bottom: 16px">
-            <div class="form-group">
-              <label class="form-label"
-                >Bahasa<span class="required">*</span></label
-              >
-              <div class="custom-select-wrapper">
-                <div class="custom-select" id="languageSelectJSONDisplay">
-                  <span class="selected-option">
-                    <i class="fas fa-globe"></i> Pilih Bahasa
-                  </span>
-                  <i class="fas fa-chevron-down dropdown-arrow"></i>
-                </div>
-                <div class="custom-options" id="languageOptionsJSON">
-                  <div class="custom-option" data-value="en" data-flag="gb">
-                    <span class="fi fi-gb"></span> English
-                  </div>
-                  <div class="custom-option" data-value="id" data-flag="id">
-                    <span class="fi fi-id"></span> Bahasa Indonesia
-                  </div>
-                </div>
-                <input type="hidden" id="languageSelectJSON" value="" />
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="upload-area"
-            id="uploadAreaJSON"
-            role="button"
-            tabindex="0"
-          >
-            <p class="muted">
-              Klik atau seret file .json ke sini. Maksimal 1 file.
-            </p>
-            <input
-              id="fileInputJSON"
-              type="file"
-              accept=".json,application/json"
-              style="display: none"
-              tabindex="-1"
-            />
-          </div>
-
-          <div class="upload-controls">
-            <button type="button" class="btn btn-outline" id="sendJSONBtn">
-              <i class="fas fa-folder-open"></i> Pilih JSON
-            </button>
-            <button
-              type="button"
-              id="clearAllJSONBtn"
-              class="btn btn-outline"
-              onclick="clearAllJSON(); return false;"
-              style="display: none"
-            >
-              <i class="fas fa-trash"></i> Hapus Semua
-            </button>
-          </div>
-
-          <div style="margin-top: 12px">
-            <div class="muted">Preview JSON:</div>
-            <div id="previewGridJSON" class="preview-grid"></div>
-          </div>
-          <div style="margin-top: 12px">
-            <div class="muted">Status:</div>
-            <div id="statusAreaJSON" class="muted">
-              Belum ada file JSON dipilih.
             </div>
           </div>
         </div>
@@ -306,20 +231,6 @@ Processing...</pre
         >
       </div>
     </div>
-
-    <footer
-      style="
-        background: #0052d3;
-        padding: 25px 0;
-        margin: 40px -20px -20px -20px;
-        text-align: center;
-        color: white;
-        font-size: 14px;
-        width: calc(100% + 40px);
-      "
-    >
-      Copyright © 2025 Tim Cohort Asah A25-CS352
-    </footer>
 
     <script src="Upload.js"></script>
   </body>
