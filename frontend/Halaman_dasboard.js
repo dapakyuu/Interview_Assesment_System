@@ -841,7 +841,7 @@ function updateFinalRating() {
 
   const projectScore = 100;
   let interviewScore = interviewData.llm_results.avg_total_llm;
-  let totalScore = projectScore * 0.7 + interviewScore * 0.3;
+  let totalScore = projectScore * 0.5 + interviewScore * 0.3;
   let finalRating = 1;
 
   if (totalScore > 90) {
