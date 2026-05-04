@@ -828,9 +828,6 @@ function updateFinalDecision() {
       height: 100%;
       text-align: center;
     ">
-      <div class="content-text">
-        Total Score: <b>${totalScore.toFixed(1)}</b>
-      </div>
     </div>
   `;
 }
