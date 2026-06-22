@@ -4,8 +4,10 @@
 let interviewData = null;
 
 // const API_BASE_URL = "https://zhephyr-be-interview-assesment-system.hf.space";
+// const API_BASE_URL =
+//   "https://allena-untransfigured-anomalistically.ngrok-free.dev";
  const API_BASE_URL =
-   "https://allena-untransfigured-anomalistically.ngrok-free.dev";
+   "https://allena-untransfigured-anomalistically.ngrok-free.dev/Interview_Assesment_System-main/backend/Python/";
 // const API_BASE_URL =
 //  "http://127.0.0.1:5500/Interview_Assesment_System-main/backend/Python/";
 // =========================================================
