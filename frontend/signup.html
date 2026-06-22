@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - AI Interview Platform</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <link rel="stylesheet" href="auth.css" />
+  </head>
+  <body class="auth-page" data-auth-page="signup">
+    <main class="auth-shell">
+      <section class="auth-panel">
+        <div class="auth-brand">
+          <i class="fas fa-rocket"></i>
+          AI Interview Assessment System
+        </div>
+        <h1>Buat akun untuk mulai menilai interview lebih cepat.</h1>
+        <p>
+          Registrasi sekali, lalu gunakan akun yang sama untuk upload video, cek
+          hasil grading, dan melanjutkan proses evaluasi interview.
+        </p>
+        <ul class="auth-points">
+          <li>
+            <i class="fas fa-check-circle"></i> Proses pendaftaran sederhana
+          </li>
+          <li>
+            <i class="fas fa-cloud-upload-alt"></i> Siap lanjut ke upload video
+          </li>
+          <li>
+            <i class="fas fa-chart-pie"></i> Selaras dengan dashboard analisis
+          </li>
+        </ul>
+      </section>
+
+      <section class="auth-card">
+        <div class="auth-card-inner">
+          <div class="auth-card-header">
+            <span class="auth-badge"
+              ><i class="fas fa-user-plus"></i> Sign Up</span
+            >
+            <h2>Buat akun baru</h2>
+            <p>
+              Daftarkan akun Anda untuk mengakses halaman upload dan dashboard
+              analisis.
+            </p>
+          </div>
+
+          <form class="auth-form" id="signupForm">
+            <div class="auth-field">
+              <label for="signupName">Nama Lengkap</label>
+              <input
+                id="signupName"
+                type="text"
+                placeholder="Masukkan nama lengkap"
+                autocomplete="name"
+                required
+              />
+            </div>
+
+            <div class="auth-field">
+              <label for="signupEmail">Email</label>
+              <input
+                id="signupEmail"
+                type="email"
+                placeholder="nama@email.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="auth-field">
+              <label for="signupPassword">Password</label>
+              <input
+                id="signupPassword"
+                type="password"
+                placeholder="Minimal 6 karakter"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+
+            <div class="auth-field">
+              <label for="signupConfirmPassword">Konfirmasi Password</label>
+              <input
+                id="signupConfirmPassword"
+                type="password"
+                placeholder="Ulangi password"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn btn-secondary btn-full">
+              <i class="fas fa-user-check"></i> Daftar Sekarang
+            </button>
+          </form>
+
+          <div id="authMessage" class="auth-message"></div>
+
+          <div class="auth-footer">
+            Sudah punya akun?
+            <strong
+              ><a class="auth-link" href="login.html">Masuk di sini</a></strong
+            ><br />
+            Setelah daftar, Anda akan diarahkan ke halaman upload.
+          </div>
+
+          <div class="auth-mini-actions">
+            <a class="btn btn-outline" href="Upload.html">
+              <i class="fas fa-arrow-left"></i> Kembali ke Upload
+            </a>
+            <a class="btn btn-primary" href="login.html">
+              <i class="fas fa-right-to-bracket"></i> Login
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+  </body>
+</html>

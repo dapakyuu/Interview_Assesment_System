@@ -1,0 +1,111 @@
+.history-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.history-table th,
+.history-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eef2f7;
+  font-size: 14px;
+}
+
+.history-table th {
+  background: #f8fbff;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.history-table tbody tr:hover {
+  background: #fbfdff;
+}
+
+.btn-outline {
+  background: #fff;
+  color: #102a43;
+  border: 1px solid #d8e1ee;
+  font-weight: 500;
+}
+
+.btn-outline:hover {
+  background: #f8fbff;
+  border-color: #a5b4fc;
+  transform: translateY(-2px);
+}
+
+.history-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #eef4ff;
+  color: #0052d3;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid #d6e4ff;
+  transition: all 0.2s ease;
+}
+
+.history-link-btn:hover {
+  background: #dce9ff;
+  transform: translateY(-1px);
+}
+
+.header-actions .auth-user-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #d8e1ee;
+  color: #102a43;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.header-actions .auth-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0052d3, #2673ff);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  flex: 0 0 auto;
+}
+
+.header-actions .auth-user-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.header-actions .auth-user-meta strong {
+  font-size: 14px;
+}
+
+.history-empty {
+  margin-top: 18px;
+  padding: 18px;
+  background: #f8fbff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  color: #64748b;
+  text-align: center;
+}

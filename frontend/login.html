@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - AI Interview Platform</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <link rel="stylesheet" href="auth.css" />
+  </head>
+  <body class="auth-page" data-auth-page="login">
+    <main class="auth-shell">
+      <section class="auth-panel">
+        <div class="auth-brand">
+          <i class="fas fa-brain"></i>
+          AI Interview Assessment System
+        </div>
+        <h1>Masuk untuk melanjutkan analisis interview.</h1>
+        <p>
+          Kelola proses upload video, lihat hasil penilaian AI, dan lanjutkan
+          workflow interview dari satu tempat dengan tampilan yang konsisten.
+        </p>
+        <ul class="auth-points">
+          <li>
+            <i class="fas fa-video"></i> Upload video interview dengan cepat
+          </li>
+          <li>
+            <i class="fas fa-chart-line"></i> Pantau hasil analisis dari
+            dashboard
+          </li>
+          <li>
+            <i class="fas fa-shield-alt"></i> Data tersimpan di sesi yang sama
+          </li>
+        </ul>
+      </section>
+
+      <section class="auth-card">
+        <div class="auth-card-inner">
+          <div class="auth-card-header">
+            <span class="auth-badge"
+              ><i class="fas fa-right-to-bracket"></i> Login</span
+            >
+            <h2>Selamat datang kembali</h2>
+            <p>
+              Masuk dengan akun yang sudah terdaftar untuk melanjutkan ke
+              halaman upload.
+            </p>
+          </div>
+
+          <form class="auth-form" id="loginForm">
+            <div class="auth-field">
+              <label for="loginEmail">Email</label>
+              <input
+                id="loginEmail"
+                type="email"
+                placeholder="nama@email.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="auth-field">
+              <label for="loginPassword">Password</label>
+              <input
+                id="loginPassword"
+                type="password"
+                placeholder="Masukkan password"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+
+            <div class="auth-row">
+              <label class="auth-checkbox">
+                <input type="checkbox" checked /> Ingat saya
+              </label>
+              <a class="auth-link" href="signup.html">Buat akun baru</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+              <i class="fas fa-arrow-right"></i> Masuk
+            </button>
+          </form>
+
+          <div id="authMessage" class="auth-message"></div>
+
+          <div class="auth-footer">
+            Belum punya akun?
+            <strong
+              ><a class="auth-link" href="signup.html"
+                >Daftar di sini</a
+              ></strong
+            ><br />
+            Setelah login, Anda akan diarahkan kembali ke halaman upload.
+          </div>
+
+          <div class="auth-mini-actions">
+            <a class="btn btn-outline" href="Upload.html">
+              <i class="fas fa-arrow-left"></i> Kembali ke Upload
+            </a>
+            <a class="btn btn-secondary" href="signup.html">
+              <i class="fas fa-user-plus"></i> Sign Up
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>History - AI Interview Platform</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="Halaman_dasboard.css" />
+    <link rel="stylesheet" href="history.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+  </head>
+  <body data-auth-page="history" data-require-auth="true">
+    <div class="container">
+      <div class="header">
+        <div class="header-left">
+          <h1><i class="fas fa-clock-rotate-left"></i> History Session</h1>
+          <p>Riwayat session milik user yang sedang login</p>
+        </div>
+        <div class="header-actions" id="authArea">
+          <a href="Upload.html" class="btn btn-outline">
+            <i class="fas fa-arrow-left"></i> Kembali ke Upload
+          </a>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="card full-width-card">
+          <div class="card-title">
+            <i class="fas fa-table"></i>
+            Tabel History
+          </div>
+
+          <div id="historyStatus" class="muted" style="margin-bottom: 14px">
+            Memuat history...
+          </div>
+
+          <div class="history-table-wrap">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Session ID</th>
+                  <th>Dashboard</th>
+                  <th>Dibuat Pada</th>
+                </tr>
+              </thead>
+              <tbody id="historyTableBody"></tbody>
+            </table>
+          </div>
+
+          <div id="historyEmpty" class="history-empty" style="display: none">
+            Belum ada session history untuk user ini.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="history.js"></script>
+  </body>
+</html>
