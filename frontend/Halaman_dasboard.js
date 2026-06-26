@@ -806,7 +806,7 @@ function updateFinalDecision() {
 
   const projectScore = 100;
   const interviewScore = interviewData.llm_results.avg_total_llm;
-  const totalScore = projectScore * 0.55 + interviewScore * 0.45;
+  const totalScore = projectScore * 0.3 + interviewScore * 0.7;
   let scoreLabel = "";
   if (totalScore > 90) {
     scoreLabel = "Sangat Baik";
@@ -829,7 +829,7 @@ function updateFinalRating() {
 
   const projectScore = 100;
   let interviewScore = interviewData.llm_results.avg_total_llm;
-  let totalScore = projectScore * 0.55 + interviewScore * 0.45;
+  let totalScore = projectScore * 0.3 + interviewScore * 0.7;
   let finalRating = 1;
 
   if (totalScore > 90) {
