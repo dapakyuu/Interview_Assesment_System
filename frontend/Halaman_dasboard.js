@@ -806,15 +806,15 @@ function updateFinalDecision() {
 
   const projectScore = 100;
   const interviewScore = interviewData.llm_results.avg_total_llm;
-  const totalScore = projectScore * 0.3 + interviewScore * 0.7;
+  const totalScore = interviewScore;
   let scoreLabel = "";
-  if (totalScore > 90) {
+  if (totalScore == 5) {
     scoreLabel = "Sangat Baik";
-  } else if (totalScore > 80) {
+  } else if (totalScore == 4 {
     scoreLabel = "Baik";
-  } else if (totalScore > 70) {
+  } else if (totalScore == 3) {
     scoreLabel = "Cukup";
-  } else if (totalScore > 50) {
+  } else if (totalScore == 2) {
     scoreLabel = "Kurang";
   } else {
     scoreLabel = "Sangat Kurang";
@@ -830,19 +830,7 @@ function updateFinalRating() {
   const projectScore = 100;
   let interviewScore = interviewData.llm_results.avg_total_llm;
   let totalScore = projectScore * 0.3 + interviewScore * 0.7;
-  let finalRating = 1;
-
-  if (totalScore > 90) {
-    finalRating = 5;
-  } else if (totalScore > 80) {
-    finalRating = 4;
-  } else if (totalScore > 70) {
-    finalRating = 3;
-  } else if (totalScore > 50) {
-    finalRating = 2;
-  } else {
-    finalRating = 1;
-  }
+  let finalRating = interviewScore;
 
   const finalRatingLabel = getRatingCategoryText(finalRating);
 
