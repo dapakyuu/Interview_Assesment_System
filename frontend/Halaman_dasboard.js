@@ -810,7 +810,7 @@ function updateFinalDecision() {
   let scoreLabel = "";
   if (totalScore == 5) {
     scoreLabel = "Sangat Baik";
-  } else if (totalScore == 4 {
+  } else if (totalScore == 4) {
     scoreLabel = "Baik";
   } else if (totalScore == 3) {
     scoreLabel = "Cukup";
@@ -829,7 +829,6 @@ function updateFinalRating() {
 
   const projectScore = 100;
   let interviewScore = interviewData.llm_results.avg_total_llm;
-  let totalScore = projectScore * 0.3 + interviewScore * 0.7;
   let finalRating = interviewScore;
 
   const finalRatingLabel = getRatingCategoryText(finalRating);
