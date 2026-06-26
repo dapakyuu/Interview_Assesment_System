@@ -625,6 +625,45 @@ async function resumePolling(sessionId, candidateName) {
   poll();
 }
 
+async function saveHistory(sessionId) {
+  try {
+    const client = getSupabaseClient();
+
+    if (!client) {
+      console.warn("Supabase client tidak tersedia");
+      return;
+    }
+
+    const {
+      data: { session },
+    } = await client.auth.getSession();
+
+    if (!session?.user) {
+      console.warn("User belum login");
+      return;
+    }
+
+    const { error } = await client.from("history").upsert(
+      {
+        user_id: session.user.id,
+        session_id: sessionId,
+        updated_at: new Date().toISOString(),
+      },
+      {
+        onConflict: "user_id,session_id",
+      },
+    );
+
+    if (error) {
+      console.error("History insert gagal:", error);
+    } else {
+      console.log("History berhasil disimpan");
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 async function buildAndSendVideo() {
   event?.preventDefault?.();
 
@@ -824,6 +863,7 @@ async function buildAndSendVideo() {
 
     // Get session ID
     const sessionId = result.session_id || tempSessionId;
+    await saveHistory(sessionId);
     console.log(`📊 Session ID: ${sessionId}`);
 
     // PHASE 2: Save session
