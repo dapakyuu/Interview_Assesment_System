@@ -1322,7 +1322,6 @@ function buildDashboardReportData() {
       summary: nonverbal.summary || "",
     },
     content,
-    totalScore,
     finalRating,
     finalRatingLabel,
     transcriptionConfidence,
