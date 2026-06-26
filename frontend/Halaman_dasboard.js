@@ -1288,20 +1288,10 @@ function buildDashboardReportData() {
     : [];
 
   const interviewScore = Number(llmResults.avg_total_llm || 0);
-  const totalScore = 100 * 0.7 + interviewScore * 0.3;
 
-  let finalRating = 1;
-  if (totalScore > 90) {
-    finalRating = 5;
-  } else if (totalScore > 80) {
-    finalRating = 4;
-  } else if (totalScore > 70) {
-    finalRating = 3;
-  } else if (totalScore > 50) {
-    finalRating = 2;
-  }
+  let finalRating = interviewScore;
 
-  const finalRatingLabel = getScoreCategoryText(totalScore);
+  const finalRatingLabel = getRatingCategoryText(finalRating);
 
   const transcriptionConfidence = content.length
     ? content.reduce(
